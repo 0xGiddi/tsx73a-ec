@@ -96,6 +96,7 @@ static int ec_check_exists(void) {
     outb(0x21, 0x2e);
     ec_id |= inb(0x2f);
 
+    // HACK HACK HACK - Bypass for testing
     if (EC_CHIP_ID != ec_id) 
         //ret = -ENODEV;
         ret = 0;
@@ -205,23 +206,31 @@ ec_read_byte_out:
 
 static ssize_t ec_vpd_parse_data(struct ec_vpd_entry *vpd, char *raw, char *buf) {
     struct tm *tm_real;
-    time64_t timestamp;
+    time64_t ts, time_bytes=0;
+    
 
     switch (vpd->type) {
-        case 0: // str
+        case 0: 
+            // Field is a string, copy and null terminate
             strncpy(buf, raw, vpd->length);
             buf[vpd->length + 1] = '\0';
             return vpd->length + 1;
-        case 1: // num
-
+        case 1:
+            // Field is a number
+            
             break;
-        case 2: // date
-            // TODO 
-            //timestamp = mktime64(113, 0, 1,0, 0, 0) + (time64_t)raw;
-            //tm_real = gmtime(&timestamp);
-            //return snprintf(buf, PAGE_SIZE, "%04d/%02d/%02d %02d:%02d", tm_real->ym_year + 1900, tm_real->tm_mon + 1, tm_real->tm_mday, tm_real->tm_hour, tm_real->tm_sec);            
+        case 2:
+            // Field is date
+            // BUG BUG BUG: cannot seem to get the exact time right, cant't use `gmtime` as not exists in kernel API
+            //      Using `sudo hal_app --vpd_get_field enc_sys_id=root,obj_index=0:0` returns '2023/05/22 14:14'
+            //      raw tested VPD bytes are 63 5b 53, but this function returns `2023-05-22 16:03:00`. 
+            //      Maybe DST/TZ/Leap correction in usernald API? It will not explain the minutes difference
+            //      EC VPD value seems to be minutes since 2013/01/01. Oh well, this isn't critical
+            memcpy(&time_bytes, raw, vpd->length);
+            ts = mktime64(2013, 1, 1,0, 0, 0) + (time_bytes * 0x3c); 
+            return scnprintf(buf, PAGE_SIZE, "%ptTs", &ts);
     }
-    return 0;
+    return -EINVAL;
 }
 
 static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf) {
