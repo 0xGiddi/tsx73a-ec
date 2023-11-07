@@ -207,7 +207,6 @@ ec_read_byte_out:
 static ssize_t ec_vpd_parse_data(struct ec_vpd_entry *vpd, char *raw, char *buf) {
     ssize_t ret = 0;
     int i, offs;
-    struct tm *tm_real;
     time64_t ts, time_bytes=0;
     
     switch (vpd->type) {
@@ -219,10 +218,10 @@ static ssize_t ec_vpd_parse_data(struct ec_vpd_entry *vpd, char *raw, char *buf)
             break;
         case 1:
             // Field is a number, convert endianness
-            ret += scnprintf(buf, PAGE_SIZE, "0x", &);
+            ret += scnprintf(buf, PAGE_SIZE, "0x");
             for (i=0; i < vpd->length; i++) {
                 offs = (i + 1) * 2;
-                ret += scnprintf(buf + offs, PAGE_SIZE - offs, "%02x", raw + (vpd->length - i) - 1);
+                ret += scnprintf(buf + offs, PAGE_SIZE - offs, "%02x", raw[(vpd->length - i) - 1]);
             }
             break;
         case 2:
@@ -243,12 +242,13 @@ static ssize_t ec_vpd_parse_data(struct ec_vpd_entry *vpd, char *raw, char *buf)
 }
 
 static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf) {
+    char raw_data[512] = {0};
     return scnprintf(buf, PAGE_SIZE, "VPD: t=%d, o=%d, l=%d, ty=%d\n", attr->vpd.table, attr->vpd.offset, attr->vpd.length, attr->vpd.type);
-    return -ENOMEM;
+    return ec_vpd_parse_data(&attr->vpd, raw_data, buf);
 }
 
 static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *attr, const char *buf, size_t count) {
-    return scnprintf(buf, PAGE_SIZE, "VPD: t=%d, o=%d, l=%d, ty=%d\n", attr->vpd.table, attr->vpd.offset, attr->vpd.length, attr->vpd.type);
+    
     return -ENOMEM;
 }
 
