@@ -1,16 +1,22 @@
+#include <linux/module.h>
+#include <linux/ioport.h>
+#include <linux/io.h>
+#include <linux/delay.h>
+#include <linux/platform_device.h>
+#include <linux/mutex.h>
 #include "tsx73a-ec.h"
 
 static struct platform_device *ec_pdev;
 
 static struct resource ec_resources[] = {
-    DEFINE_RES_IO_NAMED(EC_CMD_PORT, 1, "tsx73a-ec"),
-    DEFINE_RES_IO_NAMED(EC_DAT_PORT, 1, "tsx73a-ec")
+    DEFINE_RES_IO_NAMED(EC_CMD_PORT, 1, DRVNAME),
+    DEFINE_RES_IO_NAMED(EC_DAT_PORT, 1, DRVNAME)
 };
 
 static struct platform_driver ec_pdriver = {
     .driver = {
         .owner = THIS_MODULE,
-        .name  = "tsx73a-ec",
+        .name  = DRVNAME,
     },
     .probe	= ec_driver_probe,
     .remove	= ec_driver_remove
@@ -27,13 +33,12 @@ static const struct attribute_group ec_attr_group = {
     .attrs = ec_attrs
 };
 
-/* These are generic VPD attributes -  exists to make future development easier */
+/* Attributes to dump an entire VPD table, mostly for development*/
 static VPD_DEV_ATTR(dbg_table0, S_IRUGO, ec_vpd_table_show, NULL, 0);
 static VPD_DEV_ATTR(dbg_table1, S_IRUGO, ec_vpd_table_show, NULL, 0);
 static VPD_DEV_ATTR(dbg_table2, S_IRUGO, ec_vpd_table_show, NULL, 0);
 static VPD_DEV_ATTR(dbg_table3, S_IRUGO, ec_vpd_table_show, NULL, 0);
-static VPD_DEV_ATTR(dbg_read_single, S_IRUGO | S_IWUSR, NULL, ec_vpd_read_single_store, 0);
-/* These are known VPD attributes as discovered from RE the hal library */
+/* Attributes for all known VPD entries (see tsx73a-ec.h) */
 static VPD_DEV_ATTR(mb_date, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_MB_DATE);
 static VPD_DEV_ATTR(mb_manufacturer, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_MB_MANUF);
 static VPD_DEV_ATTR(mb_name, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_MB_NAME);
@@ -54,22 +59,18 @@ static struct attribute *ec_vpd_attrs[] = {
     &dev_attr_dbg_table1.attr,
     &dev_attr_dbg_table2.attr,
     &dev_attr_dbg_table3.attr,
-    &dev_attr_dbg_read_single.attr,
-    
     &dev_attr_mb_date.attr,
     &dev_attr_mb_manufacturer.attr,
     &dev_attr_mb_name.attr,
     &dev_attr_mb_serial.attr,
     &dev_attr_mb_model.attr,
     &dev_attr_mb_vendor.attr,
-
     &dev_attr_bp_date.attr,
     &dev_attr_bp_manufacturer.attr,
     &dev_attr_bp_name.attr,
     &dev_attr_bp_serial.attr,
     &dev_attr_bp_model.attr,
     &dev_attr_bp_vendor.attr,
-    
     &dev_attr_enc_serial.attr,
     &dev_attr_enc_nickname.attr,
     NULL
@@ -82,11 +83,19 @@ static const struct attribute_group ec_vpd_attr_group = {
 
 static DEFINE_MUTEX(ec_lock);
 
+/**
+ * ec_check_exists - Check that EC is ITE8528
+ *
+ * Check is done by reading idregs from the SIO port,
+ * ID bytes should be 0x85 and 0x28 for the ITE8528.
+ * Only SIO port combination on  0x2e,0x2f are checked
+ * as this seems to be sufficiant for the QNAP system. 
+ */
 static int ec_check_exists(void) {
     int ret = 0;
     u16 ec_id;
 
-    if(!request_muxed_region(0x2e, 2, "tsx73a-ec")) {
+    if(!request_muxed_region(0x2e, 2, DRVNAME)) {
         ret = -EBUSY;
         goto ec_check_exists_ret;
     }
@@ -211,7 +220,7 @@ static ssize_t ec_vpd_parse_data(struct ec_vpd_entry *vpd, char *raw, char *buf)
     
     switch (vpd->type) {
         case 0: 
-            // Field is a string, copy and null terminate
+            // Field is a string
             strncpy(buf, raw, vpd->length);
             buf[vpd->length + 1] = '\0';
             ret = vpd->length + 1;
@@ -226,11 +235,13 @@ static ssize_t ec_vpd_parse_data(struct ec_vpd_entry *vpd, char *raw, char *buf)
             break;
         case 2:
             // Field is date
-            // BUG BUG BUG: cannot seem to get the exact time right, cant't use `gmtime` as not exists in kernel API
-            //      Using `sudo hal_app --vpd_get_field enc_sys_id=root,obj_index=0:0` returns '2023/05/22 14:14'
-            //      raw tested VPD bytes are 63 5b 53, but this function returns `2023-05-22 16:03:00`. 
-            //      Maybe DST/TZ/Leap correction in usernald API? It will not explain the minutes difference
-            //      EC VPD value seems to be minutes since 2013/01/01. Oh well, this isn't critical
+            /**
+            *  BUG BUG BUG: cannot seem to get the exact time right, cant't use `gmtime` as not exists in kernel API
+            *      Using `sudo hal_app --vpd_get_field enc_sys_id=root,obj_index=0:0` returns '2023/05/22 14:14'
+            *      raw tested VPD bytes are 63 5b 53, but this function returns `2023-05-22 16:03:00`. 
+            *      Maybe DST/TZ/Leap correction in usernald API? It will not explain the minutes difference
+            *      EC VPD value seems to be minutes since 2013/01/01. This isn't critical.
+            */
             memcpy(&time_bytes, raw, vpd->length);
             ts = mktime64(2013, 1, 1,0, 0, 0) + (time_bytes * 0x3c); 
             ret += scnprintf(buf, PAGE_SIZE, "%ptTs", &ts);
@@ -242,19 +253,49 @@ static ssize_t ec_vpd_parse_data(struct ec_vpd_entry *vpd, char *raw, char *buf)
 }
 
 static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf) {
-    char raw_data[512] = {0};
-    return scnprintf(buf, PAGE_SIZE, "VPD: t=%d, o=%d, l=%d, ty=%d\n", attr->vpd.table, attr->vpd.offset, attr->vpd.length, attr->vpd.type);
+    char raw_data[EC_VPD_TABLE_LEN + 1] = {0};
+    ssize_t i, reg0, reg1, reg2;
+
+    switch (attr->vpd.table) {
+        case 0:
+            reg0 = 0x56;
+            reg1 = 0x57;
+            reg2 = 0x58;
+            break;
+        case 1:
+            reg0 = 0x59;
+            reg1 = 0x5a;
+            reg2 = 0x5b;
+            break;
+        case 2:
+            reg0 = 0x5c;
+            reg1 = 0x5d;
+            reg2 = 0x5e;
+            break;
+        case 3:
+            reg0 = 0x60;
+            reg1 = 0x61;
+            reg2 = 0x62;
+            break;
+        default:
+            return -EINVAL;
+    }
+
+    for (i=0; i < attr->vpd.length; i++) {
+        if(ec_write_byte(reg0, (i >> 8) & 0xff) ||
+            ec_write_byte(reg1, i & 0xff) ||
+            ec_read_byte(reg2, &raw_data[i]))
+            return -EBUSY;
+    }
+
     return ec_vpd_parse_data(&attr->vpd, raw_data, buf);
 }
 
 static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *attr, const char *buf, size_t count) {
     
-    return -ENOMEM;
+    return -ENOSYS;
 }
 
-static ssize_t ec_vpd_read_single_store(struct device *dev, struct ec_vpd_attribute *attr, const char *buf, size_t count) {
-    return -ENOMEM;
-}
 
 static ssize_t ec_vpd_table_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf) {
     int table_id = 0;
@@ -333,7 +374,7 @@ static int __init tsx73a_init(void) {
     }
 
     // Create and register the platform device
-    ec_pdev = platform_device_alloc("tsx73a-ec", -1);
+    ec_pdev = platform_device_alloc(DRVNAME, -1);
     if (!ec_pdev) {
         ret = -ENOMEM;
         goto tsx73a_exit_init;
@@ -350,15 +391,11 @@ static int __init tsx73a_init(void) {
     ret = platform_device_add(ec_pdev);
     if (ret)
         goto tsx73a_exit_init_put;
-    pr_debug("Device registred");
 
     // Create and setup the platform driver
     ret = platform_driver_register(&ec_pdriver);
     if (ret)
         goto tsx73a_exit_init_unregister;
-    pr_debug("Driver registred");
-
-    pr_debug("Init");
 
     goto tsx73a_exit_init;
 
@@ -374,7 +411,6 @@ static void __exit tsx73a_exit(void) {
     if (ec_pdev)
         platform_device_unregister(ec_pdev);
     platform_driver_unregister(&ec_pdriver);
-    pr_debug("Exit");
 }
 
 module_init(tsx73a_init);
