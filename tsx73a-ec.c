@@ -38,7 +38,10 @@ static VPD_DEV_ATTR(dbg_table0, S_IRUGO, ec_vpd_table_show, NULL, 0);
 static VPD_DEV_ATTR(dbg_table1, S_IRUGO, ec_vpd_table_show, NULL, 0);
 static VPD_DEV_ATTR(dbg_table2, S_IRUGO, ec_vpd_table_show, NULL, 0);
 static VPD_DEV_ATTR(dbg_table3, S_IRUGO, ec_vpd_table_show, NULL, 0);
-/* Attributes for all known VPD entries (see tsx73a-ec.h) */
+/**
+ * Attributes for all known VPD entries (see tsx73a-ec.h) 
+ * Currently only nickname VPD entry sis writeable, it's not really useful.
+ * */
 static VPD_DEV_ATTR(mb_date, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_MB_DATE);
 static VPD_DEV_ATTR(mb_manufacturer, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_MB_MANUF);
 static VPD_DEV_ATTR(mb_name, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_MB_NAME);
@@ -51,8 +54,8 @@ static VPD_DEV_ATTR(bp_name, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_BP_NAME);
 static VPD_DEV_ATTR(bp_serial, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_BP_SERIAL);
 static VPD_DEV_ATTR(bp_model, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_BP_MODEL);
 static VPD_DEV_ATTR(bp_vendor, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_BP_VENDOR);
-static VPD_DEV_ATTR(enc_nickname, S_IRUGO | S_IWUSR, ec_vpd_entry_show, ec_vpd_entry_store, EC_VPD_ENC_NICKNAME);
 static VPD_DEV_ATTR(enc_serial, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_ENC_SERIAL);
+static VPD_DEV_ATTR(enc_nickname, S_IRUGO | S_IWUSR, ec_vpd_entry_show, ec_vpd_entry_store, EC_VPD_ENC_NICKNAME);
 
 static struct attribute *ec_vpd_attrs[] = {
     &dev_attr_dbg_table0.attr,
@@ -115,6 +118,9 @@ ec_check_exists_ret:
     return ret;
 }
 
+/**
+ * ec_wait_obf_set - Wait for EC output buffer have data
+ */
 static int ec_wait_obf_set(void) {
     int retries = 0;
     do {
@@ -125,6 +131,9 @@ static int ec_wait_obf_set(void) {
     return -EBUSY;
 }
 
+/**
+ * ec_wait_obf_set - Wait for EC input buffer to be clear
+ */
 static int ec_wait_ibf_clear(void) {
     int retries = 0;
     do {
@@ -135,7 +144,9 @@ static int ec_wait_ibf_clear(void) {
     return -EBUSY;
 }
 
-
+/**
+ * ec_clear_obf - Clear and old data in EC output buffer
+ */
 static int ec_clear_obf(void) {
     int retries = 0;
     do {
@@ -146,6 +157,12 @@ static int ec_clear_obf(void) {
     return -EBUSY;
 }
 
+/**
+ * ec_send_command - Send a read/write register command to the EC
+ * 
+ * Start by sending  0x88 to the command port, then send HI and LO bytes.
+ * Between writes check that the EC IBF is clear. 
+ */
 static int ec_send_command(u16 command) {
     int ret;
 
@@ -168,7 +185,13 @@ ec_send_cmd_out:
     return ret;
 }
 
-
+/**
+ * ec_read_byte - Read a register from the EC
+ * 
+ * Read a register values from the EC data port.
+ * Clears EC buffer before read command issued
+ * and waits for EC OBF to be set.
+ */
 static int ec_read_byte(u16 command, u8 *data) {
     int ret; 
 
@@ -193,7 +216,14 @@ ec_read_byte_out:
     return ret;
 }
 
-
+/**
+ * ec_write_byte - Write a register on the EC
+ * 
+ * Write a values to a register on EC.
+ * Clears EC buffer before read command issued
+ * and waits for EC IBF to be set. When writing to the EC
+ * bit 7 of the HI command bye should be set.
+ */
 static int ec_write_byte(u16 command, u8 data) {
     int ret; 
     
@@ -213,6 +243,9 @@ ec_read_byte_out:
     return ret;
 }
 
+/**
+ * ec_vpd_parse_data - Parses VPD entry according to its type
+ */
 static ssize_t ec_vpd_parse_data(struct ec_vpd_entry *vpd, char *raw, char *buf) {
     ssize_t ret = 0;
     int i, offs;
@@ -252,6 +285,9 @@ static ssize_t ec_vpd_parse_data(struct ec_vpd_entry *vpd, char *raw, char *buf)
     return ret;
 }
 
+/**
+ * ec_vpd_entry_show - Read the VPD entry associated with the vpd attribute.
+ */
 static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf) {
     char raw_data[EC_VPD_TABLE_LEN + 1] = {0};
     ssize_t i, reg0, reg1, reg2;
@@ -291,12 +327,21 @@ static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *at
     return ec_vpd_parse_data(&attr->vpd, raw_data, buf);
 }
 
+/**
+ * ec_vpd_entry_store - Store attribute data to associated VPD entry.
+ * 
+ * Under normal circumstances VPD should not be written to.
+ */
 static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *attr, const char *buf, size_t count) {
-    
+    // TODO
     return -ENOSYS;
 }
 
-
+/**
+ * ec_vpd_table_show - Dump an entire VPD table as binary.
+ * 
+ * Read the entire 512 long VPD data from the EC, used for debug and development.
+ */
 static ssize_t ec_vpd_table_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf) {
     int table_id = 0;
     ssize_t i, reg0, reg1, reg2;
@@ -366,14 +411,12 @@ static int __init tsx73a_init(void) {
     int ret;
     struct ec_platform_data platdata;
     
-    // Check we have the correct EC
     ret = ec_check_exists();
     if (ret) {
         pr_err("Could not find ITE8528");
         goto tsx73a_exit_init;    
     }
 
-    // Create and register the platform device
     ec_pdev = platform_device_alloc(DRVNAME, -1);
     if (!ec_pdev) {
         ret = -ENOMEM;
@@ -392,7 +435,6 @@ static int __init tsx73a_init(void) {
     if (ret)
         goto tsx73a_exit_init_put;
 
-    // Create and setup the platform driver
     ret = platform_driver_register(&ec_pdriver);
     if (ret)
         goto tsx73a_exit_init_unregister;

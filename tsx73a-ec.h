@@ -3,14 +3,12 @@
 #undef pr_fmt
 #define pr_fmt(fmt) "%s @ %s: " fmt "\n", DRVNAME, __FUNCTION__
 
-
-#define EC_MAX_RETRY    1000
-#define EC_CMD_PORT     0x6c
-#define EC_DAT_PORT     0x68
-#define EC_UDELAY       300
-#define EC_CHIP_ID      0x8528
-
-#define EC_VPD_TABLE_LEN	0x200
+#define EC_MAX_RETRY    	1000	// Times to check EC status 
+#define EC_CMD_PORT     	0x6c	// EC "Third Host Interface" command port
+#define EC_DAT_PORT     	0x68	// EC "Third Host Interface" data port
+#define EC_UDELAY       	300		// Delay between EC status read/clear 
+#define EC_CHIP_ID      	0x8528	// ITE8528 chip id
+#define EC_VPD_TABLE_LEN	0x200	// Max VPD table size in bytes
 
 /** 
  * EC VPD entries
@@ -120,7 +118,6 @@ struct ec_vpd_attribute {
 	struct ec_vpd_entry vpd;
 };
 
-/* Custom attribute for VPD entries*/
 #define __VPD_ATTR(_name, _mode, _show, _store, _vpd) {		\
 	.attr = {.name = __stringify(_name),				    \
 		 .mode = VERIFY_OCTAL_PERMISSIONS(_mode) },		    \
@@ -135,7 +132,6 @@ struct ec_vpd_attribute {
 #define VPD_DEV_ATTR(_name, _mode, _show, _store, _vpd) \
 	struct ec_vpd_attribute dev_attr_##_name = __VPD_ATTR(_name, _mode, _show, _store, _vpd)
 
-/* Function prototyes */
 static int ec_check_exists(void);
 static int ec_wait_obf_set(void);
 static int ec_wait_ibf_clear(void);
