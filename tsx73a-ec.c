@@ -205,19 +205,25 @@ ec_read_byte_out:
 }
 
 static ssize_t ec_vpd_parse_data(struct ec_vpd_entry *vpd, char *raw, char *buf) {
+    ssize_t ret = 0;
+    int i, offs;
     struct tm *tm_real;
     time64_t ts, time_bytes=0;
     
-
     switch (vpd->type) {
         case 0: 
             // Field is a string, copy and null terminate
             strncpy(buf, raw, vpd->length);
             buf[vpd->length + 1] = '\0';
-            return vpd->length + 1;
+            ret = vpd->length + 1;
+            break;
         case 1:
-            // Field is a number
-            
+            // Field is a number, convert endianness
+            ret += scnprintf(buf, PAGE_SIZE, "0x", &);
+            for (i=0; i < vpd->length; i++) {
+                offs = (i + 1) * 2;
+                ret += scnprintf(buf + offs, PAGE_SIZE - offs, "%02x", raw + (vpd->length - i) - 1);
+            }
             break;
         case 2:
             // Field is date
@@ -228,9 +234,12 @@ static ssize_t ec_vpd_parse_data(struct ec_vpd_entry *vpd, char *raw, char *buf)
             //      EC VPD value seems to be minutes since 2013/01/01. Oh well, this isn't critical
             memcpy(&time_bytes, raw, vpd->length);
             ts = mktime64(2013, 1, 1,0, 0, 0) + (time_bytes * 0x3c); 
-            return scnprintf(buf, PAGE_SIZE, "%ptTs", &ts);
+            ret += scnprintf(buf, PAGE_SIZE, "%ptTs", &ts);
+            break;
+        default:
+            ret = -EINVAL;
     }
-    return -EINVAL;
+    return ret;
 }
 
 static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf) {

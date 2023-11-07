@@ -1,10 +1,7 @@
-*/*.o
-*/*.ko
-*/*.cmd
-*/*.mod
-*/*.mod.c
-*/modules.order
-*/Module.symvers
-*/test
-*/read
-*/write
+*.o
+*.ko
+*.cmd
+*.mod
+*.mod.c
+modules.order
+Module.symvers
