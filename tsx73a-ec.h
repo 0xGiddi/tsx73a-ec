@@ -147,7 +147,6 @@ static int ec_driver_probe(struct platform_device *pdev);
 static int ec_driver_remove(struct platform_device *pdev);
 static ssize_t ec_vpd_table_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf);
 static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf);
-static ssize_t ec_vpd_read_single_store(struct device *dev, struct ec_vpd_attribute *attr, const char *buf, size_t count);
 static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *attr, const char *buf, size_t count);
 static int __init tsx73a_init(void);
 static void __exit tsx73a_exit(void);
