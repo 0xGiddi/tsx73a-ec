@@ -14,6 +14,12 @@
 #define EC_MAX_PWM_CHANNELS	64
 #define EC_MAX_FAN_CHANNELS	64
 
+#define EC_FW_VER_REGISTER	0x308
+#define EC_FW_VER_LEN		8
+#define EC_AC_RECOVER_REG	0x16
+#define EC_EUP_SUPPRT_REG	0x101
+#define EC_EUP_MODE_REG		0x121
+
 /** 
  * EC VPD entries
  * 
@@ -151,7 +157,12 @@ static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *a
 static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_types type, u32 attribute, int channel);
 static int ec_hwmon_read(struct device *, enum hwmon_sensor_types type, u32 attr, int, long *);
 static int ec_hwmon_write(struct device *, enum hwmon_sensor_types type, u32 attr, int, long);
-int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, const char **str);
+static int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, const char **str);
+static ssize_t ec_ac_recovery_show(struct device *dev, struct device_attribute *attr, char *buf);
+static ssize_t ec_ac_recovery_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t count);
+static ssize_t ec_fw_version_show(struct device *dev, struct device_attribute *attr, char *buf);
+static ssize_t ec_eup_mode_show(struct device *dev, struct device_attribute *attr, char *buf);
+static ssize_t ec_eup_mode_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t count);
 
 static int __init tsx73a_init(void);
 static void __exit tsx73a_exit(void);

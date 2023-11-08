@@ -28,9 +28,9 @@ static struct platform_driver ec_pdriver = {
     .remove	= ec_driver_remove
 };
 
-static DEVICE_ATTR(fw_version, S_IRUGO, NULL, NULL);
-static DEVICE_ATTR(ac_recovery, S_IRUGO, NULL, NULL);
-static DEVICE_ATTR(eup_mode, S_IRUGO, NULL, NULL);
+static DEVICE_ATTR(fw_version, S_IRUGO, ec_fw_version_show, NULL);
+static DEVICE_ATTR(ac_recovery, S_IRUGO | S_IWUSR, ec_ac_recovery_show,ec_ac_recovery_store);
+static DEVICE_ATTR(eup_mode, S_IRUGO | S_IWUSR, ec_eup_mode_show, ec_eup_mode_store);
 
 static struct attribute *ec_attrs[] = {
     &dev_attr_fw_version.attr,
@@ -416,11 +416,128 @@ static ssize_t ec_vpd_table_show(struct device *dev, struct ec_vpd_attribute *at
     return i;
 }
 
+/**
+ * ec_ac_recovery_show - Show AC recovery mode
+ * 
+ * See ec_ac_recovery_store for valid values returned
+ */
+static ssize_t ec_ac_recovery_show(struct device *dev, struct device_attribute *attr, char *buf) {
+    u8 value, ret;
+    
+    ret = ec_read_byte(EC_AC_RECOVER_REG, &value);
+    if (ret)
+        return ret;
+    return scnprintf(buf, PAGE_SIZE, "%d", value);
+}
+
+/**
+ * ec_ac_recovery_show - Store AC recovery mode
+ * 
+ * Valid values:
+ *  0: Remain off
+ *  1: Power on
+ *  2: Resume last power state
+ */
+static ssize_t ec_ac_recovery_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t count) {
+    u8 value;
+    int ret;
+    
+    ret = kstrtou8(buf, 10, &value);
+    if (ret)
+        return ret;
+
+    if ((value < 0) || (value > 2))
+        return -ERANGE;
+
+    ret = ec_write_byte(EC_AC_RECOVER_REG, value);
+    if (ret)
+        return ret;
+    
+    return count;
+}
+
+/**
+ * ec_fw_version_show - Show EC firmware version
+ */
+static ssize_t ec_fw_version_show(struct device *dev, struct device_attribute *attr, char *buf) {
+    u8 value;
+    int i; 
+    int ret;
+    int read = 0;
+    
+    for (i=0; i <  EC_FW_VER_LEN; i++) {
+        ret = ec_read_byte(i, &value);
+        if (ret)
+            return ret;
+        read += scnprintf(buf + i, PAGE_SIZE - i, "%c", value);
+    }
+
+    return read;
+}
+
+/**
+ * ec_eup_mode_show - Show EuP mode
+ */
+static ssize_t ec_eup_mode_show(struct device *dev, struct device_attribute *attr, char *buf) {
+    u8 ret, value;
+    
+    ret = ec_read_byte(EC_EUP_SUPPRT_REG, &value);
+    if (ret)
+        return ret;
+
+    if (!(value & 0x08))
+        return -ENOSYS;
+
+    ret = ec_read_byte(EC_EUP_MODE_REG, &value);
+    if (ret)
+        return ret;
+
+    return scnprintf(buf, PAGE_SIZE, "%d", (value & 0x08) ? 1 : 0);
+}
+
+/**
+ * ec_eup_mode_store - Store EuP mode
+ * 
+ * Valid values:
+ *  0: Off
+ *  1: On
+ */
+static ssize_t ec_eup_mode_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t count) {
+    u8 value, tmp;
+    int ret;
+    
+    ret = ec_read_byte(EC_EUP_SUPPRT_REG, &value);
+    if (ret)
+        return ret;
+
+    if (!(value & 0x08))
+        return -ENOSYS;
+
+    ret = kstrtou8(buf, 10, &value);
+    if (ret)
+        return ret;
+
+    if ((value < 0) || (value > 1))
+        return -ERANGE;
+
+    ret = ec_read_byte(EC_EUP_MODE_REG, &tmp);
+    if (ret)
+        return ret;
+  
+    tmp &= 0xf7;
+    tmp |= value ? 0x08 : 0x00;
+
+    ret = ec_write_byte(EC_EUP_MODE_REG, tmp);
+    if (ret)
+        return ret;
+    
+    return count;
+}
+
 static int ec_driver_probe(struct platform_device *pdev) {
     int ret;
     struct device* hwmon_dev;
 
-    
     ret = sysfs_create_group(&pdev->dev.kobj, &ec_attr_group);
     if (ret)
         goto ec_probe_ret;
@@ -467,15 +584,15 @@ static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_typ
     return 0;
 }
 
-static int ec_hwmon_read(struct device *, enum hwmon_sensor_types type, u32 attr, int, long *) {
+static int ec_hwmon_read(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, long *val) {
     return -EOPNOTSUPP;
 }
 
-static int ec_hwmon_write(struct device *, enum hwmon_sensor_types type, u32 attr, int, long) {
+static int ec_hwmon_write(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, long val) {
     return -EOPNOTSUPP;
 }
 
-int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, const char **str) {
+static int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, const char **str) {
     *str = "sensor str";
     return 0;
 }
