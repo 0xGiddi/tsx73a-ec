@@ -4,6 +4,7 @@
 #include <linux/delay.h>
 #include <linux/platform_device.h>
 #include <linux/mutex.h>
+#include <linux/hwmon.h>
 #include "tsx73a-ec.h"
 
 static struct platform_device *ec_pdev;
@@ -32,6 +33,8 @@ static struct attribute *ec_attrs[] = {
 static const struct attribute_group ec_attr_group = {
     .attrs = ec_attrs
 };
+
+
 
 /* Attributes to dump an entire VPD table, mostly for development*/
 static VPD_DEV_ATTR(dbg_table0, S_IRUGO, ec_vpd_table_show, NULL, 0);
@@ -85,6 +88,36 @@ static const struct attribute_group ec_vpd_attr_group = {
 };
 
 static DEFINE_MUTEX(ec_lock);
+
+static u32 temp_config[EC_MAX_TEMP_CHANNELS + 1];
+static struct hwmon_channel_info temp_chan_info = {
+    .type = hwmon_temp,
+    .config = temp_config
+};
+
+static u32 pwm_config[EC_MAX_PWM_CHANNELS + 1];
+static struct hwmon_channel_info pwm_chan_info = {
+    .type = hwmon_pwm,
+    .config = pwm_config
+};
+
+static u32 fan_config[EC_MAX_FAN_CHANNELS + 1];
+static struct hwmon_channel_info fan_chan_info = {
+    .type = hwmon_fan,
+    .config = fan_config
+};
+
+static const struct hwmon_channel_info *hwmon_chan_info[] = {&temp_chan_info, &pwm_chan_info, &fan_chan_info, NULL};
+static struct hwmon_ops ec_hwmon_ops = {
+    .is_visible = &ec_hwmon_is_visible,
+    .read = &ec_hwmon_read,
+    .write = ec_hwmon_write
+};
+
+static struct hwmon_chip_info ec_hwmon_chip_info = {
+    .info = hwmon_chan_info,
+    .ops = &ec_hwmon_ops
+};
 
 /**
  * ec_check_exists - Check that EC is ITE8528
@@ -386,16 +419,29 @@ static ssize_t ec_vpd_table_show(struct device *dev, struct ec_vpd_attribute *at
 
 static int ec_driver_probe(struct platform_device *pdev) {
     int ret;
+    struct device* hwmon_dev;
 
     ret = sysfs_create_group(&pdev->dev.kobj, &ec_attr_group);
     if (ret)
-        return ret;
+        goto ec_probe_ret;
 
     ret = sysfs_create_group(&pdev->dev.kobj, &ec_vpd_attr_group);
     if (ret)
-        return ret;
+        goto ec_probe_ret;
 
+    hwmon_dev = devm_hwmon_device_register_with_info(&pdev->dev, "tsx73a_ec", NULL, &ec_hwmon_chip_info, NULL);
+    if (hwmon_dev <= 0) {
+        ret = -ENOMEM;
+        goto ec_probe_sysfs_ret;
+    }
+    
+    goto ec_probe_ret;
     pr_debug("Probe");
+
+ec_probe_sysfs_ret:
+    sysfs_remove_group(&pdev->dev.kobj, &ec_attr_group);
+    sysfs_remove_group(&pdev->dev.kobj, &ec_vpd_attr_group);
+ec_probe_ret:
     return ret;
 }
 
@@ -405,6 +451,25 @@ static int ec_driver_remove(struct platform_device *pdev) {
 
     pr_debug("Remove");
     return 0;
+}
+
+static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_types type, u32 attribute, int channel) {
+    switch (type) {
+        case hwmon_fan: 
+            return S_IRUGO;
+        default:
+            break;
+    }
+
+    return 0;
+}
+
+static int ec_hwmon_read(struct device *, enum hwmon_sensor_types type, u32 attr, int, long *) {
+    return -EOPNOTSUPP;
+}
+
+static int ec_hwmon_write(struct device *, enum hwmon_sensor_types type, u32 attr, int, long) {
+    return -EOPNOTSUPP;
 }
 
 static int __init tsx73a_init(void) {

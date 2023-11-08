@@ -10,6 +10,10 @@
 #define EC_CHIP_ID      	0x8528	// ITE8528 chip id
 #define EC_VPD_TABLE_LEN	0x200	// Max VPD table size in bytes
 
+#define EC_MAX_TEMP_CHANNELS	64
+#define EC_MAX_PWM_CHANNELS	64
+#define EC_MAX_FAN_CHANNELS	64
+
 /** 
  * EC VPD entries
  * 
@@ -144,5 +148,9 @@ static int ec_driver_remove(struct platform_device *pdev);
 static ssize_t ec_vpd_table_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf);
 static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf);
 static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *attr, const char *buf, size_t count);
+static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_types type, u32 attribute, int channel);
+static int ec_hwmon_read(struct device *, enum hwmon_sensor_types type, u32 attr, int, long *);
+static int ec_hwmon_write(struct device *, enum hwmon_sensor_types type, u32 attr, int, long);
+
 static int __init tsx73a_init(void);
 static void __exit tsx73a_exit(void);
