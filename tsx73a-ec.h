@@ -151,6 +151,18 @@ static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *a
 static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_types type, u32 attribute, int channel);
 static int ec_hwmon_read(struct device *, enum hwmon_sensor_types type, u32 attr, int, long *);
 static int ec_hwmon_write(struct device *, enum hwmon_sensor_types type, u32 attr, int, long);
+int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, const char **str);
 
 static int __init tsx73a_init(void);
 static void __exit tsx73a_exit(void);
+
+/*
+[0 ... 4]   ->CPU 
+[5 ... 9]   ->SYS 
+[10 ... 14] ->POWER 
+[15 ... 38] ->ENV
+*/
+
+
+// SYS 5  6  7
+//     27 27 35

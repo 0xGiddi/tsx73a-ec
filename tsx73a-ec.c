@@ -89,29 +89,19 @@ static const struct attribute_group ec_vpd_attr_group = {
 
 static DEFINE_MUTEX(ec_lock);
 
-static u32 temp_config[EC_MAX_TEMP_CHANNELS + 1];
-static struct hwmon_channel_info temp_chan_info = {
-    .type = hwmon_temp,
-    .config = temp_config
+
+static struct hwmon_channel_info const *hwmon_chan_info[] = {
+    HWMON_CHANNEL_INFO(temp, HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT, HWMON_T_INPUT),
+    HWMON_CHANNEL_INFO(fan, HWMON_F_INPUT, HWMON_F_INPUT, HWMON_F_INPUT),
+    HWMON_CHANNEL_INFO(pwm,  HWMON_PWM_INPUT,  HWMON_PWM_INPUT,  HWMON_PWM_INPUT),
+    NULL
 };
 
-static u32 pwm_config[EC_MAX_PWM_CHANNELS + 1];
-static struct hwmon_channel_info pwm_chan_info = {
-    .type = hwmon_pwm,
-    .config = pwm_config
-};
-
-static u32 fan_config[EC_MAX_FAN_CHANNELS + 1];
-static struct hwmon_channel_info fan_chan_info = {
-    .type = hwmon_fan,
-    .config = fan_config
-};
-
-static const struct hwmon_channel_info *hwmon_chan_info[] = {&temp_chan_info, &pwm_chan_info, &fan_chan_info, NULL};
 static struct hwmon_ops ec_hwmon_ops = {
     .is_visible = &ec_hwmon_is_visible,
     .read = &ec_hwmon_read,
-    .write = ec_hwmon_write
+    .write = &ec_hwmon_write,
+    .read_string = &ec_hwmon_read_string
 };
 
 static struct hwmon_chip_info ec_hwmon_chip_info = {
@@ -429,14 +419,14 @@ static int ec_driver_probe(struct platform_device *pdev) {
     if (ret)
         goto ec_probe_ret;
 
-    hwmon_dev = devm_hwmon_device_register_with_info(&pdev->dev, "tsx73a_ec", NULL, &ec_hwmon_chip_info, NULL);
-    if (hwmon_dev <= 0) {
-        ret = -ENOMEM;
+    hwmon_dev = devm_hwmon_device_register_with_info(&pdev->dev, "tsx73a_ec", dev_get_drvdata(&pdev->dev), &ec_hwmon_chip_info, NULL);
+    if (IS_ERR(hwmon_dev)) {
+        ret = PTR_ERR(hwmon_dev);;
         goto ec_probe_sysfs_ret;
     }
-    
-    goto ec_probe_ret;
     pr_debug("Probe");
+    goto ec_probe_ret;
+    
 
 ec_probe_sysfs_ret:
     sysfs_remove_group(&pdev->dev.kobj, &ec_attr_group);
@@ -454,6 +444,7 @@ static int ec_driver_remove(struct platform_device *pdev) {
 }
 
 static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_types type, u32 attribute, int channel) {
+    return S_IRUGO;
     switch (type) {
         case hwmon_fan: 
             return S_IRUGO;
@@ -470,6 +461,11 @@ static int ec_hwmon_read(struct device *, enum hwmon_sensor_types type, u32 attr
 
 static int ec_hwmon_write(struct device *, enum hwmon_sensor_types type, u32 attr, int, long) {
     return -EOPNOTSUPP;
+}
+
+int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, const char **str) {
+    *str = "sensor str";
+    return 0;
 }
 
 static int __init tsx73a_init(void) {
