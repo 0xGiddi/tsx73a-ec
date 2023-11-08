@@ -7,6 +7,11 @@
 #include <linux/hwmon.h>
 #include "tsx73a-ec.h"
 
+static struct class ec_class = {
+    .name = "ec",
+    .owner = THIS_MODULE,
+};
+
 static struct platform_device *ec_pdev;
 
 static struct resource ec_resources[] = {
@@ -24,9 +29,13 @@ static struct platform_driver ec_pdriver = {
 };
 
 static DEVICE_ATTR(fw_version, S_IRUGO, NULL, NULL);
+static DEVICE_ATTR(ac_recovery, S_IRUGO, NULL, NULL);
+static DEVICE_ATTR(eup_mode, S_IRUGO, NULL, NULL);
 
 static struct attribute *ec_attrs[] = {
     &dev_attr_fw_version.attr,
+    &dev_attr_ac_recovery.attr,
+    &dev_attr_eup_mode.attr,
     NULL
 };
 
@@ -411,6 +420,7 @@ static int ec_driver_probe(struct platform_device *pdev) {
     int ret;
     struct device* hwmon_dev;
 
+    
     ret = sysfs_create_group(&pdev->dev.kobj, &ec_attr_group);
     if (ret)
         goto ec_probe_ret;
@@ -421,9 +431,11 @@ static int ec_driver_probe(struct platform_device *pdev) {
 
     hwmon_dev = devm_hwmon_device_register_with_info(&pdev->dev, "tsx73a_ec", dev_get_drvdata(&pdev->dev), &ec_hwmon_chip_info, NULL);
     if (IS_ERR(hwmon_dev)) {
-        ret = PTR_ERR(hwmon_dev);;
+        ret = PTR_ERR(hwmon_dev);
         goto ec_probe_sysfs_ret;
     }
+
+
     pr_debug("Probe");
     goto ec_probe_ret;
     
@@ -472,16 +484,22 @@ static int __init tsx73a_init(void) {
     int ret;
     struct ec_platform_data platdata;
     
+    
     ret = ec_check_exists();
     if (ret) {
         pr_err("Could not find ITE8528");
         goto tsx73a_exit_init;    
     }
 
+    ret = class_register(&ec_class);
+    if (ret)
+        goto tsx73a_exit_init;
+    
+
     ec_pdev = platform_device_alloc(DRVNAME, -1);
     if (!ec_pdev) {
         ret = -ENOMEM;
-        goto tsx73a_exit_init;
+        goto tsx73a_exit_init_class;
     }
 
     ret = platform_device_add_data(ec_pdev, &platdata, sizeof(struct ec_platform_data));
@@ -506,6 +524,8 @@ tsx73a_exit_init_unregister:
     platform_device_unregister(ec_pdev);
 tsx73a_exit_init_put:
     platform_device_put(ec_pdev);
+tsx73a_exit_init_class:
+    class_unregister(&ec_class);
 tsx73a_exit_init:
     return ret;
 }
@@ -513,11 +533,13 @@ tsx73a_exit_init:
 static void __exit tsx73a_exit(void) {
     if (ec_pdev)
         platform_device_unregister(ec_pdev);
+
     platform_driver_unregister(&ec_pdriver);
+    class_unregister(&ec_class);
 }
 
 module_init(tsx73a_init);
-module_exit(tsx73a_exit)
+module_exit(tsx73a_exit);
 
 MODULE_DESCRIPTION("QNAP TS-x73A EC Driver");
 MODULE_VERSION("0.0.0");
