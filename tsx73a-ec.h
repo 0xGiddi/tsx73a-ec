@@ -8,7 +8,23 @@
 #define EC_DAT_PORT     	0x68	// EC "Third Host Interface" data port
 #define EC_UDELAY       	300		// Delay between EC status read/clear 
 #define EC_CHIP_ID      	0x8528	// ITE8528 chip id
-#define EC_VPD_TABLE_LEN	0x200	// Max VPD table size in bytes
+#define EC_VPD_TABLE_SIZE	0x200	// Max VPD table size in bytes
+
+#define EC_VPD_TABLE0_REG_A	0x56
+#define EC_VPD_TABLE0_REG_B	0x57
+#define EC_VPD_TABLE0_REG_C	0x58
+
+#define EC_VPD_TABLE1_REG_A	0x59
+#define EC_VPD_TABLE1_REG_B	0x5a
+#define EC_VPD_TABLE1_REG_C	0x5b
+
+#define EC_VPD_TABLE2_REG_A	0x5c
+#define EC_VPD_TABLE2_REG_B	0x5d
+#define EC_VPD_TABLE2_REG_C	0x5e
+
+#define EC_VPD_TABLE3_REG_A	0x60
+#define EC_VPD_TABLE3_REG_B	0x61
+#define EC_VPD_TABLE3_REG_C	0x62
 
 #define EC_MAX_TEMP_CHANNELS	64
 #define EC_MAX_PWM_CHANNELS	64

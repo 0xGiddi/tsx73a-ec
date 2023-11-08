@@ -321,38 +321,38 @@ static ssize_t ec_vpd_parse_data(struct ec_vpd_entry *vpd, char *raw, char *buf)
  * ec_vpd_entry_show - Read the VPD entry associated with the vpd attribute.
  */
 static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf) {
-    char raw_data[EC_VPD_TABLE_LEN + 1] = {0};
-    ssize_t i, reg0, reg1, reg2;
+    char raw_data[EC_VPD_TABLE_SIZE + 1] = {0};
+    ssize_t i, reg_a, reg_b, reg_c;
 
     switch (attr->vpd.table) {
         case 0:
-            reg0 = 0x56;
-            reg1 = 0x57;
-            reg2 = 0x58;
+            reg_a = EC_VPD_TABLE0_REG_A;
+            reg_b = EC_VPD_TABLE0_REG_B;
+            reg_c = EC_VPD_TABLE0_REG_C;
             break;
         case 1:
-            reg0 = 0x59;
-            reg1 = 0x5a;
-            reg2 = 0x5b;
+            reg_a = EC_VPD_TABLE1_REG_A;
+            reg_b = EC_VPD_TABLE1_REG_B;
+            reg_c = EC_VPD_TABLE1_REG_C;
             break;
         case 2:
-            reg0 = 0x5c;
-            reg1 = 0x5d;
-            reg2 = 0x5e;
+            reg_a = EC_VPD_TABLE2_REG_A;
+            reg_b = EC_VPD_TABLE2_REG_B;
+            reg_c = EC_VPD_TABLE2_REG_C;
             break;
         case 3:
-            reg0 = 0x60;
-            reg1 = 0x61;
-            reg2 = 0x62;
+            reg_a = EC_VPD_TABLE3_REG_A;
+            reg_b = EC_VPD_TABLE3_REG_B;
+            reg_c = EC_VPD_TABLE3_REG_C;
             break;
         default:
             return -EINVAL;
     }
 
     for (i=0; i < attr->vpd.length; i++) {
-        if(ec_write_byte(reg0, (i >> 8) & 0xff) ||
-            ec_write_byte(reg1, i & 0xff) ||
-            ec_read_byte(reg2, &raw_data[i]))
+        if(ec_write_byte(reg_a, (i >> 8) & 0xff) ||
+            ec_write_byte(reg_b, i & 0xff) ||
+            ec_read_byte(reg_c, &raw_data[i]))
             return -EBUSY;
     }
 
@@ -365,8 +365,43 @@ static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *at
  * Under normal circumstances VPD should not be written to.
  */
 static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *attr, const char *buf, size_t count) {
-    // TODO
-    return -ENOSYS;
+    ssize_t i, reg_a, reg_b, reg_c;
+
+    if ((count > attr->vpd.length) || ((attr->vpd.offset + attr->vpd.length) > EC_VPD_TABLE_SIZE))
+        return -ENOBUFS;
+
+    switch (attr->vpd.table) {
+        case 0:
+            reg_a = EC_VPD_TABLE0_REG_A;
+            reg_b = EC_VPD_TABLE0_REG_B;
+            reg_c = EC_VPD_TABLE0_REG_C;
+            break;
+        case 1:
+            reg_a = EC_VPD_TABLE1_REG_A;
+            reg_b = EC_VPD_TABLE1_REG_B;
+            reg_c = EC_VPD_TABLE1_REG_C;
+            break;
+        case 2:
+            reg_a = EC_VPD_TABLE2_REG_A;
+            reg_b = EC_VPD_TABLE2_REG_B;
+            reg_c = EC_VPD_TABLE2_REG_C;
+            break;
+        case 3:
+            reg_a = EC_VPD_TABLE3_REG_A;
+            reg_b = EC_VPD_TABLE3_REG_B;
+            reg_c = EC_VPD_TABLE3_REG_C;
+            break;
+        default:
+            return -EINVAL;
+    }
+
+    for (i=0; i < attr->vpd.length; i++) {
+        if(ec_write_byte(reg_a, (i >> 8) & 0xff) ||
+            ec_write_byte(reg_b, i & 0xff) ||
+            ec_write_byte(reg_c, buf[i]))
+            return -EBUSY;
+    }
+    return 0;
 }
 
 /**
@@ -376,41 +411,41 @@ static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *a
  */
 static ssize_t ec_vpd_table_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf) {
     int table_id = 0;
-    ssize_t i, reg0, reg1, reg2;
+    ssize_t i, reg_a, reg_b, reg_c;
     
     if (!(sscanf(attr->attr.name, "table%d", &table_id) == 1)) {
         return -EINVAL;
     }
 
-    switch (table_id) {
+    switch (attr->vpd.table) {
         case 0:
-            reg0 = 0x56;
-            reg1 = 0x57;
-            reg2 = 0x58;
+            reg_a = EC_VPD_TABLE0_REG_A;
+            reg_b = EC_VPD_TABLE0_REG_B;
+            reg_c = EC_VPD_TABLE0_REG_C;
             break;
         case 1:
-            reg0 = 0x59;
-            reg1 = 0x5a;
-            reg2 = 0x5b;
+            reg_a = EC_VPD_TABLE1_REG_A;
+            reg_b = EC_VPD_TABLE1_REG_B;
+            reg_c = EC_VPD_TABLE1_REG_C;
             break;
         case 2:
-            reg0 = 0x5c;
-            reg1 = 0x5d;
-            reg2 = 0x5e;
+            reg_a = EC_VPD_TABLE2_REG_A;
+            reg_b = EC_VPD_TABLE2_REG_B;
+            reg_c = EC_VPD_TABLE2_REG_C;
             break;
         case 3:
-            reg0 = 0x60;
-            reg1 = 0x61;
-            reg2 = 0x62;
+            reg_a = EC_VPD_TABLE3_REG_A;
+            reg_b = EC_VPD_TABLE3_REG_B;
+            reg_c = EC_VPD_TABLE3_REG_C;
             break;
         default:
             return -EINVAL;
     }
 
     for (i=0; i < 256; i++) {
-        if(ec_write_byte(reg0, (i >> 8) & 0xff) ||
-            ec_write_byte(reg1, i & 0xff) ||
-            ec_read_byte(reg2, &buf[i]))
+        if(ec_write_byte(reg_a, (i >> 8) & 0xff) ||
+            ec_write_byte(reg_b, i & 0xff) ||
+            ec_read_byte(reg_c, &buf[i]))
             return -EBUSY;
     }
     return i;
