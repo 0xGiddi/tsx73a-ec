@@ -7,6 +7,32 @@
 #include <linux/hwmon.h>
 #include "tsx73a-ec.h"
 
+/**
+ * TODO:
+ *  Fan:
+ *      - Get SPEED
+ *      - Get STATUS
+ *      - Get PWM
+ *      - Set PWM
+ *      - Set auto/manual?
+ *  Temp:
+ *      - Get TEMP
+ *  CPLD:
+ *      - Get version
+ *  Disk:
+ *      - Power up/down SATA
+ *  Button:
+ *      - Get RESET
+ *      - Get USB/COPY
+ *  LED:
+ *      - STATUS
+ *      - USB
+ *      - DISK ERROR/PRESENT/ACTIVE
+ *      - IDENT
+ *      - NVME Activity fix?
+ *
+*/
+
 static struct class ec_class = {
     .name = "ec",
     .owner = THIS_MODULE,
