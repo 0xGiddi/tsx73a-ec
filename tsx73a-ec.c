@@ -30,6 +30,10 @@
  *      - DISK ERROR/PRESENT/ACTIVE
  *      - IDENT
  *      - NVME Activity fix?
+ * 
+ *  General:
+ *      - Refactor ec_read_byte to return the value as signed int 
+ *          w/ positive = raw value, negative = ERRNO
  *
 */
 
@@ -55,11 +59,13 @@ static struct platform_driver ec_pdriver = {
 };
 
 static DEVICE_ATTR(fw_version, S_IRUGO, ec_fw_version_show, NULL);
+static DEVICE_ATTR(cpld_version, S_IRUGO, ec_cpld_version_show, NULL);
 static DEVICE_ATTR(ac_recovery, S_IRUGO | S_IWUSR, ec_ac_recovery_show,ec_ac_recovery_store);
 static DEVICE_ATTR(eup_mode, S_IRUGO | S_IWUSR, ec_eup_mode_show, ec_eup_mode_store);
 
 static struct attribute *ec_attrs[] = {
     &dev_attr_fw_version.attr,
+    &dev_attr_cpld_version.attr,
     &dev_attr_ac_recovery.attr,
     &dev_attr_eup_mode.attr,
     NULL
@@ -534,6 +540,19 @@ static ssize_t ec_fw_version_show(struct device *dev, struct device_attribute *a
     }
 
     return read;
+}
+
+/**
+ * ec_cpld_version_show - Show CPLD firmware version
+ */
+static ssize_t ec_cpld_version_show(struct device *dev, struct device_attribute *attr, char *buf) {
+    u8 value;
+    int ret;
+
+    ret = ec_read_byte(EC_CPLD_VER_REG, &value);
+    if (ret)
+        return ret;
+    return scnprintf(buf, PAGE_SIZE, "0x%x", value);
 }
 
 /**

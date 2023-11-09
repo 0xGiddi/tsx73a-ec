@@ -35,6 +35,7 @@
 #define EC_AC_RECOVER_REG	0x16
 #define EC_EUP_SUPPRT_REG	0x101
 #define EC_EUP_MODE_REG		0x121
+#define EC_CPLD_VER_REG		0x320
 
 /** 
  * EC VPD entries
@@ -179,6 +180,7 @@ static ssize_t ec_ac_recovery_store(struct device *dev, struct device_attribute 
 static ssize_t ec_fw_version_show(struct device *dev, struct device_attribute *attr, char *buf);
 static ssize_t ec_eup_mode_show(struct device *dev, struct device_attribute *attr, char *buf);
 static ssize_t ec_eup_mode_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t count);
+static ssize_t ec_cpld_version_show(struct device *dev, struct device_attribute *attr, char *buf);
 
 static int __init tsx73a_init(void);
 static void __exit tsx73a_exit(void);
