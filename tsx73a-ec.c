@@ -406,11 +406,62 @@ static int ec_get_fan_status(unsigned int fan) {
 }
 
 static int ec_get_fan_rpm(unsigned int fan) {
+    u8 tmp;
+    u16 value, reg_a, reg_b;
+    int ret;
 
+    if (fan >= 0 && fan <= 5) {
+        reg_a = (fan + 0x312) * 2;
+        reg_b = (fan * 2) + 0x625;
+    } else if (fan == 6 || fan == 7) {
+        reg_a = (fan + 0x30a) * 2;
+        reg_b = ((fan - 6) * 2) + 0x621;
+    } else if (fan == 10) {
+        reg_a = 0x65b;
+        reb_b = 0x65a;
+    } else if (fan == 0x0b) {
+        reg_a = 0x65e;
+        reg_b = 0x65d;
+    } else if (fan >= 0x14 && fan <= 0x19) {
+        reg_a = (fan + 0x30e) * 2;
+        reg_b = ((fan - 0x14) * 2) + 0x645;
+    } else if (fan >= 0x1e && fan <= 0x23) {
+        reg_a = (fan + 0x2f8) * 2;
+        reg_b = ((fan - 0x1e) * 2) + 0x62d;
+    } else {
+        return -EINVAL;
+    }
+
+    ret = ec_read_byte(reg_a, &tmp);
+    if (ret)
+        return ret;
+    value = tmp << 8;
+
+    ret = ec_read_byte(reg_b, &tmp);
+    if (ret)
+        return ret;
+    return value | tmp;
 }
 
 static int ec_get_fan_pwm(unsigned int fan) {
-    
+    u16 reg;
+    u8 value;
+    int ret;
+
+    if (fan >= 0 && fan <= 5) {
+        reg = 0x22e;
+    } else if (fan == 6 || fan == 7) {
+        reg = 0x2b4;
+    } else if (fan >= 0x14 && fan <= 0x19) {
+        reg = 0x22f;
+    } else if (fan >= 0x1e && fan <= 0x23) {
+        reg = 0x23b;
+    } else {
+        return -EINVAL;
+    }
+
+    ret = ec_read_byte(reg, &value);
+    return (value * 100) - (value / 100);
 }
 
 static int ec_set_fan_pwm(unsigned int fan) {
@@ -831,8 +882,6 @@ static int __init tsx73a_init(void) {
     if (ret)
         goto tsx73a_exit_init_unregister;
 
-    for (i=0; i<=30;i++)
-        pr_debug("Get fan status for fan %d is %d", i, ec_get_fan_status(i));
     goto tsx73a_exit_init;
 
 tsx73a_exit_init_unregister:
