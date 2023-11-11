@@ -318,16 +318,32 @@ static int ec_get_fan_status(unsigned int fan) {
 
     switch (fan)
     {
-        case (fan <= 5):
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
             reg = 0x242;
             break;
-        case (fan == 7 || fan == 6):
+        case 6:
+        case 7:
             reg = 0x244;
             break;
-        case (fan >= 0x14 && fan <= 0x19):
+        case 0x14:
+        case 0x15:
+        case 0x16:
+        case 0x17:
+        case 0x18:
+        case 0x19:
             reg = 0x259;
             break;
-        case (fan >= 0x1e && fan <= 0x23):
+        case 0x1e:
+        case 0x1f:
+        case 0x20:
+        case 0x21:
+        case 0x22:
+        case 0x23:
             reg = 0x25a;
             break;
         default:
@@ -336,16 +352,33 @@ static int ec_get_fan_status(unsigned int fan) {
 
     if (ec_read_byte(reg, &value))
         return -EBUSY;
+    pr_debug("fan status reg %d", value);
 
     switch (fan)
     {
-        case (fan <= 5):
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
             return ((value >> (fan & 0x1f)) & 1) == 0;
-        case (fan == 7 || fan == 6):
+        case 6:
+        case 7:
             return ((value >> ((fan - 0x06) & 0x1f)) & 1) == 0;
-        case (fan >= 0x14 && fan <= 0x19):
+        case 0x14:
+        case 0x15:
+        case 0x16:
+        case 0x17:
+        case 0x18:
+        case 0x19:
             return ((value >> ((fan - 0x14) & 0x1f)) & 1) == 0;
-        case (fan >= 0x1e && fan <= 0x23):
+        case 0x1e:
+        case 0x1f:
+        case 0x20:
+        case 0x21:
+        case 0x22:
+        case 0x23:
             return ((value >> ((fan - 0x1e) & 0x1f)) & 1) == 0;
         default:
             return -EINVAL;
@@ -735,6 +768,7 @@ static int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type
 static int __init tsx73a_init(void) {
     int ret;
     struct ec_platform_data platdata;
+    unsigned int i;
     
     
     ret = ec_check_exists();
@@ -770,6 +804,8 @@ static int __init tsx73a_init(void) {
     if (ret)
         goto tsx73a_exit_init_unregister;
 
+    for (i=0; i<=30;i++)
+        pr_debug("Get fan status for fan %d is %d", i, ec_get_fan_status(i));
     goto tsx73a_exit_init;
 
 tsx73a_exit_init_unregister:
