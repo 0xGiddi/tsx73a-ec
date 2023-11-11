@@ -9,14 +9,21 @@
 
 /**
  * TODO:
+ *  GENERAL:
+ *      - Add parameter to ignore fan ranges?
+ *      - Make debug attribute single, add all functions.
+ *      - Depending on availability, auto detect fans, temps? 
+ *  VPD:
+ *      - Broken, reads first byte only. Fix.
  *  Fan:
  *      - Get SPEED
- *      - Get STATUS
+ *      - Get STATUS    - Done, requires rework
  *      - Get PWM
  *      - Set PWM
- *      - Set auto/manual?
+ *      - Set to back to auto?
+ *      - TFAN?, change temp ranges? 
  *  Temp:
- *      - Get TEMP
+ *      - Get TEMP - Looking at the board, 2 temperature are located on the CPU pcb (left under top NVME, right over CPU cooler), third is unlocated yet.
  *  CPLD:
  *      - Get version
  *  Disk:
@@ -312,6 +319,19 @@ ec_read_byte_out:
     return ret;
 }
 
+/**
+ * ec_get_fan_status - Get the fan status from the EC
+ * 
+ * TODO: 
+ *  - Check if fan status changes when the fan is turned off (does not seem the case)
+ *  - Change function so fan status returns true and not false
+ *  - Clean up switch-case with range values in if statements
+ * BUGS: 
+ *  - Fan range of 0x14-0x19 seem to return a TRUE status even though they dont exist?
+ *      Possible workaround: No TS-x73A is known to have more than 3 fans, maybe just add option to ignore?
+ * NOTES:
+ *  - On TS-473A, fan 0 is the disk fan and fan 6 is the CPU fan
+ */
 static int ec_get_fan_status(unsigned int fan) {
     u16 reg; 
     u8 value;
@@ -383,6 +403,18 @@ static int ec_get_fan_status(unsigned int fan) {
         default:
             return -EINVAL;
     }
+}
+
+static int ec_get_fan_rpm(unsigned int fan) {
+
+}
+
+static int ec_get_fan_pwm(unsigned int fan) {
+    
+}
+
+static int ec_set_fan_pwm(unsigned int fan) {
+    
 }
 
 /**
