@@ -312,17 +312,43 @@ ec_read_byte_out:
     return ret;
 }
 
-static int ec_get_fan_status(int fan) {
+static int ec_get_fan_status(unsigned int fan) {
     u16 reg; 
+    u8 value;
 
     switch (fan)
     {
-    case (fan <= 4):
-        /* code */
-        break;
-    
-    default:
-        break;
+        case (fan <= 5):
+            reg = 0x242;
+            break;
+        case (fan == 7 || fan == 6):
+            reg = 0x244;
+            break;
+        case (fan >= 0x14 && fan <= 0x19):
+            reg = 0x259;
+            break;
+        case (fan >= 0x1e && fan <= 0x23):
+            reg = 0x25a;
+            break;
+        default:
+            return -EINVAL;
+    }
+
+    if (ec_read_byte(reg, &value))
+        return -EBUSY;
+
+    switch (fan)
+    {
+        case (fan <= 5):
+            return ((value >> (fan & 0x1f)) & 1) == 0;
+        case (fan == 7 || fan == 6):
+            return ((value >> ((fan - 0x06) & 0x1f)) & 1) == 0;
+        case (fan >= 0x14 && fan <= 0x19):
+            return ((value >> ((fan - 0x14) & 0x1f)) & 1) == 0;
+        case (fan >= 0x1e && fan <= 0x23):
+            return ((value >> ((fan - 0x1e) & 0x1f)) & 1) == 0;
+        default:
+            return -EINVAL;
     }
 }
 
