@@ -312,6 +312,20 @@ ec_read_byte_out:
     return ret;
 }
 
+static int ec_get_fan_status(int fan) {
+    u16 reg; 
+
+    switch (fan)
+    {
+    case (fan <= 4):
+        /* code */
+        break;
+    
+    default:
+        break;
+    }
+}
+
 /**
  * ec_vpd_parse_data - Parses VPD entry according to its type
  */
@@ -451,8 +465,9 @@ static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *a
  * Read the entire 512 long VPD data from the EC, used for debug and development.
  */
 static ssize_t ec_vpd_table_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf) {
-    int table_id = 0, count = 0, ret;
-    ssize_t i, reg_a, reg_b, reg_c;
+    int table_id = 0, ret;
+    u16 i, reg_a, reg_b, reg_c;
+    ssize_t count = 0;
     u8 tmp;
     
     if (!(sscanf(attr->attr.name, "dbg_table%d", &table_id) == 1)) {
@@ -485,16 +500,14 @@ static ssize_t ec_vpd_table_show(struct device *dev, struct ec_vpd_attribute *at
     }
 
     // BUG BUG BUG: Only reading first byte
-    for (i=0; i < EC_VPD_TABLE_SIZE; i++) {
-        if(ec_write_byte(reg_a, (i >> 8) & 0xff) ||
-            ec_write_byte(reg_b, i & 0xff)) 
+    for (i=0; i < 64; i++) {
+        pr_debug("VPD Table read: rega=%04x, regb=%04x, regc=%04x, table=%x, i=%x, last='%c', count=%d, bufp=%d", reg_a & 0xffff, reg_b & 0xffff, reg_c & 0xffff, table_id, i, tmp,(int)count, &buf[i]);
+        if(ec_write_byte(reg_a, (i >> 8) & 0xff) || ec_write_byte(reg_b, i & 0xff)) 
             return -EBUSY;
-        udelay(1000);
         ret = ec_read_byte(reg_c, &tmp);
-        pr_debug("table byte: %x", tmp &0xff);
         if (ret)
             return -EBUSY;
-        count += scnprintf(buf+i, PAGE_SIZE-i, "%c", tmp);
+        //count += scnprintf(&buf[i], PAGE_SIZE-i, "%c", tmp);
     }
     return count;
 }

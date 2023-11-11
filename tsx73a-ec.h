@@ -182,6 +182,8 @@ static ssize_t ec_eup_mode_show(struct device *dev, struct device_attribute *att
 static ssize_t ec_eup_mode_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t count);
 static ssize_t ec_cpld_version_show(struct device *dev, struct device_attribute *attr, char *buf);
 
+static int ec_get_fan_status(int fan);
+
 static int __init tsx73a_init(void);
 static void __exit tsx73a_exit(void);
 
