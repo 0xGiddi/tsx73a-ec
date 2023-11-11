@@ -809,15 +809,10 @@ static int __init tsx73a_init(void) {
         goto tsx73a_exit_init;    
     }
 
-    ret = class_register(&ec_class);
-    if (ret)
-        goto tsx73a_exit_init;
-    
-
     ec_pdev = platform_device_alloc(DRVNAME, -1);
     if (!ec_pdev) {
         ret = -ENOMEM;
-        goto tsx73a_exit_init_class;
+        goto tsx73a_exit_init;
     }
 
     ret = platform_device_add_data(ec_pdev, &platdata, sizeof(struct ec_platform_data));
@@ -844,8 +839,6 @@ tsx73a_exit_init_unregister:
     platform_device_unregister(ec_pdev);
 tsx73a_exit_init_put:
     platform_device_put(ec_pdev);
-tsx73a_exit_init_class:
-    class_unregister(&ec_class);
 tsx73a_exit_init:
     return ret;
 }
@@ -855,7 +848,6 @@ static void __exit tsx73a_exit(void) {
         platform_device_unregister(ec_pdev);
 
     platform_driver_unregister(&ec_pdriver);
-    class_unregister(&ec_class);
 }
 
 module_init(tsx73a_init);
