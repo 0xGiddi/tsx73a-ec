@@ -170,7 +170,7 @@ static int ec_driver_probe(struct platform_device *pdev);
 static int ec_driver_remove(struct platform_device *pdev);
 static ssize_t ec_vpd_table_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf);
 static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf);
-static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *attr, const char *buf, size_t count);
+//static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *attr, const char *buf, size_t count);
 static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_types type, u32 attribute, int channel);
 static int ec_hwmon_read(struct device *, enum hwmon_sensor_types type, u32 attr, int, long *);
 static int ec_hwmon_write(struct device *, enum hwmon_sensor_types type, u32 attr, int, long);

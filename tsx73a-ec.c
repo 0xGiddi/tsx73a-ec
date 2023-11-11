@@ -99,7 +99,7 @@ static VPD_DEV_ATTR(bp_serial, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_BP_SERIA
 static VPD_DEV_ATTR(bp_model, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_BP_MODEL);
 static VPD_DEV_ATTR(bp_vendor, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_BP_VENDOR);
 static VPD_DEV_ATTR(enc_serial, S_IRUGO, ec_vpd_entry_show, NULL, EC_VPD_ENC_SERIAL);
-static VPD_DEV_ATTR(enc_nickname, S_IRUGO | S_IWUSR, ec_vpd_entry_show, ec_vpd_entry_store, EC_VPD_ENC_NICKNAME);
+static VPD_DEV_ATTR(enc_nickname, S_IRUGO | S_IWUSR, ec_vpd_entry_show, NULL, EC_VPD_ENC_NICKNAME); // Maybe add store here
 
 static struct attribute *ec_vpd_attrs[] = {
     &dev_attr_dbg_table0.attr,
@@ -187,11 +187,13 @@ ec_check_exists_ret:
  */
 static int ec_wait_obf_set(void) {
     int retries = 0;
+
     do {
         if (inb(EC_CMD_PORT) & BIT(0))
             return 0;
         udelay(EC_UDELAY);
     } while (retries++ < EC_MAX_RETRY);
+    pr_debug("Error");
     return -EBUSY;
 }
 
@@ -205,6 +207,7 @@ static int ec_wait_ibf_clear(void) {
             return 0;
         udelay(EC_UDELAY);
     } while (retries++ < EC_MAX_RETRY);
+    pr_debug("Error");
     return -EBUSY;
 }
 
@@ -216,8 +219,10 @@ static int ec_clear_obf(void) {
     do {
         if (!(inb(EC_CMD_PORT) & BIT(0)))
             return 0;
+        inb(EC_DAT_PORT);
         udelay(EC_UDELAY);
     } while (retries++ < EC_MAX_RETRY);
+    pr_debug("Error");
     return -EBUSY;
 }
 
@@ -238,12 +243,12 @@ static int ec_send_command(u16 command) {
     ret = ec_wait_ibf_clear();
     if (ret)
         goto ec_send_cmd_out;
-    outb(EC_CMD_PORT, (command >> 8) & 0xff);
+    outb((command >> 8) & 0xff, EC_DAT_PORT);
 
     ret = ec_wait_ibf_clear();
     if (ret)
         goto ec_send_cmd_out;
-    outb(EC_CMD_PORT, command & 0xff);
+    outb(command & 0xff, EC_DAT_PORT);
 
 ec_send_cmd_out:
     return ret;
@@ -356,6 +361,7 @@ static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *at
     char raw_data[EC_VPD_TABLE_SIZE + 1] = {0};
     ssize_t i, reg_a, reg_b, reg_c;
 
+    pr_debug("reading entry: Ta:%X Of:%x Ty:%x Le:%x", attr->vpd.table, attr->vpd.offset, attr->vpd.type, attr->vpd.length);
     switch (attr->vpd.table) {
         case 0:
             reg_a = EC_VPD_TABLE0_REG_A;
@@ -381,13 +387,14 @@ static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *at
             return -EINVAL;
     }
 
+    // BUG BUG BUG: Only reading first byte
     for (i=0; i < attr->vpd.length; i++) {
-        if(ec_write_byte(reg_a, (i >> 8) & 0xff) ||
-            ec_write_byte(reg_b, i & 0xff) ||
+        if(ec_write_byte(reg_a, ((attr->vpd.offset + i) >> 8) & 0xff) ||
+            ec_write_byte(reg_b, (attr->vpd.offset + i) & 0xff) ||
             ec_read_byte(reg_c, &raw_data[i]))
             return -EBUSY;
     }
-
+    pr_debug("VPD Data: %s", raw_data);
     return ec_vpd_parse_data(&attr->vpd, raw_data, buf);
 }
 
@@ -396,6 +403,7 @@ static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *at
  * 
  * Under normal circumstances VPD should not be written to.
  */
+/*
 static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *attr, const char *buf, size_t count) {
     ssize_t i, reg_a, reg_b, reg_c;
 
@@ -435,6 +443,7 @@ static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *a
     }
     return 0;
 }
+*/
 
 /**
  * ec_vpd_table_show - Dump an entire VPD table as binary.
@@ -442,14 +451,15 @@ static ssize_t ec_vpd_entry_store(struct device *dev, struct ec_vpd_attribute *a
  * Read the entire 512 long VPD data from the EC, used for debug and development.
  */
 static ssize_t ec_vpd_table_show(struct device *dev, struct ec_vpd_attribute *attr, char *buf) {
-    int table_id = 0;
+    int table_id = 0, count = 0, ret;
     ssize_t i, reg_a, reg_b, reg_c;
+    u8 tmp;
     
-    if (!(sscanf(attr->attr.name, "table%d", &table_id) == 1)) {
+    if (!(sscanf(attr->attr.name, "dbg_table%d", &table_id) == 1)) {
         return -EINVAL;
     }
 
-    switch (attr->vpd.table) {
+    switch (table_id) {
         case 0:
             reg_a = EC_VPD_TABLE0_REG_A;
             reg_b = EC_VPD_TABLE0_REG_B;
@@ -474,13 +484,19 @@ static ssize_t ec_vpd_table_show(struct device *dev, struct ec_vpd_attribute *at
             return -EINVAL;
     }
 
-    for (i=0; i < 256; i++) {
+    // BUG BUG BUG: Only reading first byte
+    for (i=0; i < EC_VPD_TABLE_SIZE; i++) {
         if(ec_write_byte(reg_a, (i >> 8) & 0xff) ||
-            ec_write_byte(reg_b, i & 0xff) ||
-            ec_read_byte(reg_c, &buf[i]))
+            ec_write_byte(reg_b, i & 0xff)) 
             return -EBUSY;
+        udelay(1000);
+        ret = ec_read_byte(reg_c, &tmp);
+        pr_debug("table byte: %x", tmp &0xff);
+        if (ret)
+            return -EBUSY;
+        count += scnprintf(buf+i, PAGE_SIZE-i, "%c", tmp);
     }
-    return i;
+    return count;
 }
 
 /**
