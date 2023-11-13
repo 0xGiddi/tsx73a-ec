@@ -16,10 +16,10 @@
  *  VPD:
  *      - Broken, reads first byte only. Fix.
  *  Fan:
- *      - Get SPEED
+ *      - Get SPEED     - Done
  *      - Get STATUS    - Done, requires rework
- *      - Get PWM
- *      - Set PWM
+ *      - Get PWM       - Done
+ *      - Set PWM       - Done
  *      - Set to back to auto?
  *      - TFAN?, change temp ranges? 
  *  Temp:
@@ -465,8 +465,37 @@ static int ec_get_fan_pwm(unsigned int fan) {
     return (value * 0x100 - value) / 100;
 }
 
-static int ec_set_fan_pwm(unsigned int fan) {
-	return -ENOSYS;    
+static int ec_set_fan_pwm(unsigned int fan, u8 value) {
+	u16 reg_a, reg_b;
+    int ret;
+
+    value = (u8)(value * 100) / 0xff;
+
+    if (fan >= 0 && fan <= 5) {
+        reg_a = 0x220;
+        reg_b = 0x22e;
+    } else if (fan == 6 || fan == 7) {
+        reg_a = 0x223;
+        reg_b = 0x24b;
+    } else if (fan >= 0x14 && fan <= 0x19) {
+        reg_a = 0x221;
+        reg_b = 0x22f;
+    } else if (fan >= 0x1e && fan <= 0x23) {
+        reg_a = 0x222;
+        reg_b = 0x23b;
+    } else {
+        return -EINVAL;
+    }
+
+    ret = ec_write_byte(reg_a, 0x10);
+    if (ret)
+        return ret;
+
+    ret = ec_write_byte(reg_a, value);
+    if (ret)
+        return ret;
+
+    return 0;
 }
 
 /**
