@@ -186,6 +186,7 @@ static int ec_get_fan_status(unsigned int fan);
 static int ec_get_fan_rpm(unsigned int fan);
 static int ec_get_fan_pwm(unsigned int fan);
 static int ec_set_fan_pwm(unsigned int fan);
+static int ec_get_temprature(unsigned int sensor);
 
 static int __init tsx73a_init(void);
 static void __exit tsx73a_exit(void);

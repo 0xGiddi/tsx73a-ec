@@ -8,6 +8,8 @@
 #include "tsx73a-ec.h"
 
 /**
+ * 'Done' means PoC implemented
+ * 
  * TODO:
  *  GENERAL:
  *      - Add parameter to ignore fan ranges?
@@ -23,9 +25,9 @@
  *      - Set to back to auto?
  *      - TFAN?, change temp ranges? 
  *  Temp:
- *      - Get TEMP - Looking at the board, 2 temperature are located on the CPU pcb (left under top NVME, right over CPU cooler), third is unlocated yet.
+ *      - Get TEMP      - Done
  *  CPLD:
- *      - Get version
+ *      - Get version   - Done
  *  Disk:
  *      - Power up/down SATA
  *  Button:
@@ -496,6 +498,65 @@ static int ec_set_fan_pwm(unsigned int fan, u8 value) {
         return ret;
 
     return 0;
+}
+
+static int ec_get_temprature(unsigned int sensor) {
+    u8 value;
+    int ret;
+    u16 reg;
+
+    switch (sensor) {
+        case 0:
+        case 1:
+            // CPU
+            reg = 0x600 + sensor;
+            break;
+        case 5:
+        case 6:
+        case 7:
+            reg = 0x5fd + sensor;
+            break;
+        case 10:
+            reg = 0x659;
+            break;
+        case 0xb:
+            reg = 0x65c;
+            break;
+        case 0xf:
+        case 0x10:
+        case 0x11:
+        case 0x12:
+        case 0x13:
+        case 0x14:
+        case 0x15:
+        case 0x16:
+        case 0x17:
+        case 0x18:
+        case 0x19:
+        case 0x1a:
+        case 0x1b:
+        case 0x1c:
+        case 0x1d:
+        case 0x1e:
+        case 0x1f:
+        case 0x20:
+        case 0x21:
+        case 0x22:
+        case 0x23:
+        case 0x24:
+        case 0x25:
+        case 0x26:
+            reg = 0x5f7 + sensor;
+            break;
+        default:
+            return -EINVAL;
+    }
+
+    // TODO this is a double?
+    ret = ec_read_byte(reg);
+    if (ret)
+        return ret;
+    return value;
 }
 
 /**
