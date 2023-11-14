@@ -185,7 +185,7 @@ static ssize_t ec_cpld_version_show(struct device *dev, struct device_attribute 
 static int ec_get_fan_status(unsigned int fan);
 static int ec_get_fan_rpm(unsigned int fan);
 static int ec_get_fan_pwm(unsigned int fan);
-static int ec_set_fan_pwm(unsigned int fan);
+static int ec_set_fan_pwm(unsigned int fan, u8 value);
 static int ec_get_temprature(unsigned int sensor);
 
 static int __init tsx73a_init(void);

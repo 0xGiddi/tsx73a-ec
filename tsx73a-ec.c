@@ -5,6 +5,7 @@
 #include <linux/platform_device.h>
 #include <linux/mutex.h>
 #include <linux/hwmon.h>
+#include <linux/rtc.h>
 #include "tsx73a-ec.h"
 
 /**
@@ -45,12 +46,6 @@
  *          w/ positive = raw value, negative = ERRNO
  *
 */
-
-static struct class ec_class = {
-    .name = "ec",
-    .owner = THIS_MODULE,
-};
-
 static struct platform_device *ec_pdev;
 
 static struct resource ec_resources[] = {
@@ -553,7 +548,7 @@ static int ec_get_temprature(unsigned int sensor) {
     }
 
     // TODO this is a double?
-    ret = ec_read_byte(reg);
+    ret = ec_read_byte(reg, &value);
     if (ret)
         return ret;
     return value;
@@ -584,13 +579,6 @@ static ssize_t ec_vpd_parse_data(struct ec_vpd_entry *vpd, char *raw, char *buf)
             break;
         case 2:
             // Field is date
-            /**
-            *  BUG BUG BUG: cannot seem to get the exact time right, cant't use `gmtime` as not exists in kernel API
-            *      Using `sudo hal_app --vpd_get_field enc_sys_id=root,obj_index=0:0` returns '2023/05/22 14:14'
-            *      raw tested VPD bytes are 63 5b 53, but this function returns `2023-05-22 16:03:00`. 
-            *      Maybe DST/TZ/Leap correction in usernald API? It will not explain the minutes difference
-            *      EC VPD value seems to be minutes since 2013/01/01. This isn't critical.
-            */
             memcpy(&time_bytes, raw, vpd->length);
             ts = mktime64(2013, 1, 1,0, 0, 0) + (time_bytes * 0x3c); 
             ret += scnprintf(buf, PAGE_SIZE, "%ptTs", &ts);
@@ -641,7 +629,7 @@ static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *at
             ec_read_byte(reg_c, &raw_data[i]))
             return -EBUSY;
     }
-    pr_debug("VPD Data: %s", raw_data);
+    //pr_debug("VPD Data: %s", raw_data);
     return ec_vpd_parse_data(&attr->vpd, raw_data, buf);
 }
 
@@ -734,7 +722,7 @@ static ssize_t ec_vpd_table_show(struct device *dev, struct ec_vpd_attribute *at
 
     // BUG BUG BUG: Only reading first byte
     for (i=0; i < 64; i++) {
-        pr_debug("VPD Table read: rega=%04x, regb=%04x, regc=%04x, table=%x, i=%x, last='%c', count=%d, bufp=%d", reg_a & 0xffff, reg_b & 0xffff, reg_c & 0xffff, table_id, i, tmp,(int)count, &buf[i]);
+        //pr_debug("VPD Table read: rega=%04x, regb=%04x, regc=%04x, table=%x, i=%x, last='%c', count=%d, bufp=%d", reg_a & 0xffff, reg_b & 0xffff, reg_c & 0xffff, table_id, i, tmp,(int)count, &buf[i]);
         if(ec_write_byte(reg_a, (i >> 8) & 0xff) || ec_write_byte(reg_b, i & 0xff)) 
             return -EBUSY;
         ret = ec_read_byte(reg_c, &tmp);
@@ -942,8 +930,6 @@ static int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type
 static int __init tsx73a_init(void) {
     int ret;
     struct ec_platform_data platdata;
-    unsigned int i;
-    
     
     ret = ec_check_exists();
     if (ret) {
@@ -972,10 +958,6 @@ static int __init tsx73a_init(void) {
     ret = platform_driver_register(&ec_pdriver);
     if (ret)
         goto tsx73a_exit_init_unregister;
-
-    for (i=0; i<36;i++) {
-	    pr_debug("Fan test %05d: status=%05d, speed=%05d, pwm=%05d", i, ec_get_fan_status(i), ec_get_fan_rpm(i), ec_get_fan_pwm(i) & 0xff);
-    }
 
     goto tsx73a_exit_init;
 
