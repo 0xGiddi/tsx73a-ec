@@ -37,6 +37,11 @@
 #define EC_EUP_MODE_REG		0x121
 #define EC_CPLD_VER_REG		0x320
 
+#define EC_BTN_RESET		BIT(1)
+#define EC_BTN_COPY			BIT(2)
+
+
+
 /** 
  * EC VPD entries
  * 
@@ -187,6 +192,11 @@ static int ec_get_fan_rpm(unsigned int fan);
 static int ec_get_fan_pwm(unsigned int fan);
 static int ec_set_fan_pwm(unsigned int fan, u8 value);
 static int ec_get_temprature(unsigned int sensor);
+static int ec_button_get_state(u8 btn);
+static int ec_led_set_brightness(u8 brightness);
+static int ec_led_set_status(u8 mode);
+static int ec_led_set_disk(u8 mode);
+
 
 static int __init tsx73a_init(void);
 static void __exit tsx73a_exit(void);

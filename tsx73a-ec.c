@@ -43,7 +43,7 @@
  * 
  *  General:
  *      - Refactor ec_read_byte to return the value as signed int 
- *          w/ positive = raw value, negative = ERRNO
+ *          w/ positive = raw value, negative = ERRNO and use IS_ERR_VALUE to make errors branches unlikely
  *
 */
 static struct platform_device *ec_pdev;
@@ -864,6 +864,77 @@ static ssize_t ec_eup_mode_store(struct device *dev, struct device_attribute *at
     return count;
 }
 
+static int ec_button_get_state(u8 btn) {
+    u8 value;
+    int ret;
+
+    ret = ec_read_byte(0x143, &value);
+    if (ret)
+        return ret;
+    return value & btn;
+}
+
+static int ec_led_set_brightness(u8 brightness) {
+    int ret;
+    u8 value;
+
+    ret = ec_write_byte(0x243, brightness);
+    if (ret)
+        return ret;
+
+    ret = ec_read_byte(0x245, &value);
+    if (ret)
+        return ret;
+    value |= 0x10;
+
+    ret = ec_write_byte(0x245, value);
+    if (ret)
+        return ret;
+
+    ret = ec_write_byte(0x246, brightness);
+    if (ret)
+        return ret;
+
+    ret = ec_read_byte(0x245, &value);
+    if (ret)
+        return ret;
+    value |= 0xef;
+
+    ret = ec_write_byte(0x245, value);
+    if (ret)
+        return ret;
+
+    return 0;    
+}
+
+static int ec_led_set_status(u8 mode)  {
+    int ret;
+
+    ret = ec_write_byte(0x155, mode);
+    if (ret)
+        return ret;
+    return 0;
+}
+
+static int ec_led_set_usb(u8 mode)  {
+    int ret;
+
+    ret = ec_write_byte(0x155, mode);
+    if (ret)
+        return ret;
+    return 0;
+}
+
+static int ec_led_set_disk(u8 mode)  {
+    int ret;
+
+    ret = ec_write_byte(0x155, mode);
+    if (ret)
+        return ret;
+    return 0;
+}
+
+
 static int ec_driver_probe(struct platform_device *pdev) {
     int ret;
     struct device* hwmon_dev;
@@ -930,7 +1001,7 @@ static int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type
 static int __init tsx73a_init(void) {
     int ret;
     struct ec_platform_data platdata;
-    
+
     ret = ec_check_exists();
     if (ret) {
         pr_err("Could not find ITE8528");
