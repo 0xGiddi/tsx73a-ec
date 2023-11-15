@@ -301,7 +301,7 @@ static int ec_write_byte(u16 command, u8 data) {
     int ret; 
     
     mutex_lock(&ec_lock);
-    ret = ec_send_command(command & 0x8000);
+    ret = ec_send_command(command | 0x8000);
     if (ret)
         goto ec_read_byte_out;
 
