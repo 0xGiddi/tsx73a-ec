@@ -40,7 +40,16 @@
  *      - DISK ERROR/PRESENT/ACTIVE
  *      - IDENT
  *      - NVME Activity fix?
- * 
+ *  
+ *      front-panel::global_brightness  - 0x243 = Value, 0x245 |= 0x10, 0x246 = val, 0x245 &= 0xef
+ *      front-panel:blue:usb            - 0x154 0/Off 1/Blink 2/Solid
+ *      front-panel:green:status        - 0x155 0/Off 1/Red 2/Green 3/BlinkRed 4/BlinkGreen 5/BlinkBoth
+ *      front-panel:red:status          - ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ *      front-panel:red:diskN           -
+ *      front-panel:green:disk1N
+  *
+ *      front-panel:red:locate
+ 
  *  General:
  *      - Refactor ec_read_byte to return the value as signed int 
  *          w/ positive = raw value, negative = ERRNO and use IS_ERR_VALUE to make errors branches unlikely
