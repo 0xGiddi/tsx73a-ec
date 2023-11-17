@@ -5,7 +5,8 @@
 #include <linux/platform_device.h>
 #include <linux/mutex.h>
 #include <linux/hwmon.h>
-#include <linux/rtc.h>
+#include <linux/rtc.h>          // TODO
+#include <linux/input.h>
 #include "tsx73a-ec.h"
 
 /**
@@ -18,7 +19,7 @@
  *      - Depending on availability, auto detect fans, temps? 
  *  VPD:
  *      - Broken, reads first byte only. Fix.
- *  Fan:
+ *  Fan:#include <linux/rtc.h>
  *      - Get SPEED     - Done
  *      - Get STATUS    - Done, requires rework
  *      - Get PWM       - Done
@@ -70,6 +71,8 @@ static struct platform_driver ec_pdriver = {
     .probe	= ec_driver_probe,
     .remove	= ec_driver_remove
 };
+
+static struct input_dev *ec_bdev;
 
 static DEVICE_ATTR(fw_version, S_IRUGO, ec_fw_version_show, NULL);
 static DEVICE_ATTR(cpld_version, S_IRUGO, ec_cpld_version_show, NULL);
@@ -145,9 +148,9 @@ static DEFINE_MUTEX(ec_lock);
 
 
 static struct hwmon_channel_info const *hwmon_chan_info[] = {
-    HWMON_CHANNEL_INFO(temp, HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT, HWMON_T_INPUT),
-    HWMON_CHANNEL_INFO(fan, HWMON_F_INPUT, HWMON_F_INPUT, HWMON_F_INPUT),
-    HWMON_CHANNEL_INFO(pwm,  HWMON_PWM_INPUT,  HWMON_PWM_INPUT,  HWMON_PWM_INPUT),
+    HWMON_CHANNEL_INFO(temp, HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL),
+    HWMON_CHANNEL_INFO(fan, HWMON_F_INPUT | HWMON_F_LABEL, HWMON_F_INPUT | HWMON_F_LABEL, HWMON_F_INPUT | HWMON_F_LABEL),
+    HWMON_CHANNEL_INFO(pwm,  HWMON_PWM_INPUT,  HWMON_PWM_INPUT,  HWMON_PWM_INPUTclear),
     NULL
 };
 
@@ -962,6 +965,22 @@ static int ec_driver_probe(struct platform_device *pdev) {
         goto ec_probe_sysfs_ret;
     }
 
+    ec_bdev = devm_input_allocate_device(&pdev->dev);
+    if (IS_ERR(ec_bdev)) {
+        ret = PTR_ERR(ec_bdev);
+        goto ec_probe_sysfs_ret;
+    }
+    ec_bdev->name = "EC Buttons";
+    ec_bdev->dev.parent = &pdev->dev;
+    ec_bdev->phys = DRVNAME "/input0";
+    ec_bdev->id.bustype = BUS_HOST;
+    input_set_capability(ec_bdev, EV_KEY, BTN_0);
+    input_set_capability(ec_bdev, EV_KEY, BTN_1);
+    
+    ret = input_register_device(ec_bdev);
+    if (ret)
+        goto ec_probe_sysfs_ret;
+
 
     pr_debug("Probe");
     goto ec_probe_ret;
@@ -977,7 +996,7 @@ ec_probe_ret:
 static int ec_driver_remove(struct platform_device *pdev) {
     sysfs_remove_group(&pdev->dev.kobj, &ec_attr_group);
     sysfs_remove_group(&pdev->dev.kobj, &ec_vpd_attr_group);
-
+    input_unregister_device(ec_bdev);
     pr_debug("Remove");
     return 0;
 }
@@ -1003,8 +1022,10 @@ static int ec_hwmon_write(struct device *dev, enum hwmon_sensor_types type, u32 
 }
 
 static int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, const char **str) {
-    *str = "sensor str";
-    return 0;
+    pr_debug("String: t:%d a:%d c:%d", type, attr, channel);
+
+    return -EOPNOTSUPP;
+    
 }
 
 static int __init tsx73a_init(void) {
