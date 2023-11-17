@@ -54,6 +54,8 @@
  *  General:
  *      - Refactor ec_read_byte to return the value as signed int 
  *          w/ positive = raw value, negative = ERRNO and use IS_ERR_VALUE to make errors branches unlikely
+ *      - Add a way to detect the device model (MB and BP VPD model info) to select correct config
+ *      - Add config overrides?
  *
 */
 static struct platform_device *ec_pdev;
@@ -411,6 +413,7 @@ static int ec_get_fan_status(unsigned int fan) {
         default:
             return -EINVAL;
     }
+
 }
 
 static int ec_get_fan_rpm(unsigned int fan) {
@@ -474,6 +477,8 @@ static int ec_get_fan_pwm(unsigned int fan) {
     return (value * 0x100 - value) / 100;
 }
 
+
+
 static int ec_set_fan_pwm(unsigned int fan, u8 value) {
 	u16 reg_a, reg_b;
     int ret;
@@ -507,7 +512,7 @@ static int ec_set_fan_pwm(unsigned int fan, u8 value) {
     return 0;
 }
 
-static int ec_get_temprature(unsigned int sensor) {
+static int ec_get_temperature(unsigned int sensor) {
     u8 value;
     int ret;
     u16 reg;
@@ -946,7 +951,6 @@ static int ec_led_set_disk(u8 mode)  {
     return 0;
 }
 
-
 static int ec_driver_probe(struct platform_device *pdev) {
     int ret;
     struct device* hwmon_dev;
@@ -1002,10 +1006,54 @@ static int ec_driver_remove(struct platform_device *pdev) {
 }
 
 static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_types type, u32 attribute, int channel) {
-    return S_IRUGO;
+    u8 tmp;
     switch (type) {
         case hwmon_fan: 
-            return S_IRUGO;
+            /**
+             * The fans on the QNAP are a bit annoying, you would think that the checking the
+             * fan status with the EC using ec_get_fan_status will return an error if the fan is
+             * invalid, but this is not the case for fan numbers that are 20-25/30-35. Using a combination of 
+             * the fan status and the fan speed is also impossible to detect that a fan is invalid,
+             * when reading the speed of an invalid fan, it returns either max u16 (65535) or -1, thats in most cases
+             * for fans 33 and 34, the speed returned is 4853 and 11935 which breaks the rule. The system fan observed max 
+             * speed is just shy of 2000rpm and the cpu fan ~5000 rpm in max speed. Therfore, if the check is run when fans
+             * might be at max speed, present fans might be erroneously omitted. 
+             * 
+             * There are three possible ways to bypass this:
+             * 1. Check fan status and speed, ignore fan number above 29. 
+             * 2. Check fan status only, ignore all fans 19, this is the approach currently implemented, tested on TS-473A.
+             * 3. Be less generic and use per model configs / request bitmask from user as parameter on load.
+             * 
+             * A note about the fan number: on the TS-473A, the system fan is 0 and the CPU fan is 6. So multiple fans 
+             * in a system does NOT mean sequential fan numbers.s
+             */
+
+            if (!ec_get_fan_status(channel) && channel < 20)
+                return S_IRUGO
+            break;
+        case hwmon_temp:
+            /**
+             * Valid temperature channel is a channel which it's temperature ranges from 0 to 254
+             * All invalid channels return either 255 (tested on TS-473A).
+             * 
+             * NOTE: Sensors 0 and 7 might be the same physical sensor?
+             */
+            tmp = ec_get_temperature(channel);
+            if (tmp >= 0 && tmp < 255)
+                return S_IRUGO;
+            break;
+        case hwmon_pwm:
+            /**
+             * Same story as the fans, reading a value should be between 0 and 255. If the value is out of range, it's invalid
+             * however, pwm channels above 19 seem to return 255. 
+             * 
+             * From testing it seems to be that PWM value for the fan groups seem to be controlled together (0-5, 6&7, 10, 11, 20-25, 30-35)
+             * so only one attribute/channel is needed per group. The TS-473A only has a single system fan and a single CPU fan, so 
+             * no tested physically. Maybe a per model config would be best?
+             */
+            tmp = ec_get_fan_pwm(channel);
+            if (channel < 20 && tmp <= 255 && tmp >= 0)
+                return S_IRUGO | S_IWUSR;
         default:
             break;
     }
