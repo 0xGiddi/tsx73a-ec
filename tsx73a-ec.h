@@ -130,6 +130,43 @@
 //#define EC_VPD_ 			0x0c030077      // Ta:03 Of:77 Ty:00 Le:03
 //#define EC_VPD_ 			0x0c1000cb      // Ta:03 Of:cb Ty:00 Le:10
 
+
+struct qnap_code_match {
+	char *code_str;
+	unsigned int offset;
+	unsigned int length;
+};
+
+
+struct qnap_model_info {
+	char *model_name;					// Model name
+	struct qnap_code_match *bp_code;	// Model matching BP code
+	struct qnap_code_match *mb_code;	// Model matching MB code
+	u64 temp_mask;						// Bitmask of supported temperature channels
+	u64 fan_mask;						// Bitmask of supported fan channels
+	u64 pwm_mask; 						// Bitmask of supported PWM channels (multiple fan can be on a single PWM driver)
+};
+
+static struct qnap_model_info model_info[] = {
+	{
+		.model_name = "TS-473A", 
+		.mb_code = {
+			.code_str = "Q07D0",
+			.offset = 0,
+			.length = ,
+			}, 
+		.bp_code = {
+			.code_str = "Q07N0",
+			.offset = 0,
+			.length = 5
+			},
+		.temp_mask = 0x000000000000001e,
+		.fan_mask = 0x0000000000000041,
+		.pwm_mask = 0x0000000000000041
+	},
+	NULL
+};
+
 struct ec_platform_data {
     
 };
