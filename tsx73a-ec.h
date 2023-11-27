@@ -130,7 +130,7 @@
 //#define EC_VPD_ 			0x0c030077      // Ta:03 Of:77 Ty:00 Le:03
 //#define EC_VPD_ 			0x0c1000cb      // Ta:03 Of:cb Ty:00 Le:10
 
-
+/*
 struct qnap_code_match {
 	char *code_str;
 	unsigned int offset;
@@ -165,7 +165,7 @@ static struct qnap_model_info model_info[] = {
 		.pwm_mask = 0x0000000000000041
 	},
 	NULL
-};
+};*/
 
 struct ec_platform_data {
     

@@ -152,7 +152,7 @@ static DEFINE_MUTEX(ec_lock);
 static struct hwmon_channel_info const *hwmon_chan_info[] = {
     HWMON_CHANNEL_INFO(temp, HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL),
     HWMON_CHANNEL_INFO(fan, HWMON_F_INPUT | HWMON_F_LABEL, HWMON_F_INPUT | HWMON_F_LABEL, HWMON_F_INPUT | HWMON_F_LABEL),
-    HWMON_CHANNEL_INFO(pwm,  HWMON_PWM_INPUT,  HWMON_PWM_INPUT,  HWMON_PWM_INPUTclear),
+    HWMON_CHANNEL_INFO(pwm,  HWMON_PWM_INPUT,  HWMON_PWM_INPUT,  HWMON_PWM_INPUT),
     NULL
 };
 
@@ -951,6 +951,13 @@ static int ec_led_set_disk(u8 mode)  {
     return 0;
 }
 
+static void ec_button_poll(struct input_dev *input)
+{
+	input_report_key(input, BTN_0, ec_button_get_state(EC_BTN_COPY));
+    input_report_key(input, BTN_1, ec_button_get_state(EC_BTN_RESET));
+	input_sync(input);
+}
+
 static int ec_driver_probe(struct platform_device *pdev) {
     int ret;
     struct device* hwmon_dev;
@@ -978,8 +985,13 @@ static int ec_driver_probe(struct platform_device *pdev) {
     ec_bdev->dev.parent = &pdev->dev;
     ec_bdev->phys = DRVNAME "/input0";
     ec_bdev->id.bustype = BUS_HOST;
-    input_set_capability(ec_bdev, EV_KEY, BTN_0);
-    input_set_capability(ec_bdev, EV_KEY, BTN_1);
+    input_set_capability(ec_bdev, EV_KEY, BTN_0 | BTN_1);
+
+    ret = input_setup_polling(ec_bdev, ec_button_poll);
+    if (ret)
+        goto ec_probe_sysfs_ret;
+
+    input_set_poll_interval(ec_bdev, 100);
     
     ret = input_register_device(ec_bdev);
     if (ret)
@@ -1029,7 +1041,7 @@ static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_typ
              */
 
             if (!ec_get_fan_status(channel) && channel < 20)
-                return S_IRUGO
+                return S_IRUGO;
             break;
         case hwmon_temp:
             /**
