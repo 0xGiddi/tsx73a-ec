@@ -881,14 +881,15 @@ static ssize_t ec_eup_mode_store(struct device *dev, struct device_attribute *at
     return count;
 }
 
-static int ec_button_get_state(u8 btn) {
+static int ec_button_get_state(void) {
     u8 value;
     int ret;
 
     ret = ec_read_byte(0x143, &value);
     if (ret)
         return ret;
-    return value & btn;
+    pr_debug("Buttons: %x", value);
+    return value;
 }
 
 static int ec_led_set_brightness(u8 brightness) {
@@ -953,9 +954,13 @@ static int ec_led_set_disk(u8 mode)  {
 
 static void ec_button_poll(struct input_dev *input)
 {
-	input_report_key(input, BTN_0, ec_button_get_state(EC_BTN_COPY));
-    input_report_key(input, BTN_1, ec_button_get_state(EC_BTN_RESET));
+
+    int state = ec_button_get_state();
+
+	input_event(input, EV_KEY, BTN_1, !!(state & EC_BTN_RESET));
+    input_event(input, EV_KEY, BTN_0, !!(state & EC_BTN_COPY));
 	input_sync(input);
+    pr_debug("Poll buttons %x (reset=%d, copy=%d)", state, state & EC_BTN_RESET, state & EC_BTN_COPY);
 }
 
 static int ec_driver_probe(struct platform_device *pdev) {
@@ -985,11 +990,13 @@ static int ec_driver_probe(struct platform_device *pdev) {
     ec_bdev->dev.parent = &pdev->dev;
     ec_bdev->phys = DRVNAME "/input0";
     ec_bdev->id.bustype = BUS_HOST;
-    input_set_capability(ec_bdev, EV_KEY, BTN_0 | BTN_1);
+    input_set_capability(ec_bdev, EV_KEY,  BTN_1);
+    input_set_capability(ec_bdev, EV_KEY,  BTN_0);
 
     ret = input_setup_polling(ec_bdev, ec_button_poll);
     if (ret)
         goto ec_probe_sysfs_ret;
+    pr_debug("Setup button polling");
 
     input_set_poll_interval(ec_bdev, 100);
     
