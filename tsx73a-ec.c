@@ -11,7 +11,7 @@
 
 /**
  * 'Done' means PoC implemented
- * 
+ * cd ..
  * TODO:
  *  GENERAL:
  *      - Add parameter to ignore fan ranges?
@@ -148,11 +148,28 @@ static const struct attribute_group ec_vpd_attr_group = {
 
 static DEFINE_MUTEX(ec_lock);
 
+static u32 ec_hwmon_temp_config[65] = {0};
+static struct hwmon_channel_info ec_hwmon_temp_chan_info = {
+    .type = hwmon_temp,
+    .config = ec_hwmon_temp_config
+};
+
+static u32 ec_hwmon_fan_config[65] = {0};
+static struct hwmon_channel_info ec_hwmon_fan_chan_info = {
+    .type = hwmon_fan,
+    .config = ec_hwmon_fan_config
+};
+
+static u32 ec_hwmon_pwm_config[65] = {0};
+static struct hwmon_channel_info ec_hwmon_pwm_chan_info = {
+    .type = hwmon_pwm,
+    .config = ec_hwmon_pwm_config
+};
 
 static struct hwmon_channel_info const *hwmon_chan_info[] = {
-    HWMON_CHANNEL_INFO(temp, HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL, HWMON_T_INPUT | HWMON_T_LABEL),
-    HWMON_CHANNEL_INFO(fan, HWMON_F_INPUT | HWMON_F_LABEL, HWMON_F_INPUT | HWMON_F_LABEL, HWMON_F_INPUT | HWMON_F_LABEL),
-    HWMON_CHANNEL_INFO(pwm,  HWMON_PWM_INPUT,  HWMON_PWM_INPUT,  HWMON_PWM_INPUT),
+    &ec_hwmon_temp_chan_info,
+    &ec_hwmon_fan_chan_info,
+    &ec_hwmon_pwm_chan_info,
     NULL
 };
 
@@ -483,7 +500,7 @@ static int ec_set_fan_pwm(unsigned int fan, u8 value) {
 	u16 reg_a, reg_b;
     int ret;
 
-    value = (u8)(value * 100) / 0xff;
+    value = (value * 100) / 0xff;
 
     if (fan >= 0 && fan <= 5) {
         reg_a = 0x220;
@@ -505,7 +522,7 @@ static int ec_set_fan_pwm(unsigned int fan, u8 value) {
     if (ret)
         return ret;
 
-    ret = ec_write_byte(reg_a, value);
+    ret = ec_write_byte(reg_b, value);
     if (ret)
         return ret;
 
@@ -648,6 +665,50 @@ static ssize_t ec_vpd_entry_show(struct device *dev, struct ec_vpd_attribute *at
     }
     //pr_debug("VPD Data: %s", raw_data);
     return ec_vpd_parse_data(&attr->vpd, raw_data, buf);
+}
+
+
+/**
+ * ec_vpd_entry_show - Read the VPD entry associated with the vpd attribute.
+ */
+static ssize_t ec_vpd_read_raw(int table, int offset, int length, char *buf) {
+    ssize_t i, reg_a, reg_b, reg_c;
+
+    pr_debug("VPD read raw: Ta:%X Of:%x Le:%x", table, offset, length);
+    switch (table) {
+        case 0:
+            reg_a = EC_VPD_TABLE0_REG_A;
+            reg_b = EC_VPD_TABLE0_REG_B;
+            reg_c = EC_VPD_TABLE0_REG_C;
+            break;
+        case 1:
+            reg_a = EC_VPD_TABLE1_REG_A;
+            reg_b = EC_VPD_TABLE1_REG_B;
+            reg_c = EC_VPD_TABLE1_REG_C;
+            break;
+        case 2:
+            reg_a = EC_VPD_TABLE2_REG_A;
+            reg_b = EC_VPD_TABLE2_REG_B;
+            reg_c = EC_VPD_TABLE2_REG_C;
+            break;
+        case 3:
+            reg_a = EC_VPD_TABLE3_REG_A;
+            reg_b = EC_VPD_TABLE3_REG_B;
+            reg_c = EC_VPD_TABLE3_REG_C;
+            break;
+        default:
+            return -EINVAL;
+    }
+
+    // BUG BUG BUG: Only reading first byte
+    for (i=0; i <= length; i++) {
+        if(ec_write_byte(reg_a, ((offset + i) >> 8) & 0xff) ||
+            ec_write_byte(reg_b, (offset + i) & 0xff) ||
+            ec_read_byte(reg_c, &buf[i]))
+            return -EBUSY;
+    }
+    //pr_debug("VPD Data: %s", raw_data);
+    return 0;
 }
 
 /**
@@ -963,9 +1024,41 @@ static void ec_button_poll(struct input_dev *input)
     pr_debug("Poll buttons %x (reset=%d, copy=%d)", state, state & EC_BTN_RESET, state & EC_BTN_COPY);
 }
 
+static struct qnap_model_config* tsx73a_locate_config(void) {
+    int i;
+    char mb_model[33];
+    char bp_model[33];
+
+    ec_vpd_read_raw(0x00, 0x42, 0x20, mb_model);
+    ec_vpd_read_raw(0x01, 0x6a, 0x20, bp_model);
+    mb_model[32] = 0;
+    bp_model[32] = 0;
+
+    pr_debug("Looking for config for MB=%s BP=%s", mb_model, bp_model);
+
+    for (i=0; tsx73a_configs[i].model_name; i++) {
+        pr_debug("Checking config model %s" , tsx73a_configs[i].model_name);    
+        if ((memcmp(tsx73a_configs[i].mb_code.code, mb_model +  tsx73a_configs[i].mb_code.offset, tsx73a_configs[i].mb_code.length) == 0) && 
+                (memcmp(tsx73a_configs[i].bp_code.code, bp_model +  tsx73a_configs[i].bp_code.offset, tsx73a_configs[i].bp_code.length) == 0))
+          return &tsx73a_configs[i];
+    }
+
+    return NULL; // Not found
+}
+
 static int ec_driver_probe(struct platform_device *pdev) {
     int ret;
     struct device* hwmon_dev;
+    struct qnap_model_config *config;
+    int i;
+    
+    config = tsx73a_locate_config();
+    if (!config) {
+        pr_debug("Failed to find configuration for device model");
+        ret = -EINVAL;
+        goto ec_probe_ret;
+    }
+    pr_debug("Detected QNAP NAS model %s", config->model_name);
 
     ret = sysfs_create_group(&pdev->dev.kobj, &ec_attr_group);
     if (ret)
@@ -975,7 +1068,22 @@ static int ec_driver_probe(struct platform_device *pdev) {
     if (ret)
         goto ec_probe_ret;
 
-    hwmon_dev = devm_hwmon_device_register_with_info(&pdev->dev, "tsx73a_ec", dev_get_drvdata(&pdev->dev), &ec_hwmon_chip_info, NULL);
+
+    for (i=0; i<64; ++i)
+        ec_hwmon_fan_config[i] = HWMON_F_INPUT | HWMON_F_LABEL;
+    ec_hwmon_fan_config[i] = 0;
+
+    for (i=0; i<64; ++i)
+        ec_hwmon_temp_config[i] = HWMON_T_INPUT | HWMON_T_LABEL;
+    ec_hwmon_temp_config[i] = 0;
+
+    for (i=0; i<64; ++i)
+        ec_hwmon_pwm_config[i] = HWMON_PWM_INPUT;
+    ec_hwmon_pwm_config[i] = 0;
+    
+    
+
+    hwmon_dev = devm_hwmon_device_register_with_info(&pdev->dev, "tsx73a_ec", config, &ec_hwmon_chip_info, NULL);
     if (IS_ERR(hwmon_dev)) {
         ret = PTR_ERR(hwmon_dev);
         goto ec_probe_sysfs_ret;
@@ -1024,8 +1132,10 @@ static int ec_driver_remove(struct platform_device *pdev) {
     return 0;
 }
 
-static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_types type, u32 attribute, int channel) {
+static umode_t ec_hwmon_is_visible(const void* data, enum hwmon_sensor_types type, u32 attribute, int channel) {
     u8 tmp;
+    struct qnap_model_config *config = (struct qnap_model_config*)data;
+
     switch (type) {
         case hwmon_fan: 
             /**
@@ -1047,7 +1157,9 @@ static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_typ
              * in a system does NOT mean sequential fan numbers.s
              */
 
-            if (!ec_get_fan_status(channel) && channel < 20)
+            /*if (!ec_get_fan_status(channel) && channel < 20)
+                */
+            if (BIT(channel) & config->fan_mask)
                 return S_IRUGO;
             break;
         case hwmon_temp:
@@ -1057,8 +1169,7 @@ static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_typ
              * 
              * NOTE: Sensors 0 and 7 might be the same physical sensor?
              */
-            tmp = ec_get_temperature(channel);
-            if (tmp >= 0 && tmp < 255)
+            if (BIT(channel) & config->temp_mask)
                 return S_IRUGO;
             break;
         case hwmon_pwm:
@@ -1070,8 +1181,7 @@ static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_typ
              * so only one attribute/channel is needed per group. The TS-473A only has a single system fan and a single CPU fan, so 
              * no tested physically. Maybe a per model config would be best?
              */
-            tmp = ec_get_fan_pwm(channel);
-            if (channel < 20 && tmp <= 255 && tmp >= 0)
+            if (BIT(channel) & config->pwm_mask)
                 return S_IRUGO | S_IWUSR;
         default:
             break;
@@ -1081,19 +1191,54 @@ static umode_t ec_hwmon_is_visible(const void* const_data, enum hwmon_sensor_typ
 }
 
 static int ec_hwmon_read(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, long *val) {
-    return -EOPNOTSUPP;
+    switch (type)
+    {
+    case hwmon_fan: 
+        *val =  ec_get_fan_rpm(channel);
+        break;
+
+    case hwmon_temp:
+        *val =  ec_get_temperature(channel) * 1000;
+        break;
+
+    case hwmon_pwm:
+        *val =  (ec_get_fan_pwm(channel) * 0xff) / 100;
+        break;
+    default:
+        return -EOPNOTSUPP;
+    }
+    return 0;
 }
 
 static int ec_hwmon_write(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, long val) {
+    if (type == hwmon_pwm) {
+        pr_debug("Setting fan %x to %x",channel, (u8)val);
+         return ec_set_fan_pwm(channel, (u8)val);
+    }
     return -EOPNOTSUPP;
 }
 
 static int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, const char **str) {
     pr_debug("String: t:%d a:%d c:%d", type, attr, channel);
 
-    return -EOPNOTSUPP;
+    switch (type)
+    {
+    case hwmon_fan: 
+        break;
+
+    case hwmon_temp:
+        break;
+
+    case hwmon_pwm:
+        break;
     
+    default:
+        return -EOPNOTSUPP;
+    }
+    return -EOPNOTSUPP;
 }
+
+
 
 static int __init tsx73a_init(void) {
     int ret;

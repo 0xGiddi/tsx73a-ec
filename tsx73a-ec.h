@@ -6,7 +6,7 @@
 #define EC_MAX_RETRY    	1000	// Times to check EC status 
 #define EC_CMD_PORT     	0x6c	// EC "Third Host Interface" command port
 #define EC_DAT_PORT     	0x68	// EC "Third Host Interface" data port
-#define EC_UDELAY       	300		// Delay between EC status read/clear 
+#define EC_UDELAY       	300		// Delay between EC status read/clear WARN: Under 100 results are unstable
 #define EC_CHIP_ID      	0x8528	// ITE8528 chip id
 #define EC_VPD_TABLE_SIZE	0x200	// Max VPD table size in bytes
 
@@ -130,42 +130,60 @@
 //#define EC_VPD_ 			0x0c030077      // Ta:03 Of:77 Ty:00 Le:03
 //#define EC_VPD_ 			0x0c1000cb      // Ta:03 Of:cb Ty:00 Le:10
 
-/*
+
 struct qnap_code_match {
-	char *code_str;
+	char *code;
 	unsigned int offset;
 	unsigned int length;
 };
 
 
-struct qnap_model_info {
+struct qnap_model_config {
 	char *model_name;					// Model name
-	struct qnap_code_match *bp_code;	// Model matching BP code
-	struct qnap_code_match *mb_code;	// Model matching MB code
+	struct qnap_code_match bp_code;	// Model matching BP code
+	struct qnap_code_match mb_code;	// Model matching MB code
 	u64 temp_mask;						// Bitmask of supported temperature channels
 	u64 fan_mask;						// Bitmask of supported fan channels
 	u64 pwm_mask; 						// Bitmask of supported PWM channels (multiple fan can be on a single PWM driver)
 };
 
-static struct qnap_model_info model_info[] = {
+static struct qnap_model_config tsx73a_configs[] = {
 	{
 		.model_name = "TS-473A", 
 		.mb_code = {
-			.code_str = "Q07D0",
-			.offset = 0,
-			.length = ,
+			.code = "Q07D0",
+			.offset = 4,
+			.length = 5,
 			}, 
 		.bp_code = {
-			.code_str = "Q07N0",
-			.offset = 0,
+			.code = "Q07N0",
+			.offset = 4,
+			.length = 5
+			},
+		.temp_mask = 0x0000000000000e1,
+		.fan_mask = 0x0000000000000041,
+		.pwm_mask = 0x0000000000000041
+	},
+	{
+		.model_name = "TS-673A", 
+		.mb_code = {
+			.code = "Q07D0",
+			.offset = 4,
+			.length = 5,
+			}, 
+		.bp_code = {
+			.code = "Q07M0",
+			.offset = 4,
 			.length = 5
 			},
 		.temp_mask = 0x000000000000001e,
 		.fan_mask = 0x0000000000000041,
 		.pwm_mask = 0x0000000000000041
 	},
-	NULL
-};*/
+	{NULL}
+};
+
+
 
 struct ec_platform_data {
     
@@ -237,6 +255,9 @@ static int ec_led_set_disk(u8 mode);
 
 static int __init tsx73a_init(void);
 static void __exit tsx73a_exit(void);
+
+
+
 
 /*
 [0 ... 4]   ->CPU 
