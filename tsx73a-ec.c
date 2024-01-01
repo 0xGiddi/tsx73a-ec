@@ -148,19 +148,19 @@ static const struct attribute_group ec_vpd_attr_group = {
 
 static DEFINE_MUTEX(ec_lock);
 
-static u32 ec_hwmon_temp_config[65] = {0};
+static u32 ec_hwmon_temp_config[TSX73A_MAX_HWMON_CHANNELS + 1] = {0};
 static struct hwmon_channel_info ec_hwmon_temp_chan_info = {
     .type = hwmon_temp,
     .config = ec_hwmon_temp_config
 };
 
-static u32 ec_hwmon_fan_config[65] = {0};
+static u32 ec_hwmon_fan_config[TSX73A_MAX_HWMON_CHANNELS + 1] = {0};
 static struct hwmon_channel_info ec_hwmon_fan_chan_info = {
     .type = hwmon_fan,
     .config = ec_hwmon_fan_config
 };
 
-static u32 ec_hwmon_pwm_config[65] = {0};
+static u32 ec_hwmon_pwm_config[TSX73A_MAX_HWMON_CHANNELS + 1] = {0};
 static struct hwmon_channel_info ec_hwmon_pwm_chan_info = {
     .type = hwmon_pwm,
     .config = ec_hwmon_pwm_config
@@ -184,6 +184,39 @@ static struct hwmon_chip_info ec_hwmon_chip_info = {
     .info = hwmon_chan_info,
     .ops = &ec_hwmon_ops
 };
+
+static struct led_classdev tsx73a_leds[] = {
+    {
+        .name = DRVNAME ":red:status".
+        .brightness = LED_OFF
+        .max_brightness = LED_ON,
+        .brightness_set = NULL,
+        .brightness_get = NULL,
+    },
+    {
+        .name = DRVNAME ":green:status".
+        .brightness = LED_OFF
+        .max_brightness = LED_ON,
+        .brightness_set = NULL,
+        .brightness_get = NULL,
+    },
+    {
+        .name = DRVNAME ":blue:usb".
+        .brightness = LED_OFF
+        .max_brightness = LED_ON,
+        .brightness_set = NULL,
+        .brightness_get = NULL,
+    },
+     {
+        .name = DRVNAME ":blue:usb".
+        .brightness = LED_OFF
+        .max_brightness = LED_FULL,
+        .brightness_set = NULL,
+        .brightness_get = NULL,
+    },
+    { NULL }
+};
+
 
 /**
  * ec_check_exists - Check that EC is ITE8528
@@ -1069,15 +1102,15 @@ static int ec_driver_probe(struct platform_device *pdev) {
         goto ec_probe_ret;
 
 
-    for (i=0; i<64; ++i)
+    for (i=0; i<TSX73A_MAX_HWMON_CHANNELS; ++i)
         ec_hwmon_fan_config[i] = HWMON_F_INPUT | HWMON_F_LABEL;
     ec_hwmon_fan_config[i] = 0;
 
-    for (i=0; i<64; ++i)
+    for (i=0; i<TSX73A_MAX_HWMON_CHANNELS; ++i)
         ec_hwmon_temp_config[i] = HWMON_T_INPUT | HWMON_T_LABEL;
     ec_hwmon_temp_config[i] = 0;
 
-    for (i=0; i<64; ++i)
+    for (i=0; i<TSX73A_MAX_HWMON_CHANNELS; ++i)
         ec_hwmon_pwm_config[i] = HWMON_PWM_INPUT;
     ec_hwmon_pwm_config[i] = 0;
     

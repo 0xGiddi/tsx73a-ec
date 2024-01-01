@@ -40,6 +40,7 @@
 #define EC_BTN_RESET		4
 #define EC_BTN_COPY		2
 
+#define TSX73A_MAX_HWMON_CHANNELS 64
 
 
 /** 
@@ -147,6 +148,12 @@ struct qnap_model_config {
 	u64 pwm_mask; 						// Bitmask of supported PWM channels (multiple fan can be on a single PWM driver)
 };
 
+struct qnap_slot_config {
+	u8 index;			
+	u8 ec_bit;
+	u8 type;
+};
+
 static struct qnap_model_config tsx73a_configs[] = {
 	{
 		.model_name = "TS-473A", 
@@ -160,6 +167,14 @@ static struct qnap_model_config tsx73a_configs[] = {
 			.offset = 4,
 			.length = 5
 			},
+		.slots = {
+			{.index = 1, .ec_bit = 9, .type = 1},
+			{.index = 2, .ec_bit = 10, .type = 1},
+			{.index = 1, .ec_bit = 1, .type = 0},
+			{.index = 2, .ec_bit = 2, .type = 0},
+			{.index = 3, .ec_bit = 3, .type = 0},
+			{.index = 4, .ec_bit = 4, .type = 0},
+		},
 		.temp_mask = 0x0000000000000e1,
 		.fan_mask = 0x0000000000000041,
 		.pwm_mask = 0x0000000000000041
