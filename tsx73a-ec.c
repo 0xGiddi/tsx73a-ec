@@ -184,7 +184,7 @@ static struct hwmon_chip_info ec_hwmon_chip_info = {
     .info = hwmon_chan_info,
     .ops = &ec_hwmon_ops
 };
-
+/*
 static struct led_classdev tsx73a_leds[] = {
     {
         .name = DRVNAME ":red:status".
@@ -215,7 +215,7 @@ static struct led_classdev tsx73a_leds[] = {
         .brightness_get = NULL,
     },
     { NULL }
-};
+};*/
 
 
 /**

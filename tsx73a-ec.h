@@ -138,21 +138,23 @@ struct qnap_code_match {
 	unsigned int length;
 };
 
-
-struct qnap_model_config {
-	char *model_name;					// Model name
-	struct qnap_code_match bp_code;	// Model matching BP code
-	struct qnap_code_match mb_code;	// Model matching MB code
-	u64 temp_mask;						// Bitmask of supported temperature channels
-	u64 fan_mask;						// Bitmask of supported fan channels
-	u64 pwm_mask; 						// Bitmask of supported PWM channels (multiple fan can be on a single PWM driver)
-};
-
 struct qnap_slot_config {
 	u8 index;			
 	u8 ec_bit;
 	u8 type;
 };
+
+struct qnap_model_config {
+	char *model_name;					// Model name
+	struct qnap_code_match bp_code;	// Model matching BP code
+	struct qnap_code_match mb_code;	// Model matching MB code
+	
+	u64 temp_mask;						// Bitmask of supported temperature channels
+	u64 fan_mask;						// Bitmask of supported fan channels
+	u64 pwm_mask; 						// Bitmask of supported PWM channels (multiple fan can be on a single PWM driver)
+};
+
+
 
 static struct qnap_model_config tsx73a_configs[] = {
 	{
@@ -167,14 +169,14 @@ static struct qnap_model_config tsx73a_configs[] = {
 			.offset = 4,
 			.length = 5
 			},
-		.slots = {
+		/*.slots = {
 			{.index = 1, .ec_bit = 9, .type = 1},
 			{.index = 2, .ec_bit = 10, .type = 1},
 			{.index = 1, .ec_bit = 1, .type = 0},
 			{.index = 2, .ec_bit = 2, .type = 0},
 			{.index = 3, .ec_bit = 3, .type = 0},
 			{.index = 4, .ec_bit = 4, .type = 0},
-		},
+		},*/
 		.temp_mask = 0x0000000000000e1,
 		.fan_mask = 0x0000000000000041,
 		.pwm_mask = 0x0000000000000041
@@ -270,9 +272,6 @@ static int ec_led_set_disk(u8 mode);
 
 static int __init tsx73a_init(void);
 static void __exit tsx73a_exit(void);
-
-
-
 
 /*
 [0 ... 4]   ->CPU 
