@@ -3,7 +3,7 @@
 #undef pr_fmt
 #define pr_fmt(fmt) "%s @ %s: " fmt "\n", DRVNAME, __FUNCTION__
 
-#define EC_MAX_RETRY    	1000	// Times to check EC status 
+#define EC_MAX_RETRY    	1000	// Times to check EC status
 #define EC_CMD_PORT     	0x6c	// EC "Third Host Interface" command port
 #define EC_DAT_PORT     	0x68	// EC "Third Host Interface" data port
 #define EC_UDELAY       	300		// Delay between EC status read/clear WARN: Under 100 results are unstable
@@ -43,22 +43,22 @@
 #define TSX73A_MAX_HWMON_CHANNELS 64
 
 
-/** 
+/**
  * EC VPD entries
- * 
+ *
  * There are 4 VPD tables, each table 512 byte in length. Each table
  * seems to hold information about a specific component of the system.
  * Only tables 0 and 1 seem to be used on the TS-x73A, being main board and
  * backplane VPD respetivly. The only outliers are the case serial and system
- * nickname which are located in thre backplane VPD. 
- * 
+ * nickname which are located in thre backplane VPD.
+ *
  * A VPD entry is located using the table number,offset withing the table,
- * length of the data and then parsed according to its type. 
+ * length of the data and then parsed according to its type.
  *
  * These entry values are extracted from libLinux_hal, most are unknown.
  * Using values on stickers, PCB silkscreen and common sense
  * the following have been figured out and  assigned an attribute.
- * 
+ *
  * The values bits are parsed as such:
  *  MSB																 LSB
  * 	1111    	11   			11  		11111111	1111111111111111
@@ -69,8 +69,8 @@
  *  Example:
  *  VPD entry 0x0c1000cb = table 3, offset 203, length 16 and type 0
  *  0000 		11 				00 			00010000 	0000000011001011
- 
- * 
+
+ *
  * Notes:
  * 	Tables 2 and 3 may be used for network and redundent power VPD
  *  as there are hints to it in hal_daemon/libLinux_hal.
@@ -92,6 +92,7 @@
 #define EC_VPD_BP_MODEL 	0x0420006a      // Ta:01 Of:6a Ty:00 Le:20
 #define EC_VPD_BP_VENDOR 	0x04100094      // Ta:01 Of:94 Ty:00 Le:10
 /* More VPD entries from libLinux_hal that are unknown at this time */
+
 //#define EC_VPD_ 			0x01100064      // Ta:00 Of:64 Ty:01 Le:10
 //#define EC_VPD_			0x0020008d      // Ta:00 Of:8d Ty:00 Le:20
 //#define EC_VPD_			0x001000ae      // Ta:00 Of:ae Ty:00 Le:10
@@ -139,7 +140,7 @@ struct qnap_code_match {
 };
 
 struct qnap_slot_config {
-	u8 index;			
+	u8 index;
 	u8 ec_bit;
 	u8 type;
 };
@@ -148,7 +149,7 @@ struct qnap_model_config {
 	char *model_name;					// Model name
 	struct qnap_code_match bp_code;	// Model matching BP code
 	struct qnap_code_match mb_code;	// Model matching MB code
-	
+
 	u64 temp_mask;						// Bitmask of supported temperature channels
 	u64 fan_mask;						// Bitmask of supported fan channels
 	u64 pwm_mask; 						// Bitmask of supported PWM channels (multiple fan can be on a single PWM driver)
@@ -158,12 +159,12 @@ struct qnap_model_config {
 
 static struct qnap_model_config tsx73a_configs[] = {
 	{
-		.model_name = "TS-473A", 
+		.model_name = "TS-473A",
 		.mb_code = {
 			.code = "Q07D0",
 			.offset = 4,
 			.length = 5,
-			}, 
+			},
 		.bp_code = {
 			.code = "Q07N0",
 			.offset = 4,
@@ -182,12 +183,12 @@ static struct qnap_model_config tsx73a_configs[] = {
 		.pwm_mask = 0x0000000000000041
 	},
 	{
-		.model_name = "TS-673A", 
+		.model_name = "TS-673A",
 		.mb_code = {
 			.code = "Q07D0",
 			.offset = 4,
 			.length = 5,
-			}, 
+			},
 		.bp_code = {
 			.code = "Q07M0",
 			.offset = 4,
@@ -203,7 +204,7 @@ static struct qnap_model_config tsx73a_configs[] = {
 
 
 struct ec_platform_data {
-    
+
 };
 
 struct ec_vpd_entry {
@@ -214,7 +215,7 @@ struct ec_vpd_entry {
 };
 
 struct ec_vpd_attribute {
-    struct attribute attr; 
+    struct attribute attr;
     ssize_t (*show)(struct device *dev, struct ec_vpd_attribute *attr,
 			char *buf);
     ssize_t (*store)(struct device *dev, struct ec_vpd_attribute *attr,
@@ -263,7 +264,7 @@ static int ec_get_fan_status(unsigned int fan);
 static int ec_get_fan_rpm(unsigned int fan);
 static int ec_get_fan_pwm(unsigned int fan);
 static int ec_set_fan_pwm(unsigned int fan, u8 value);
-static int ec_get_temprature(unsigned int sensor);
+static int ec_get_temperature(unsigned int sensor);
 static int ec_button_get_state(void);
 static int ec_led_set_brightness(u8 brightness);
 static int ec_led_set_status(u8 mode);
@@ -274,9 +275,9 @@ static int __init tsx73a_init(void);
 static void __exit tsx73a_exit(void);
 
 /*
-[0 ... 4]   ->CPU 
-[5 ... 9]   ->SYS 
-[10 ... 14] ->POWER 
+[0 ... 4]   ->CPU
+[5 ... 9]   ->SYS
+[10 ... 14] ->POWER
 [15 ... 38] ->ENV
 */
 
