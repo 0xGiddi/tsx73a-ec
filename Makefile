@@ -1,10 +1,16 @@
-obj-m += tsx73a_ec.o
+MODULE_NAME := tsx73a-ec
+DKMS_CONF_FILE := dkms.conf
+MODULE_VERSION := $(shell grep "^PACKAGE_VERSION" $(DKMS_CONF_FILE) | sed 's/.*= *//')
 
-KERNEL_DIR := /lib/modules/$(shell uname -r)/build
-CFLAGS_tsx73a-ec.o := -DDEBUG
+.PHONY: all install uninstall
 
 all:
-	make -C $(KERNEL_DIR) M=$(PWD) modules
+	@echo "Available targets:"
+	@echo "  install   - Install the DKMS module"
+	@echo "  uninstall - Uninstall the DKMS module"
 
-clean:
-	make -C $(KERNEL_DIR) M=$(PWD) clean
+install:
+	dkms install .
+
+uninstall:
+	dkms remove -m $(MODULE_NAME) -v $(MODULE_VERSION) --all

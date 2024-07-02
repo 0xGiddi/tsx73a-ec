@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-2.0-or-later */
 #define DRVNAME "tsx73a-ec"
 
 #undef pr_fmt

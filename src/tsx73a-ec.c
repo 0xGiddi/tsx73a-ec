@@ -1,3 +1,27 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+/*
+ * tsx73a-ec.c - Linux kernel module controlling QNAP specific hardware.
+ *
+ * The QNAP TS-x73A series use a IT8528 EC with custom firmware to control
+ * some internal hardware devices and capabilities. This module exposes the
+ * non standard EC interface via standard Linux interfaces to the userland.
+ *
+ * This driver supports the follwoing QNAP IT8528 EC functions:
+ * 	- Read QNAP Vital Product Data
+ * 	- Set/Clear AC power recovery mode
+ *  - Set/Clear Energy-using Products (EuP) mode
+ *  - Expose EC FW version
+ *  - Expose CPLD version
+ *  - Read fan speeds in RPM
+ *  - WIP: Read/write pwm fan speeds
+ *  - Read various chasis temprature sensors
+ *  - Read RESET & USB hardware buttons
+ *  - WIP: Expose various LEDs (Status, USB, Disks)
+ *  - WIP: Control SATA ports power
+ *
+ * Supported devices:
+ * 	TS-373A
+ */
 #include <linux/module.h>
 #include <linux/ioport.h>
 #include <linux/io.h>
@@ -7,7 +31,7 @@
 #include <linux/hwmon.h>
 #include <linux/time.h>
 #include <linux/input.h>
-#include "tsx73a_ec.h"
+#include "tsx73a-ec.h"
 
 /**
  * 'Done' means PoC implemented
@@ -1360,6 +1384,6 @@ module_init(tsx73a_init);
 module_exit(tsx73a_exit);
 
 MODULE_DESCRIPTION("QNAP TS-x73A EC Driver");
-MODULE_VERSION("0.0.0");
+MODULE_VERSION("1.0");
 MODULE_AUTHOR("0xGiddi - <giddi AT giddi.net>");
 MODULE_LICENSE("GPL");
