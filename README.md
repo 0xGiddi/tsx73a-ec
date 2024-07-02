@@ -1,6 +1,24 @@
 # UNDER ACTIVE DEVELOPMENT
 The module is still under active development, currently the tag v0.1 is a testing version that I am running on my own hardware. Check the table below "Features in development" for features currently implemented.
-This version can be downloaded in the releases section of this repository. To install run `make install`, dkms is required to install using the root Makefile. If dkms is not your cup of tea, run `make` in the `src` directory to build the kernel module right there. 
+This version can be downloaded in the releases section of this repository. 
+
+### Install instructions
+To install run `make install` in the projects root directory, this will use dkms to install the module. If dkms is not your cup of tea, run `make` in the `src` directory to build the kernel and use the resulting kernel module file `tsx73a-ec.ko` as you wish.
+To load the module automatically I use a service file with systemd. Create a new file `/etc/systemd/system/tsx73a-ec-load-module.service` and add the following content:
+```
+[Unit]
+Description=Install tsx73a-ec kernel module
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/sbin/modprobe tsx73a-ec
+ExecStop=/sbin/modprobe -r tsx73a-ec
+
+[Install]
+WantedBy=multi-user.target
+```
+Then run `systemctl enable --now tsx73a-ec-load-module.service`.
 
 Contributions are welcome.
 
