@@ -273,8 +273,8 @@ static int ec_check_exists(void)
 
 	/* HACK HACK HACK - Bypass for testing */
 	if (ec_id != EC_CHIP_ID)
-		/* ret = -ENODEV; */
-		ret = 0;
+		ret = -ENODEV
+		//ret = 0;
 	release_region(0x2e, 2);
 
 ec_check_exists_ret:
