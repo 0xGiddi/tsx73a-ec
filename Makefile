@@ -1,4 +1,4 @@
-obj-m += tsx73a-ec.o
+obj-m += tsx73a_ec.o
 
 KERNEL_DIR := /lib/modules/$(shell uname -r)/build
 CFLAGS_tsx73a-ec.o := -DDEBUG
