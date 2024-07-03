@@ -13,7 +13,7 @@
  *  - Expose EC FW version
  *  - Expose CPLD version
  *  - Read fan speeds in RPM
- *  - WIP: Read/write pwm fan speeds
+ *  - Read/write pwm fan speeds
  *  - Read various chasis temprature sensors
  *  - Read RESET & USB hardware buttons
  *  - WIP: Expose various LEDs (Status, USB, Disks)
@@ -87,6 +87,27 @@
  *      - Add config overrides?
  *
 */
+
+/* EC Buttons polling interval in ms*/
+static unsigned int poll_interval = 100;
+module_param(poll_interval, uint, 0660);
+
+/* Should the module check the EC chip ID?*/
+static unsigned int check_ec_id = 1;
+module_param(check_ec_id, uint, 0660);
+
+/* Should the module check the EC chip ID?*/
+static ulong temperature_mask = 0xe1;
+module_param(temperature_mask, ulong, 0660);
+
+/* Should the module check the EC chip ID?*/
+static ulong fan_mask = 0x41;
+module_param(fan_mask, ulong, 0660);
+
+/* Should the module check the EC chip ID?*/
+static ulong pwm_mask = 0x41;
+module_param(pwm_mask, ulong, 0660);
+
 static struct platform_device *ec_pdev;
 
 static struct resource ec_resources[] = {
@@ -261,6 +282,9 @@ static int ec_check_exists(void)
 	int ret = 0;
 	u16 ec_id;
 
+	if (!check_ec_id)
+		return ret;
+
 	if (!request_muxed_region(0x2e, 2, DRVNAME)) {
 		ret = -EBUSY;
 		goto ec_check_exists_ret;
@@ -271,10 +295,9 @@ static int ec_check_exists(void)
 	outb(0x21, 0x2e);
 	ec_id |= inb(0x2f);
 
-	/* HACK HACK HACK - Bypass for testing */
 	if (ec_id != EC_CHIP_ID)
 		ret = -ENODEV;
-		//ret = 0;
+
 	release_region(0x2e, 2);
 
 ec_check_exists_ret:
@@ -562,7 +585,9 @@ static int ec_get_fan_pwm(unsigned int fan)
 
 	ret = ec_read_byte(reg, &value);
 	if (ret)
-		return -1337;
+		return -EAGAIN;
+	/* Not sure exactly why this formula, it is not inverse to the PWM set 
+	 * formula but that is how it's done in the original binary */
 	return (value * 0x100 - value) / 100;
 }
 
@@ -1108,7 +1133,7 @@ static void ec_button_poll(struct input_dev *input)
 	pr_debug("Poll buttons %x (reset=%d, copy=%d)", state, state & EC_BTN_RESET, state & EC_BTN_COPY);
 }
 
-static struct qnap_model_config *tsx73a_locate_config(void)
+/*static struct qnap_model_config *tsx73a_locate_config(void)
 {
 	int i;
 	char mb_model[33];
@@ -1129,22 +1154,22 @@ static struct qnap_model_config *tsx73a_locate_config(void)
 	}
 
 	return NULL;
-}
+}*/
 
 static int ec_driver_probe(struct platform_device *pdev)
 {
 	int ret;
 	struct device *hwmon_dev;
-	struct qnap_model_config *config;
+	//struct qnap_model_config *config;
 	int i;
 
-	config = tsx73a_locate_config();
-	if (!config) {
-		pr_debug("Failed to find configuration for device model");
-		ret = -EINVAL;
-		goto ec_probe_ret;
-	}
-	pr_debug("Detected QNAP NAS model %s", config->model_name);
+	//config = tsx73a_locate_config();
+	//if (!config) {
+	//	pr_debug("Failed to find configuration for device model");
+	//	ret = -EINVAL;
+	//	goto ec_probe_ret;
+	//}
+	//pr_debug("Detected QNAP NAS model %s", config->model_name);
 
 	ret = sysfs_create_group(&pdev->dev.kobj, &ec_attr_group);
 	if (ret)
@@ -1169,7 +1194,7 @@ static int ec_driver_probe(struct platform_device *pdev)
 
 
 
-	hwmon_dev = devm_hwmon_device_register_with_info(&pdev->dev, "tsx73a_ec", config, &ec_hwmon_chip_info, NULL);
+	hwmon_dev = devm_hwmon_device_register_with_info(&pdev->dev, "tsx73a_ec", NULL, &ec_hwmon_chip_info, NULL);
 	if (IS_ERR(hwmon_dev)) {
 		ret = PTR_ERR(hwmon_dev);
 		goto ec_probe_sysfs_ret;
@@ -1192,7 +1217,7 @@ static int ec_driver_probe(struct platform_device *pdev)
 		goto ec_probe_sysfs_ret;
 	pr_debug("Setup button polling");
 
-	input_set_poll_interval(ec_bdev, 100);
+	input_set_poll_interval(ec_bdev, poll_interval);
 
 	ret = input_register_device(ec_bdev);
 	if (ret)
@@ -1222,7 +1247,7 @@ static int ec_driver_remove(struct platform_device *pdev)
 static umode_t ec_hwmon_is_visible(const void *data, enum hwmon_sensor_types type, u32 attribute, int channel)
 {
 	u8 tmp;
-	struct qnap_model_config *config = (struct qnap_model_config *)data;
+	//struct qnap_model_config *config = (struct qnap_model_config *)data;
 
 	switch (type) {
 	case hwmon_fan:
@@ -1247,7 +1272,7 @@ static umode_t ec_hwmon_is_visible(const void *data, enum hwmon_sensor_types typ
 
 		/*if (!ec_get_fan_status(channel) && channel < 20)
 			*/
-		if (BIT(channel) & config->fan_mask)
+		if (BIT(channel) & fan_mask)
 			return S_IRUGO;
 		break;
 	case hwmon_temp:
@@ -1257,7 +1282,7 @@ static umode_t ec_hwmon_is_visible(const void *data, enum hwmon_sensor_types typ
 		 *
 		 * NOTE: Sensors 0 and 7 might be the same physical sensor?
 		 */
-		if (BIT(channel) & config->temp_mask)
+		if (BIT(channel) & temperature_mask)
 			return S_IRUGO;
 		break;
 	case hwmon_pwm:
@@ -1269,7 +1294,7 @@ static umode_t ec_hwmon_is_visible(const void *data, enum hwmon_sensor_types typ
 		 * so only one attribute/channel is needed per group. The TS-473A only has a single system fan and a single CPU fan, so
 		 * no tested physically. Maybe a per model config would be best?
 		 */
-		if (BIT(channel) & config->pwm_mask)
+		if (BIT(channel) & pwm_mask)
 			return S_IRUGO | S_IWUSR;
 	default:
 		break;
@@ -1290,6 +1315,7 @@ static int ec_hwmon_read(struct device *dev, enum hwmon_sensor_types type, u32 a
 		break;
 
 	case hwmon_pwm:
+		/* Somthing is wrong here, 78 return 193 */
 		*val =  (ec_get_fan_pwm(channel) * 0xff) / 100;
 		break;
 	default:
@@ -1309,7 +1335,7 @@ static int ec_hwmon_write(struct device *dev, enum hwmon_sensor_types type, u32 
 
 static int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, const char **str)
 {
-	pr_debug("String: t:%d a:%d c:%d", type, attr, channel);
+	//pr_debug("String: t:%d a:%d c:%d", type, attr, channel);
 
 	switch (type) {
 	case hwmon_fan:

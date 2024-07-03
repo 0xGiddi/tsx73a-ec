@@ -41,7 +41,7 @@
 #define EC_BTN_RESET		4
 #define EC_BTN_COPY		2
 
-#define TSX73A_MAX_HWMON_CHANNELS 64
+#define TSX73A_MAX_HWMON_CHANNELS 32
 
 
 /**
@@ -133,7 +133,7 @@
 //#define EC_VPD_ 			0x0c030077      // Ta:03 Of:77 Ty:00 Le:03
 //#define EC_VPD_ 			0x0c1000cb      // Ta:03 Of:cb Ty:00 Le:10
 
-
+/*
 struct qnap_code_match {
 	char *code;
 	unsigned int offset;
@@ -178,7 +178,7 @@ static struct qnap_model_config tsx73a_configs[] = {
 			{.index = 2, .ec_bit = 2, .type = 0},
 			{.index = 3, .ec_bit = 3, .type = 0},
 			{.index = 4, .ec_bit = 4, .type = 0},
-		},*/
+		},
 		.temp_mask = 0x0000000000000e1,
 		.fan_mask = 0x0000000000000041,
 		.pwm_mask = 0x0000000000000041
@@ -201,8 +201,7 @@ static struct qnap_model_config tsx73a_configs[] = {
 	},
 	{NULL}
 };
-
-
+ */
 
 struct ec_platform_data {
 
