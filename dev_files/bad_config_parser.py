@@ -71,8 +71,7 @@ def main(config_path):
                 "bus_type":d["bus_type"] if "bus_type" in d else ""})
         if _disks[0]["error"].startswith("ec:"):
             pass
-        if model == fm_name:
-            return
+
         #if len(_disks) != int(num_disks):
         #    print(f"{model} - {len(_disks)}/{num_disks} '{config_path}'")
 

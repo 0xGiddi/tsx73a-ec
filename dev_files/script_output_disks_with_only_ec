@@ -1,0 +1,9894 @@
+
+
+Model: ts-2490fu
+Fixed Name: ts-2490fu
+MB: Q03X0
+BP: Q04K0
+EXT: 
+Sys Fans: 4
+CPU Fans: 0
+Temp sensors: 4
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 24
+	Disk 1
+		name: u.2 ssd 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: u.2 ssd 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: u.2 ssd 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: u.2 ssd 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: u.2 ssd 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: u.2 ssd 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: u.2 ssd 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: u.2 ssd 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: u.2 ssd 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: u.2 ssd 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: u.2 ssd 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: u.2 ssd 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: u.2 ssd 13
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: u.2 ssd 14
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: u.2 ssd 15
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: u.2 ssd 16
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 17
+		name: u.2 ssd 17
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 18
+		name: u.2 ssd 18
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 19
+		name: u.2 ssd 19
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 20
+		name: u.2 ssd 20
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 21
+		name: u.2 ssd 21
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 22
+		name: u.2 ssd 22
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 23
+		name: u.2 ssd 23
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 24
+		name: u.2 ssd 24
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-2490fu
+Fixed Name: ts-2490fu
+MB: Q03X0
+BP: Q04K0
+EXT: 
+Sys Fans: 4
+CPU Fans: 0
+Temp sensors: 4
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 24
+	Disk 1
+		name: u.2 ssd 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: u.2 ssd 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: u.2 ssd 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: u.2 ssd 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: u.2 ssd 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: u.2 ssd 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: u.2 ssd 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: u.2 ssd 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: u.2 ssd 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: u.2 ssd 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: u.2 ssd 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: u.2 ssd 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: u.2 ssd 13
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: u.2 ssd 14
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: u.2 ssd 15
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: u.2 ssd 16
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 17
+		name: u.2 ssd 17
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 18
+		name: u.2 ssd 18
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 19
+		name: u.2 ssd 19
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 20
+		name: u.2 ssd 20
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 21
+		name: u.2 ssd 21
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 22
+		name: u.2 ssd 22
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 23
+		name: u.2 ssd 23
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 24
+		name: u.2 ssd 24
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: tns-1083x
+Fixed Name: tns-1083x
+MB: Q0410
+BP: Q0490
+EXT: Q04U0
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: False
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:12
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 12
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: ec:1
+		locate: ec:1
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: ec:2
+		locate: ec:2
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: ec:3
+		locate: ec:3
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: ec:4
+		locate: ec:4
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: ec:5
+		locate: ec:5
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: ec:6
+		locate: ec:6
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: ec:7
+		locate: ec:7
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: ec:8
+		locate: ec:8
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: u.2 ssd 1
+		error: ec:9
+		present: ec:9
+		locate: ec:9
+		blink: 
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: u.2 ssd 2
+		error: ec:10
+		present: ec:10
+		locate: ec:10
+		blink: 
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: tns-1083x
+Fixed Name: tns-c1083x
+MB: Q0411
+BP: Q0490
+EXT: Q04U0
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: False
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:12
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 12
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: ec:1
+		locate: ec:1
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: ec:2
+		locate: ec:2
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: ec:3
+		locate: ec:3
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: ec:4
+		locate: ec:4
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: ec:5
+		locate: ec:5
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: ec:6
+		locate: ec:6
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: ec:7
+		locate: ec:7
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: ec:8
+		locate: ec:8
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: u.2 ssd 1
+		error: ec:9
+		present: ec:9
+		locate: ec:9
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: u.2 ssd 2
+		error: ec:10
+		present: ec:10
+		locate: ec:10
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1673au
+Fixed Name: ts-1673au-rp
+MB: Q0520
+BP: Q0580
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 16
+	Disk 1
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1673au
+Fixed Name: ts-1673au-rp
+MB: Q0520
+BP: Q0580
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: '1'
+Slot presence: '1'
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 16
+	Disk 1
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1273au
+Fixed Name: ts-1273au
+MB: Q0520
+BP: Q05G0
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 12
+	Disk 1
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-873au
+Fixed Name: ts-873au
+MB: Q0520
+BP: Q05G1
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 8
+	Disk 1
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1273au
+Fixed Name: ts-1273au-rp
+MB: Q0520
+BP: Q0670
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 12
+	Disk 1
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1273au
+Fixed Name: ts-1273au-rp
+MB: Q0520
+BP: Q0670
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: '1'
+Slot presence: '1'
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 12
+	Disk 1
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-873au
+Fixed Name: ts-873au-rp
+MB: Q0520
+BP: Q0671
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 8
+	Disk 1
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: 
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-973ax
+Fixed Name: ts-973ax
+MB: Q0711
+BP: Q0760
+EXT: 
+Sys Fans: 1
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd:bp
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: True
+JBOD Connect LED: False
+VPD MB: True
+VPD BP: True
+Num disks: 9
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: ssd 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: ssd 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: ssd 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: ssd 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+Failed to parse config '/home/giddi/Downloads/q/configs/mods/nodups/model_Q08D0_Q08N0_10_10.conf' - 'While reading from '<string>' [line 95]: option 'blink_led' in section 'system disk 5' already exists'
+Failed to parse config '/home/giddi/Downloads/q/configs/mods/nodups/model_Q08D0_Q08N0_20_10.conf' - 'While reading from '<string>' [line 109]: option 'blink_led' in section 'system disk 5' already exists'
+Failed to parse config '/home/giddi/Downloads/q/configs/mods/nodups/model_Q08D0_Q08N1_20_11.conf' - 'While reading from '<string>' [line 102]: option 'blink_led' in section 'system disk 5' already exists'
+
+
+Model: ts-1290fx
+Fixed Name: ts-1290fx
+MB: Q09A0
+BP: Q09C0
+EXT: 
+Sys Fans: 2
+CPU Fans: 1
+Temp sensors: 4
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: '1'
+Slot presence: '1'
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: True
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 12
+	Disk 1
+		name: u.2 ssd 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:1
+		prescense_sup: ec:1
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: u.2 ssd 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:2
+		prescense_sup: ec:2
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: u.2 ssd 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:3
+		prescense_sup: ec:3
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: u.2 ssd 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:4
+		prescense_sup: ec:4
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: u.2 ssd 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:5
+		prescense_sup: ec:5
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: u.2 ssd 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:6
+		prescense_sup: ec:6
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: u.2 ssd 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:7
+		prescense_sup: ec:7
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: u.2 ssd 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:8
+		prescense_sup: ec:8
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: u.2 ssd 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:9
+		prescense_sup: ec:9
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: u.2 ssd 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:10
+		prescense_sup: ec:10
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: u.2 ssd 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:11
+		prescense_sup: ec:11
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: u.2 ssd 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:12
+		prescense_sup: ec:12
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1290fx
+Fixed Name: ts-1290fx
+MB: Q09A0
+BP: Q09C0
+EXT: 
+Sys Fans: 2
+CPU Fans: 1
+Temp sensors: 4
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: '1'
+Slot presence: '1'
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: True
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 12
+	Disk 1
+		name: u.2 ssd 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:1
+		prescense_sup: ec:1
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: u.2 ssd 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:2
+		prescense_sup: ec:2
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: u.2 ssd 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:3
+		prescense_sup: ec:3
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: u.2 ssd 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:4
+		prescense_sup: ec:4
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: u.2 ssd 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:5
+		prescense_sup: ec:5
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: u.2 ssd 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:6
+		prescense_sup: ec:6
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: u.2 ssd 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:7
+		prescense_sup: ec:7
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: u.2 ssd 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:8
+		prescense_sup: ec:8
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: u.2 ssd 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:9
+		prescense_sup: ec:9
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: u.2 ssd 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:10
+		prescense_sup: ec:10
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: u.2 ssd 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:11
+		prescense_sup: ec:11
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: u.2 ssd 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec:12
+		prescense_sup: ec:12
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1090fu
+Fixed Name: ts-1090fu
+MB: Q09B0
+BP: Q09I0
+EXT: 
+Sys Fans: 5
+CPU Fans: 0
+Temp sensors: 3
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: False
+Audio mute: False
+Slot power: '1'
+Slot presence: '1'
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 10
+	Disk 1
+		name: u.2 ssd 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: u.2 ssd 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: u.2 ssd 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: u.2 ssd 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: u.2 ssd 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: u.2 ssd 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: u.2 ssd 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: u.2 ssd 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: u.2 ssd 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: u.2 ssd 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: sata:nvme
+		bus_type: sata:nvme
+		power_sup: ec
+		prescense_sup: ec
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-873aeu
+Fixed Name: ts-873aeu
+MB: Q0AK0
+BP: Q0AO0
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 10
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: 
+		locate: ec:1
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: 
+		locate: ec:2
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: 
+		locate: ec:3
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: 
+		locate: ec:4
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: 
+		locate: ec:5
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: 
+		locate: ec:6
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: 
+		locate: ec:7
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: 
+		locate: ec:8
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-873aeu
+Fixed Name: ts-873aeu
+MB: Q0AK0
+BP: Q0AO0
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: '1'
+Slot presence: '1'
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 10
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 1
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 1
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: 
+		locate: ec:1
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:1
+		prescense_sup: ec:1
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: 
+		locate: ec:2
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:2
+		prescense_sup: ec:2
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: 
+		locate: ec:3
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:3
+		prescense_sup: ec:3
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: 
+		locate: ec:4
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:4
+		prescense_sup: ec:4
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: 
+		locate: ec:5
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:5
+		prescense_sup: ec:5
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: 
+		locate: ec:6
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:6
+		prescense_sup: ec:6
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: 
+		locate: ec:7
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:7
+		prescense_sup: ec:7
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: 
+		locate: ec:8
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:8
+		prescense_sup: ec:8
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-873aeu
+Fixed Name: ts-873aeu-rp
+MB: Q0AK0
+BP: Q0AO1
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 10
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: 
+		locate: ec:1
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: 
+		locate: ec:2
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: 
+		locate: ec:3
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: 
+		locate: ec:4
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: 
+		locate: ec:5
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: 
+		locate: ec:6
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: 
+		locate: ec:7
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: 
+		locate: ec:8
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-873aeu
+Fixed Name: ts-873aeu-rp
+MB: Q0AK0
+BP: Q0AO1
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: False
+Slot power: '1'
+Slot presence: '1'
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 10
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 1
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 1
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: 
+		locate: ec:1
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:1
+		prescense_sup: ec:1
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: 
+		locate: ec:2
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:2
+		prescense_sup: ec:2
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: 
+		locate: ec:3
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:3
+		prescense_sup: ec:3
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: 
+		locate: ec:4
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:4
+		prescense_sup: ec:4
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: 
+		locate: ec:5
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:5
+		prescense_sup: ec:5
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: 
+		locate: ec:6
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:6
+		prescense_sup: ec:6
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: 
+		locate: ec:7
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:7
+		prescense_sup: ec:7
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: 
+		locate: ec:8
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: ec:8
+		prescense_sup: ec:8
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-855eu
+Fixed Name: ts-855eu
+MB: Q0BT0
+BP: Q0BU0
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: False
+Audio mute: False
+Slot power: '1'
+Slot presence: '1'
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 10
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 1
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 1
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: ec:1
+		locate: ec:1
+		blink: ec:1
+		type: 
+		bus_type: 
+		power_sup: ec:1
+		prescense_sup: ec:1
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: ec:2
+		locate: ec:2
+		blink: ec:2
+		type: 
+		bus_type: 
+		power_sup: ec:2
+		prescense_sup: ec:2
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: ec:3
+		locate: ec:3
+		blink: ec:3
+		type: 
+		bus_type: 
+		power_sup: ec:3
+		prescense_sup: ec:3
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: ec:4
+		locate: ec:4
+		blink: ec:4
+		type: 
+		bus_type: 
+		power_sup: ec:4
+		prescense_sup: ec:4
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: ec:5
+		locate: ec:5
+		blink: ec:5
+		type: 
+		bus_type: 
+		power_sup: ec:5
+		prescense_sup: ec:5
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: ec:6
+		locate: ec:6
+		blink: ec:6
+		type: 
+		bus_type: 
+		power_sup: ec:6
+		prescense_sup: ec:6
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: ec:7
+		locate: ec:7
+		blink: ec:7
+		type: 
+		bus_type: 
+		power_sup: ec:7
+		prescense_sup: ec:7
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: ec:8
+		locate: ec:8
+		blink: ec:8
+		type: 
+		bus_type: 
+		power_sup: ec:8
+		prescense_sup: ec:8
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-855eu
+Fixed Name: ts-855eu
+MB: Q0BT0
+BP: Q0BU0
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: False
+Audio mute: False
+Slot power: '1'
+Slot presence: '1'
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 10
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: ec:9
+		prescense_sup: ec:9
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: ec:10
+		prescense_sup: ec:10
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: ec:1
+		locate: ec:1
+		blink: ec:1
+		type: 
+		bus_type: 
+		power_sup: ec:1
+		prescense_sup: ec:1
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: ec:2
+		locate: ec:2
+		blink: ec:2
+		type: 
+		bus_type: 
+		power_sup: ec:2
+		prescense_sup: ec:2
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: ec:3
+		locate: ec:3
+		blink: ec:3
+		type: 
+		bus_type: 
+		power_sup: ec:3
+		prescense_sup: ec:3
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: ec:4
+		locate: ec:4
+		blink: ec:4
+		type: 
+		bus_type: 
+		power_sup: ec:4
+		prescense_sup: ec:4
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: ec:5
+		locate: ec:5
+		blink: ec:5
+		type: 
+		bus_type: 
+		power_sup: ec:5
+		prescense_sup: ec:5
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: ec:6
+		locate: ec:6
+		blink: ec:6
+		type: 
+		bus_type: 
+		power_sup: ec:6
+		prescense_sup: ec:6
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: ec:7
+		locate: ec:7
+		blink: ec:7
+		type: 
+		bus_type: 
+		power_sup: ec:7
+		prescense_sup: ec:7
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: ec:8
+		locate: ec:8
+		blink: ec:8
+		type: 
+		bus_type: 
+		power_sup: ec:8
+		prescense_sup: ec:8
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-855eu
+Fixed Name: ts-855eu
+MB: Q0BT0
+BP: Q0BU1
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: False
+Audio mute: False
+Slot power: '1'
+Slot presence: '1'
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 10
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 1
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 1
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: ec:1
+		locate: ec:1
+		blink: ec:1
+		type: 
+		bus_type: 
+		power_sup: ec:1
+		prescense_sup: ec:1
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: ec:2
+		locate: ec:2
+		blink: ec:2
+		type: 
+		bus_type: 
+		power_sup: ec:2
+		prescense_sup: ec:2
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: ec:3
+		locate: ec:3
+		blink: ec:3
+		type: 
+		bus_type: 
+		power_sup: ec:3
+		prescense_sup: ec:3
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: ec:4
+		locate: ec:4
+		blink: ec:4
+		type: 
+		bus_type: 
+		power_sup: ec:4
+		prescense_sup: ec:4
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: ec:5
+		locate: ec:5
+		blink: ec:5
+		type: 
+		bus_type: 
+		power_sup: ec:5
+		prescense_sup: ec:5
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: ec:6
+		locate: ec:6
+		blink: ec:6
+		type: 
+		bus_type: 
+		power_sup: ec:6
+		prescense_sup: ec:6
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: ec:7
+		locate: ec:7
+		blink: ec:7
+		type: 
+		bus_type: 
+		power_sup: ec:7
+		prescense_sup: ec:7
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: ec:8
+		locate: ec:8
+		blink: ec:8
+		type: 
+		bus_type: 
+		power_sup: ec:8
+		prescense_sup: ec:8
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-855eu
+Fixed Name: ts-855eu
+MB: Q0BT0
+BP: Q0BU1
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: False
+Audio mute: False
+Slot power: '1'
+Slot presence: '1'
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 10
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: ec:9
+		prescense_sup: ec:9
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: nvme
+		bus_type: nvme
+		power_sup: ec:10
+		prescense_sup: ec:10
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: ec:1
+		locate: ec:1
+		blink: ec:1
+		type: 
+		bus_type: 
+		power_sup: ec:1
+		prescense_sup: ec:1
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: ec:2
+		locate: ec:2
+		blink: ec:2
+		type: 
+		bus_type: 
+		power_sup: ec:2
+		prescense_sup: ec:2
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: ec:3
+		locate: ec:3
+		blink: ec:3
+		type: 
+		bus_type: 
+		power_sup: ec:3
+		prescense_sup: ec:3
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: ec:4
+		locate: ec:4
+		blink: ec:4
+		type: 
+		bus_type: 
+		power_sup: ec:4
+		prescense_sup: ec:4
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: ec:5
+		locate: ec:5
+		blink: ec:5
+		type: 
+		bus_type: 
+		power_sup: ec:5
+		prescense_sup: ec:5
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: ec:6
+		locate: ec:6
+		blink: ec:6
+		type: 
+		bus_type: 
+		power_sup: ec:6
+		prescense_sup: ec:6
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: ec:7
+		locate: ec:7
+		blink: ec:7
+		type: 
+		bus_type: 
+		power_sup: ec:7
+		prescense_sup: ec:7
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: ec:8
+		locate: ec:8
+		blink: ec:8
+		type: 
+		bus_type: 
+		power_sup: ec:8
+		prescense_sup: ec:8
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-977xu
+Fixed Name: ts-977xu
+MB: QZ480
+BP: Q0060
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 9
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: ssd 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: ssd 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: ssd 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: ssd 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: ssd 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-977xu
+Fixed Name: ts-977xu
+MB: QZ480
+BP: Q0060
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 9
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: ssd 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: ssd 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: ssd 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: ssd 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: ssd 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-977xu
+Fixed Name: ts-977xu
+MB: QZ480
+BP: Q0060
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: False
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 9
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: ssd 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: ssd 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: ssd 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: ssd 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: ssd 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-977xu
+Fixed Name: ts-977xu
+MB: QZ481
+BP: Q0060
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 9
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: ssd 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: ssd 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: ssd 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: ssd 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: ssd 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-977xu
+Fixed Name: ts-977xu
+MB: QZ482
+BP: Q0060
+EXT: 
+Sys Fans: 3
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 9
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: ssd 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: ssd 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: ssd 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: ssd 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: ssd 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1277xu
+Fixed Name: ts-1277xu
+MB: QZ490
+BP: QZ550
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 12
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-877xu
+Fixed Name: ts-877xu
+MB: QZ490
+BP: QZ551
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 8
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-877xu
+Fixed Name: ts-877xu
+MB: QZ490
+BP: QZ560
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 8
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1677xu
+Fixed Name: ts-1677xu
+MB: QZ491
+BP: QZ540
+EXT: 
+Sys Fans: 4
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 16
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: disk 13
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: disk 14
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: disk 15
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: disk 16
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1677xu
+Fixed Name: ts-1677xu
+MB: QZ492
+BP: QZ540
+EXT: 
+Sys Fans: 4
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 16
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: disk 13
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: disk 14
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: disk 15
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: disk 16
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1677xu
+Fixed Name: ts-1677xu
+MB: QZ492
+BP: QZ540
+EXT: 
+Sys Fans: 4
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 16
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: disk 13
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: disk 14
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: disk 15
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: disk 16
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1277xu
+Fixed Name: ts-1277xu
+MB: QZ492
+BP: QZ550
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 12
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1277xu
+Fixed Name: ts-1277xu
+MB: QZ492
+BP: QZ550
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 12
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-877xu
+Fixed Name: ts-877xu
+MB: QZ492
+BP: QZ551
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 8
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-877xu
+Fixed Name: ts-877xu
+MB: QZ492
+BP: QZ551
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 8
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1677xu
+Fixed Name: ts-1677xu
+MB: QZ493
+BP: QZ540
+EXT: 
+Sys Fans: 4
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 16
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: disk 13
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: disk 14
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: disk 15
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: disk 16
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1677xu
+Fixed Name: ts-1677xu
+MB: QZ494
+BP: QZ540
+EXT: 
+Sys Fans: 4
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 16
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: disk 13
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: disk 14
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: disk 15
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: disk 16
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-1277xu
+Fixed Name: ts-1277xu
+MB: QZ494
+BP: QZ550
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 12
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-877xu
+Fixed Name: ts-877xu
+MB: QZ494
+BP: QZ551
+EXT: 
+Sys Fans: 2
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 8
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-2477xu
+Fixed Name: ts-2477xu
+MB: QZ500
+BP: Q0070
+EXT: 
+Sys Fans: 4
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 24
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: disk 13
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: disk 14
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: disk 15
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: disk 16
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 17
+		name: disk 17
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 18
+		name: disk 18
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 19
+		name: disk 19
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 20
+		name: disk 20
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 21
+		name: disk 21
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 22
+		name: disk 22
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 23
+		name: disk 23
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 24
+		name: disk 24
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-2477xu
+Fixed Name: ts-2477xu
+MB: QZ500
+BP: Q0070
+EXT: 
+Sys Fans: 4
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 24
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: disk 13
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: disk 14
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: disk 15
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: disk 16
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 17
+		name: disk 17
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 18
+		name: disk 18
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 19
+		name: disk 19
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 20
+		name: disk 20
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 21
+		name: disk 21
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 22
+		name: disk 22
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 23
+		name: disk 23
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 24
+		name: disk 24
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-2477xu
+Fixed Name: ts-2477xu
+MB: QZ502
+BP: Q0070
+EXT: 
+Sys Fans: 4
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 24
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: disk 13
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: disk 14
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: disk 15
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: disk 16
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 17
+		name: disk 17
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 18
+		name: disk 18
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 19
+		name: disk 19
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 20
+		name: disk 20
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 21
+		name: disk 21
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 22
+		name: disk 22
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 23
+		name: disk 23
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 24
+		name: disk 24
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-2477xu
+Fixed Name: ts-2477xu
+MB: QZ503
+BP: Q0070
+EXT: 
+Sys Fans: 4
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: ec
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 24
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: disk 13
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: disk 14
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: disk 15
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: disk 16
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 17
+		name: disk 17
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 18
+		name: disk 18
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 19
+		name: disk 19
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 20
+		name: disk 20
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 21
+		name: disk 21
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 22
+		name: disk 22
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 23
+		name: disk 23
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 24
+		name: disk 24
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-2477xu
+Fixed Name: ts-2477xu
+MB: QZ503
+BP: Q0070
+EXT: 
+Sys Fans: 4
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 24
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: disk 13
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: disk 14
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: disk 15
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: disk 16
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 17
+		name: disk 17
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 18
+		name: disk 18
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 19
+		name: disk 19
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 20
+		name: disk 20
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 21
+		name: disk 21
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 22
+		name: disk 22
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 23
+		name: disk 23
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 24
+		name: disk 24
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: ts-2477xu
+Fixed Name: ts-2477xu
+MB: QZ504
+BP: Q0070
+EXT: 
+Sys Fans: 4
+CPU Fans: 0
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: True
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: True
+Audio mute: True
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:1
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 24
+	Disk 1
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 7
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 8
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 9
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 10
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 11
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 12
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: disk 13
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: disk 14
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: disk 15
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: disk 16
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 17
+		name: disk 17
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 18
+		name: disk 18
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 19
+		name: disk 19
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 20
+		name: disk 20
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 21
+		name: disk 21
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 22
+		name: disk 22
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 23
+		name: disk 23
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 24
+		name: disk 24
+		error: ec
+		present: ec
+		locate: ec
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: tvs-875u
+Fixed Name: tvs-875u
+MB: SAP00
+BP: SBO60
+EXT: 
+Sys Fans: 2
+CPU Fans: 1
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: False
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:8
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 10
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: ec:1
+		locate: ec:1
+		blink: ec:1
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: ec:2
+		locate: ec:2
+		blink: ec:2
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: ec:3
+		locate: ec:3
+		blink: ec:3
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: ec:4
+		locate: ec:4
+		blink: ec:4
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: ec:5
+		locate: ec:5
+		blink: ec:5
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: ec:6
+		locate: ec:6
+		blink: ec:6
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: ec:7
+		locate: ec:7
+		blink: ec:7
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: ec:8
+		locate: ec:8
+		blink: ec:8
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: tvs-1275u
+Fixed Name: tvs-1275u
+MB: SAP00
+BP: SBO70
+EXT: 
+Sys Fans: 2
+CPU Fans: 1
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: False
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:8
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 14
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: ec:1
+		locate: ec:1
+		blink: ec:1
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: ec:2
+		locate: ec:2
+		blink: ec:2
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: ec:3
+		locate: ec:3
+		blink: ec:3
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: ec:4
+		locate: ec:4
+		blink: ec:4
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: ec:5
+		locate: ec:5
+		blink: ec:5
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: ec:6
+		locate: ec:6
+		blink: ec:6
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: ec:7
+		locate: ec:7
+		blink: ec:7
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: ec:8
+		locate: ec:8
+		blink: ec:8
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 9
+		error: ec:9
+		present: ec:9
+		locate: ec:9
+		blink: ec:9
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 10
+		error: ec:10
+		present: ec:10
+		locate: ec:10
+		blink: ec:10
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: disk 11
+		error: ec:11
+		present: ec:11
+		locate: ec:11
+		blink: ec:11
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: disk 12
+		error: ec:12
+		present: ec:12
+		locate: ec:12
+		blink: ec:12
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: tvs-875u
+Fixed Name: tvs-875u
+MB: SAP00
+BP: SBO71
+EXT: 
+Sys Fans: 2
+CPU Fans: 1
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: False
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:8
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 10
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: ec:1
+		locate: ec:1
+		blink: ec:1
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: ec:2
+		locate: ec:2
+		blink: ec:2
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: ec:3
+		locate: ec:3
+		blink: ec:3
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: ec:4
+		locate: ec:4
+		blink: ec:4
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: ec:5
+		locate: ec:5
+		blink: ec:5
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: ec:6
+		locate: ec:6
+		blink: ec:6
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: ec:7
+		locate: ec:7
+		blink: ec:7
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: ec:8
+		locate: ec:8
+		blink: ec:8
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: tvs-1675u
+Fixed Name: tvs-1675u
+MB: SAP00
+BP: SBO80
+EXT: 
+Sys Fans: 3
+CPU Fans: 1
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: False
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: False
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:8
+Front USB LED: False
+JBOD Connect LED: True
+VPD MB: True
+VPD BP: True
+Num disks: 18
+	Disk 1
+		name: m.2 ssd 1
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: 
+		present: 
+		locate: 
+		blink: 
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec:1
+		present: ec:1
+		locate: ec:1
+		blink: ec:1
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec:2
+		present: ec:2
+		locate: ec:2
+		blink: ec:2
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec:3
+		present: ec:3
+		locate: ec:3
+		blink: ec:3
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec:4
+		present: ec:4
+		locate: ec:4
+		blink: ec:4
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec:5
+		present: ec:5
+		locate: ec:5
+		blink: ec:5
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec:6
+		present: ec:6
+		locate: ec:6
+		blink: ec:6
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 9
+		name: disk 7
+		error: ec:7
+		present: ec:7
+		locate: ec:7
+		blink: ec:7
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 10
+		name: disk 8
+		error: ec:8
+		present: ec:8
+		locate: ec:8
+		blink: ec:8
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 11
+		name: disk 9
+		error: ec:9
+		present: ec:9
+		locate: ec:9
+		blink: ec:9
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 12
+		name: disk 10
+		error: ec:10
+		present: ec:10
+		locate: ec:10
+		blink: ec:10
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 13
+		name: disk 11
+		error: ec:11
+		present: ec:11
+		locate: ec:11
+		blink: ec:11
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 14
+		name: disk 12
+		error: ec:12
+		present: ec:12
+		locate: ec:12
+		blink: ec:12
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 15
+		name: disk 13
+		error: ec:13
+		present: ec:13
+		locate: ec:13
+		blink: ec:13
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 16
+		name: disk 14
+		error: ec:14
+		present: ec:14
+		locate: ec:14
+		blink: ec:14
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 17
+		name: disk 15
+		error: ec:15
+		present: ec:15
+		locate: ec:15
+		blink: ec:15
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 18
+		name: disk 16
+		error: ec:16
+		present: ec:16
+		locate: ec:16
+		blink: ec:16
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+
+
+Model: tvs-675
+Fixed Name: tvs-675
+MB: SAP10
+BP: SBO90
+EXT: 
+Sys Fans: 2
+CPU Fans: 1
+Temp sensors: 2
+AC Recovery: True
+Serial location: vpd
+Eup Mode: False
+Copy BTN: True
+Reset BTN: True
+Status GREEN: True
+Status RED: True
+Brighness control: False
+Audio mute: False
+Slot power: 0
+Slot presence: 0
+10G LED: False
+Chasis open: False
+CPU Temp unit: dts:8
+Front USB LED: True
+JBOD Connect LED: False
+VPD MB: True
+VPD BP: True
+Num disks: 8
+	Disk 1
+		name: m.2 ssd 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 2
+		name: m.2 ssd 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 3
+		name: disk 1
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 4
+		name: disk 2
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 5
+		name: disk 3
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 6
+		name: disk 4
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 7
+		name: disk 5
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+	Disk 8
+		name: disk 6
+		error: ec
+		present: ec
+		locate: ec
+		blink: ec
+		type: 
+		bus_type: 
+		power_sup: 
+		prescense_sup: 
+		not_power_sup: 
+		not_prescense_sup: 
+QNAP model 'tx-800p' does not seem to use the IT8528 EC ('/home/giddi/Downloads/q/configs/mods/nodups/model_TBJBOD_QW580_QW750_20_20.conf')
+QNAP model 'tx-500p' does not seem to use the IT8528 EC ('/home/giddi/Downloads/q/configs/mods/nodups/model_TBJBOD_QW580_QX180_20_20.conf')
