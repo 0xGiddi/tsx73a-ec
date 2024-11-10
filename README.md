@@ -2,6 +2,17 @@
 The module is still under active development, currently the tag v0.1 is a testing version that I am running on my own hardware. Check the table below "Features in development" for features currently implemented.
 This version can be downloaded in the releases section of this repository. To install run `make install`, dkms is required to install using the root Makefile. If dkms is not your cup of tea, run `make` in the `src` directory to build the kernel module right there. 
 
+LED support is currently basic:
+All disk LEDs & STATUS - Vlaues 0-2 (OFF/GREEN/RED)
+Blue USB - 0-1 (OFF/ON)
+Front panel brightness - 0-255 (OFF->MAX BRIGHTNESS)
+For the TS-X73A, It seems that the disks that blink with activity out of-the-box (for me, the two leftmost disks) will blink activity only when set to GREEN (1). There seems to be no way to decouple the built in activity blinking and control it manually (it ignores the hardware blink command). 
+
+Blinking is not officialy supported, but all the LEDs can be blinked in software using the `ledtrig_timer` module, but this is not handled properly yet (blinking will default to blink green, but blinking red requires setting the LED to red, then setting the timer for a second time, and even then it does not work properly all the time due to my handling, it's in the works). 
+
+Yes, the code is currently all over the place unoptimized and scary, I'm woking on it. 
+
+
 Contributions are welcome.
 
 # QNAP TS-x73A EC Driver
