@@ -1,75 +1,143 @@
-# UNDER ACTIVE DEVELOPMENT
-The module is still under active development, currently the tag v0.1 is a testing version that I am running on my own hardware. Check the table below "Features in development" for features currently implemented.
-This version can be downloaded in the releases section of this repository. To install run `make install`, dkms is required to install using the root Makefile. If dkms is not your cup of tea, run `make` in the `src` directory to build the kernel module right there. 
-
-LED support is currently basic:
-All disk LEDs & STATUS - Vlaues 0-2 (OFF/GREEN/RED)
-Blue USB - 0-1 (OFF/ON)
-Front panel brightness - 0-255 (OFF->MAX BRIGHTNESS)
-For the TS-X73A, It seems that the disks that blink with activity out of-the-box (for me, the two leftmost disks) will blink activity only when set to GREEN (1). There seems to be no way to decouple the built in activity blinking and control it manually (it ignores the hardware blink command). 
-
-Blinking is not officialy supported, but all the LEDs can be blinked in software using the `ledtrig_timer` module, but this is not handled properly yet (blinking will default to blink green, but blinking red requires setting the LED to red, then setting the timer for a second time, and even then it does not work properly all the time due to my handling, it's in the works). 
-
-Yes, the code is currently all over the place unoptimized and scary, I'm woking on it. 
-
-
-Contributions are welcome.
-
-# QNAP TS-x73A EC Driver
+**WARNING:** This module is under development and the master branch may be broken here and there. Please feel free to contribute (code, requests, bugs, ideas) via a opening an issue or mailing me at `tsx73a [AT] giddi.net`.
 
 ## Overview
-This kernel driver is for exposing the ITE8528 embedded controller functionality on QNAP NAS devices via common kernel APIs. The goal is to get as many QNAP devices that use the ITE8528 EC to be supported, current development is done  for support of the TS-x73A family while testing on the TS-473A (which is the only device I have available).
+This kernel driver is for exposing the ITE8528 embedded controller functionality on QNAP NAS devices via common kernel APIs. The goal is to get as many QNAP devices that use the ITE8528 EC to be supported, current development is done for support of the TS-x73A family while testing on the TS-473A (which is the only device I have available).
+
+## How to install/build
 
 
-## Features in development
- Task | Status | Description  |
--|-|-|
- Read VPD entries | :white_check_mark:  | Read vital product information entries from the VPD tables (Device serial, backplane/motherboard serial, product code and so on)
-Read EC FW version| :white_check_mark:| Get EC firmware version
-Read CPLD version| :white_check_mark: | Get CPLD version (not sure if is in use, but added anyway)
-Get/Set AC recover| :white_check_mark: | Get and set the AC power recovery mode in case of power failure(remain off, turn on, last state)
-Get/Set EuP mode| :white_check_mark: | Get and set the EuP (Energy using Product) mode. (affects Wake-on-Lan, AC Power recovery, power schedules)
-Expose fans via HWMON | :white_check_mark: | Expose the fan PWM/Speed via HWMON. Used for monitoring with `lm-sensors` for example.
-Expose temperature sensors via HWMON | :white_check_mark: | Expose the system temperature sensors via HWMON. Used for monitoring with `lm-sensors` for example [1] [2].
-Expose fan control via PWM | WIP | Expose PWM interface for setting fan speeds manually. [3] [4] [5]
-Read RESET/COPY buttons |  :white_check_mark:  | Expose the state of the front COPY and rear RESET buttons as an input device. From my research it seems there is not interrupt for these buttons, so they are polled at 100ms intervals [6]
-LED global brightness |  :white_check_mark: | A virtual LED exposed via the LED subsystem to control the bightness of all front panel LEDs.
-Status LED | No blink | Expose the status LED (red/green/blink/alternate) via the LED subsystem [7]
-USB LED | :white_check_mark: |  Expose the blue USB LED (solid/blink/off)
-Disk LEDs | No blink | Expose the disk LEDs (present/error/blink) [7]. Fix N.2 NVME activity?[8]
-Enclosure IDENT LED | WIP | Expose the enclosure identification LED. The TS-x73A blinks all disk LEDs red for ident, so maybe not needed? But other models might have dedicated LED.
-|----|----|----
-SATA power control | Unknown | There seems to be sata power control to power up/down SATA disks slots, this is not officially supported (according to the missing entries in `/etc/model.con`) but it works. Maybe add it for replacing disks on the fly?
+### Install instructions using DKMS
+~~First, check that the driver supports your hardware in the "Supported models" section, even if the driver supports your hadrware, it does not mean its been tested yet (but a configuration exists).~~
+
+1. Download the latest release of the driver from the [releases page](https://github.com/0xGiddi/tsx73a-ec/releases/tag/v0.2-debug)
+2. Extract the zip/tarball using `unzip <file>` or `tar xzvf <file>`
+3. Enter the project directory `tsx73a-ec`
+    
+    3.1 *Optional*: Edit the makefile `src/Makefile` to remove debug prints (remove `CFLAGS_tsx73a-ec.o := -DDEBUG`) some prints (especially button reading and rapid LED setting can spam the kernel logs)
+4. Compile and install the module using with `make install`
+
+### Autoload module on startup
+1. Create a new service file `touch /etc/systemd/system/tsx73a-ec-load-module.service`/
+2. Open the file in your favorite editor and add the following:
+```ini
+[Unit]
+Description=Install tsx73a-ec kernel module
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/sbin/modprobe tsx73a-ec
+ExecStop=/sbin/modprobe -r tsx73a-ec
+
+[Install]
+WantedBy=multi-user.target
+```
+3. Enable the service `systemctl enable --now tsx73a-ec-load-module.service`
+4. Check that module loaded properly `lsmod | grep tsx`
+
+If module is not loaded, try `systemctl restart tsx73a-ec-load-module.service`
+
+## Features NOT included in this driver
+
+The following features are NOT included in this driver and are handled by existing drivers in the Linux kernel on my TS-473A NAS (other models may need different kernel modules):
+
+- CPU package/die temperature sensors (handled by `k10temp`). 
+- Hardware watchdog control (handled by `sp5100_tco`). 
+- Built in buzzer sound generation (handled by `pcspkr`).
 
 
-[1] The AMD CPU temperature is exposed via the `k10temp`` kernel driver (Tctl/Tdie).
+## Supported features:
 
-[2] When testing, it seems that there are 3 temperature readings (indexes 5, 6 and 7) but I only located two physical temperature sensors on the main board. it might be two of the readings are identical. Requires more research.
+#### Read EC firmware version
+The ECs firmware version can be read from `/sys/devices/platform/tsx73a-ec/fw_version`.
 
-[3] Currently the method for setting the fan speed works, however, I have not yet found a way to set the fans back to automatic control (based on sensor reading) other that reooting the system
+#### Read CPLD version
+CPLD version of the EC can be read from `/sys/devices/platform/tsx73a-ec/cpld_version`. 
 
-[4] From the research, it seems there is a way to set the EC to run the fans based on a LOW/MED/HIGH temperature reading (TFAN settings), but I have not yet figured this out.
+#### Get/Set AC recovery mode
+AC recovery mode can be read or set using `/sys/devices/platform/tsx73a-ec/ac_recovery` valid values are:
+|Mode|value|
+|-|-|
+|Keep power off| 0
+|Auto power on| 1
+|Enter last power state| 2
 
-[5] There also seems to be a function for calibrating the temperature sensor, calibration procedure is still unknown.
+#### Get/set EuP mode
+EuP (Energy-using Products) mode can be read or set using `/sys/devices/platform/tsx73a-ec/eup_mode`, this effects other features such as WOL, power recovery (and power schedules  which are not implemented). valid values are:
+|State|value|
+|-|-|
+|Disabled | 0
+| Enabled | 1
 
-[6] Note to self, maybe disable polling when input device is ot open to save on resources.
+#### Fan control
+This driver exposes fan controls via HWMon, allowing `lm-sensors` to monitor the fans and third party tools to control fan speeds via PWM. This does not expose an API any settings associated with the ECs built in auto fan control (`TFAN`, if it even works). 
 
-[7] For all multicolor LEDs, I have not decided how to properly expose them, since the status and disk LED colors are mutually exclusive (red OR green). I might expose them as two colored LEDs, my only problem is how to expose the alternate color (geed/red) flashing status LED. If you have ideas, let me know.
+**NOTE:** Fans are controlled in groups, this driver exposes a PWM channel for each group of fans.
 
-[8] The LEDs connected to SATA devices blink when disk is accessed, however the M.2 NVME leds stay constant and do not respond to read/write activity. Maybe create a custom trigger/hood the NVME block devices to blink the correct LEDs?, This will require matching the correct LED per NVME disk via PCI BDF, does not seem like a problem since each NVME is on its own PCI BDF, but can be a hassle, maybe add an interface to the user can pass the path to the device he wants to monitor with LED?
+Fan speed in RPM can be read from `/sys/class/hwmon/hwmon<X>/fan<X>_input`
 
-## Nice to have features for other models
-- Get thunderbolt chip count / status
-- Battery backup support/exists (if it's referring to builtin and not external UPS)
-- OLED functions (FW version, buttons, status texts) - if done via EC
-- Fan status LEDs
-- Cover status  (open/closed)
-- Buzzer mute (at boot - a BIOS setting)
+PWM fan speed control can be set and read from `/sys/class/hwmon/hwmon<X>/pwm<X>` (values `0`-`255`) 
 
-## Things that this driver does not do:
-- CPU temperature (no SYS) (use `k10temp` AMD cpu kernel driver)
-- Making sounds with the buzzer (use the `pcspkr` interface, `beep` command)
-- Handle the hardware watchdog (SP5100 TCO, use `sp5100_tco` kernel module)
+#### Expose reset/copy buttons
+The quick copy button on the front and reset button (in the back) are exposed as an input device. The button events (`EV_KEY`) are reported by the driver as `BTN_0` for reset and `BTN_1` for copy. 
+
+**NOTE:** The EC is polled to get the state of the buttons at a rate of 10Hz (every 100ms), a button press less than 100ms might not register. Polling time might be configurable via a module parameter in the future. 
+
+#### System LEDs
+System LED such as the *Status*, *USB*, ~~*JBOD* and *10G*~~ and ~~*IDENT*~~ (depending on the NAS model) currently have basic support for turning on and off, hardware blink is not yet supported and software timers (using `ledtrig_timer`) are buggy at this time.
+
+|LED|Color|Values|
+|-|-|-|
+|Status|Green/Red| 0/1/2 - OFF/GREEN/RED|
+|USB|Blue| 0/1 - OFF/ON
+|~~JBOD~~|~~Blue~~|~~0/1 - OFF/ON~~
+|~~10G~~|~~?~~|~~0/1 - ON/OFF~~
+|~~IDENT~~|~~Red~~|~~0/1 - ON/OFF~~
+
+**NOTE:** Features with a strike are not implemented and maybe model specific. 
+
+
+#### Disk LEDs
+Disk LEDs also have some basic support like the system LEDs. SInce disk numbers is variable between NAS models, currently only the TS-473A configuration is implemented, more to come later. 
+
+For static brightness, the same logic of the *Status* LED is used `0`/`1`/`2` for OFF/GREEN/RED.
+
+**NOTE:** Some of the green disk LEDs blink on disk activity out-of-the-box (but not all of them), they seem to be controlled internally by the EC, this cannot be disabled (maybe some internal register?), even if the LED is set to static GREEN, it will blink with activity if that LED is strobes out-of-the-box. If the LED is set to RED or OFF, it will not blink with activity.
+
+As with system LEDs, hardware blink is not supported yet and software blink has some bugs. 
+
+
+#### Reading VPD entries
+VPD data from the disk backplane and motherboard can be read, only a handful of VPD entries are available.
+
+The following VPD entries are avaiable under `/sys/devices/platform/tsx73a-ec/vpd/`:
+
+|Name| *sysfs* attribute | Example Data | Notes
+|-|-|-|-|
+|Motherboard name|`mb_name`| `SATA-6G-MB` |
+|Motherboard model|`mb_model`| `70-0Q07D0250` | Used for configuration selection
+|Motherboard vendor|`mb_vendor`| `QNAP Systems` |
+|Motherboard manufacturer|`mb_manufacturer`| ` BTC Systems`
+|Motherboard date|`mb_date`| | empty? 
+|Motherboard serial|`mb_serial`| `223XXXXXXX` | 
+|Backplane name|`mb_name`| `LF-SATA-BP` |
+|Backplane model|`mb_model`| `70-1Q07N0200` | Used for configuration selection
+|Backplane vendor|`mb_vendor`| `QNAP Systems` | 
+|Backplane manufacturer|`mb_manufacturer`| ` BTC Systems` | 
+|Backplane date|`mb_date`| `2023-05-22 16:14:00` | Manufacturing date?
+|Backplane serial|`mb_serial`| `223XXXXXXXX` | 
+|Enclosure Serial | `enc_serial` | `Q2XXXXXXXXX` | Device serial number (on sticker), located in backplane VPD table
+|Enclosure nickname|`enc_nickname`|  | Can be written using QNAP software (empty by default?)
+
+In addition, `dbg_tableX` (`X`=0-4) exist for debug purposes to print the entire VPD table for future development (may be changed/removed).
+
+**NOTE:** VPD entries may change between models, especially since there are multiple VPD tables and the TS-473A only uses 2 of them. More tests on other devices are needed to figure out if this needs to be handled differently for each model.
+
+
+#### SATA Power control
+Allows power control over the HDD SATA ports, might be nice to have to power down a disk before a hotswap, currently not implemented. 
+
+## Supported models (coming soon)
 
 ## What else
 I want to try and make this driver be able to enumerate all it's supported hardware in the driver probe state and avoid using configurations, but this is probably not possible due to the non deterministic behavior of the devices and sensors (fan speed/pwm, disk led bit mapping and more).
