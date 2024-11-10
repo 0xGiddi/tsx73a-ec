@@ -13,7 +13,7 @@
  *  - Expose EC FW version
  *  - Expose CPLD version
  *  - Read fan speeds in RPM
- *  - WIP: Read/write pwm fan speeds
+ *  - Read/write pwm fan speeds
  *  - Read various chasis temprature sensors
  *  - Read RESET & USB hardware buttons
  *  - WIP: Expose various LEDs (Status, USB, Disks)
@@ -22,71 +22,28 @@
  * Supported devices:
  * 	TS-373A
  */
-#include <linux/module.h>
-#include <linux/ioport.h>
-#include <linux/io.h>
 #include <linux/delay.h>
-#include <linux/platform_device.h>
-#include <linux/mutex.h>
 #include <linux/hwmon.h>
-#include <linux/time.h>
 #include <linux/input.h>
+#include <linux/io.h>
+#include <linux/ioport.h>
+#include <linux/leds.h>
+#include <linux/module.h>
+#include <linux/mutex.h>
+#include <linux/platform_device.h>
+#include <linux/time.h>
 #include "tsx73a-ec.h"
 
-/**
- * 'Done' means PoC implemented
- * cd ..
- * TODO:
- *  GENERAL:
- *      - Add parameter to ignore fan ranges?
- *      - Make debug attribute single, add all functions.
- *      - Depending on availability, auto detect fans, temps?
- *  VPD:
- *      - Broken, reads first byte only. Fix.
- *  Fan:#include <linux/rtc.h>
- *      - Get SPEED     - Done
- *      - Get STATUS    - Done, requires rework
- *      - Get PWM       - Done
- *      - Set PWM       - Done
- *      - Set to back to auto?
- *      - TFAN?, change temp ranges?
- *  Temp:
- *      - Get TEMP      - Done
- *  CPLD:
- *      - Get version   - Done
- *  Disk:
- *      - Power up/down SATA
- *  Button:
- *      - Get RESET
- *      - Get USB/COPY
- *  LED:
- *      - STATUS
- *      - USB
- *      - DISK ERROR/PRESENT/ACTIVE
- *      - IDENT
- *      - NVME Activity fix?
- *
- *      front-panel::global_brightness  -
- *          0x243 = Value, 0x245 |= 0x10, 0x246 = val, 0x245 &= 0xef
- *      front-panel:blue:usb            - 0x154 0/Off 1/Blink 2/Solid
- *      front-panel:green:status        -
- *          0x155 0/Off 1/Red 2/Green 3/BlinkRed 4/BlinkGreen 5/BlinkBoth
- *      front-panel:red:status          -
- *          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- *      front-panel:red:diskN           -
- *      front-panel:green:disk1N
- *
- *      front-panel:red:locate
- *
- *  General:
- *      - Refactor ec_read_byte to return the value as signed int
- *          w/ positive = raw value, negative = ERRNO and use IS_ERR_VALUE to
- *          make errors branches unlikely
- *      - Add a way to detect the device model (MB and BP VPD model info) to
- *          select correct config
- *      - Add config overrides?
- *
-*/
+static int ec_led_usb_set(struct led_classdev *cdev, enum led_brightness brightness);
+static int ec_led_usb_blink(struct led_classdev *led_cdev, unsigned long *delay_on, unsigned long *delay_off);
+static int ec_led_status_set_green(struct led_classdev *cdev, enum led_brightness brightness);
+static int ec_led_status_set_red(struct led_classdev *cdev, enum led_brightness brightness);
+static int ec_led_panel_brightness(struct led_classdev *cdev, enum led_brightness brightness);
+static int ec_led_status_set_green_blink(struct led_classdev *led_cdev, unsigned long *delay_on, unsigned long *delay_off) ;
+static int ec_led_status_set_red_blink(struct led_classdev *led_cdev, unsigned long *delay_on, unsigned long *delay_off);
+static int is_status_blinking=0;
+static bool is_unloading = false;
+
 static struct platform_device *ec_pdev;
 
 static struct resource ec_resources[] = {
@@ -213,40 +170,36 @@ static struct hwmon_chip_info ec_hwmon_chip_info = {
 	.info = hwmon_chan_info,
 	.ops = &ec_hwmon_ops
 };
-/*
-* static struct led_classdev tsx73a_leds[] = {
-*	{
-*		.name = DRVNAME ":red:status".
-*		.brightness = LED_OFF
-*		.max_brightness = LED_ON,
-*		.brightness_set = NULL,
-*		.brightness_get = NULL,
-*	},
-*	{
-*		.name = DRVNAME ":green:status".
-*		.brightness = LED_OFF
-*		.max_brightness = LED_ON,
-*		.brightness_set = NULL,
-*		.brightness_get = NULL,
-*	},
-*	{
-*		.name = DRVNAME ":blue:usb".
-*		.brightness = LED_OFF
-*		.max_brightness = LED_ON,
-*		.brightness_set = NULL,
-*		.brightness_get = NULL,
-*	},
-*	 {
-*		.name = DRVNAME ":blue:usb".
-*		.brightness = LED_OFF
-*		.max_brightness = LED_FULL,
-*		.brightness_set = NULL,
-*		.brightness_get = NULL,
-*	},
-*	{ NULL }
-* };
-*/
 
+static struct led_classdev ec_led_usb = {
+	.name = DRVNAME "::usb",
+	.max_brightness = LED_ON,
+	.brightness_set_blocking = ec_led_usb_set,
+	.blink_set = ec_led_usb_blink,
+
+};
+static struct led_classdev ec_led_status_green = {
+	.name = DRVNAME "::status",
+	.max_brightness = 2,
+	.brightness_set_blocking = ec_led_status_set_green,
+	.blink_set = ec_led_status_set_green_blink,
+
+};
+
+/*static struct led_classdev ec_led_status_red = {
+	.name = DRVNAME ":red:status",
+	.max_brightness = LED_ON,
+	.brightness_set_blocking = ec_led_status_set_red,
+	.blink_set = ec_led_status_set_red_blink,
+
+};
+*/
+static struct led_classdev ec_led_panel_brightness_cdev = {
+	.name = DRVNAME "::panel-brightness",
+	.max_brightness = LED_FULL,
+	.brightness = LED_FULL,
+	.brightness_set_blocking = ec_led_panel_brightness,
+};
 
 /**
  * ec_check_exists - Check that EC is ITE8528
@@ -562,7 +515,7 @@ static int ec_get_fan_pwm(unsigned int fan)
 
 	ret = ec_read_byte(reg, &value);
 	if (ret)
-		return -1337;
+		return -EIO;
 	return (value * 0x100 - value) / 100;
 }
 
@@ -1080,8 +1033,8 @@ static int ec_led_set_status(u8 mode)
 static int ec_led_set_usb(u8 mode)
 {
 	int ret;
-
-	ret = ec_write_byte(0x155, mode);
+	pr_debug("Setting USB LED to %d", mode);
+	ret = ec_write_byte(0x154, mode);
 	if (ret)
 		return ret;
 	return 0;
@@ -1130,6 +1083,193 @@ static struct qnap_model_config *tsx73a_locate_config(void)
 
 	return NULL;
 }
+
+static int ec_led_usb_set(struct led_classdev *cdev, enum led_brightness brightness) {
+	if (is_unloading)
+		return brightness;
+
+	if (brightness)
+		ec_led_set_usb(2);
+	else
+		ec_led_set_usb(0);
+	return brightness;
+}
+
+static int ec_led_usb_blink(struct led_classdev *led_cdev, unsigned long *delay_on, unsigned long *delay_off) {
+	pr_debug("Led triggered with blink %d %d, flags=%d", *delay_on, *delay_off, led_cdev->flags);
+	// If no blink time info was given, just do hardware blink
+	if (*delay_on == 0 && *delay_off == 0) {
+		pr_debug("Hardware blink USB");
+		ec_led_set_usb(1);
+		return 0;
+	}
+	return -EINVAL;
+}
+
+
+// ec_led_status_set_green_blink
+static int ec_led_status_set_green_blink(struct led_classdev *led_cdev, unsigned long *delay_on, unsigned long *delay_off) {
+	pr_debug("Led triggered with blink %d %d, brightness=%d ", *delay_on, *delay_off, led_cdev->brightness);
+	// If no blink time info was given, just do hardware blink
+	// BUG BUG BUG: led_cdev->brightness does not reflect real brightness, need to fix
+	if (*delay_on == 0 && *delay_off == 0) {
+		switch(led_cdev->brightness) {
+			case 0:
+			case 1:
+				ec_led_set_status(3);
+				break;
+			case 2:
+				ec_led_set_status(4);
+		}
+		return 0;
+	}
+	return -EINVAL;
+}
+/*
+static int ec_led_status_set_red_blink(struct led_classdev *led_cdev, unsigned long *delay_on, unsigned long *delay_off) {
+	pr_debug("Led triggered with blink %d %d, flags=%d blink=%d", *delay_on, *delay_off, led_cdev->flags, is_status_blinking);
+	if (is_status_blinking)
+		ec_led_set_status(5);	
+	else
+		ec_led_set_status(4);
+	is_status_blinking=1;
+	return 0;
+}*/
+
+
+static int ec_led_status_set_green(struct led_classdev *cdev, enum led_brightness brightness) {
+	pr_debug("Setting status to brightness=%d", brightness);
+	if (is_unloading)
+		return brightness;
+	
+	ec_led_set_status(brightness);
+	return brightness;
+}
+
+/*static int ec_led_status_set_red(struct led_classdev *cdev, enum led_brightness brightness) {
+	ec_led_set_status(0);
+	if (brightness)
+		ec_led_set_status(2);
+	else
+		is_status_blinking=0;
+
+	if (is_unloading)
+		ec_led_set_status(5);
+	return brightness;
+	
+}*/
+
+static int ec_led_panel_brightness(struct led_classdev *cdev, enum led_brightness brightness) {
+	if (is_unloading)
+		return brightness;
+
+	ec_led_set_brightness(brightness);
+	return brightness;
+}
+
+// Activiy ignores static green on
+// Error ignores green activity and static
+// Locate ignores error and all above
+// How to disable activity?
+
+static int qnap_set_hdd_led_blink(struct led_classdev *led_cdev, unsigned long *delay_on, unsigned long *delay_off) {
+	struct qnap_led_classdev *qcdev = container_of(led_cdev, struct qnap_led_classdev, cdev);
+
+	pr_debug("Setting LED for disk %u to blink (off=%lu of=%lu), current=%d", qcdev->ec_index, *delay_on, *delay_off, led_cdev->brightness);
+	if (*delay_on == 0 && *delay_off == 0) {
+		switch (led_cdev->brightness) {
+			case 0:
+			case 1:
+				ec_write_byte(0x15a, qcdev->ec_index);
+				ec_write_byte(0x15f, qcdev->ec_index);
+				break;
+			case 2:
+				ec_write_byte(0x158, qcdev->ec_index);
+		}
+		return 0;
+	}
+	
+	return -EINVAL;
+}
+
+static int qnap_set_hdd_led(struct led_classdev *cdev,	enum led_brightness brightness) {
+	struct qnap_led_classdev *qcdev = container_of(cdev, struct qnap_led_classdev, cdev);
+	
+	pr_debug("Setting LED for disk %u to %d", qcdev->ec_index, brightness);
+	if (is_unloading)
+		return brightness;
+	ec_write_byte(0x157, qcdev->ec_index); // Disable blinking green (active)
+	ec_write_byte(0x159, qcdev->ec_index); // Disable blinking red (ident)
+
+	switch (brightness) {
+		case 0:
+			ec_write_byte(0x15d, qcdev->ec_index); // Disable static green (present)
+			ec_write_byte(0x15b, qcdev->ec_index); // Disable static red (error)
+			break;
+		case 1:
+			ec_write_byte(0x15a, qcdev->ec_index); // Enable static green (present)
+			ec_write_byte(0x15d, qcdev->ec_index); // Disable static red (error)
+			break;
+		case 2:
+			ec_write_byte(0x15b, qcdev->ec_index); // Disable static green (present)
+			ec_write_byte(0x15c, qcdev->ec_index); // Enable active red (error)
+			break;
+	}
+	return brightness;
+}
+
+
+/*static int __init qnap8528_init_slot_led(struct qnap8528_slot *slot) {
+	struct qnap8528_slot_led *slot_led;
+
+	pr_debug("Init disk slot LED for ec index %u (%s)", slot->ec_index, slot->name);
+	slot_led = devm_kzalloc(&ec_pdev->dev, sizeof(struct qnap8528_slot_led), GFP_KERNEL);
+	if (!slot_led)
+		return -ENOMEM;
+	slot_led->cdev.name = devm_kasprintf(&ec_pdev->dev, GFP_KERNEL, DRVNAME ":green:%s" , slot->name);
+	if (!slot_led->cdev.name)
+		return -ENOMEM;
+	slot_led->cdev.max_brightness = LED_ON;
+	slot_led->cdev.brightness_set = qnap8258_slot_led_set;
+	slot_led->ec_index = slot->ec_index;
+	slot_led->color = slot->color;
+	slot_led->current_state = QNAP8528_SLOT_LED_STATE_PRESENT;
+	devm_led_classdev_register(&ec_pdev->dev, &slot_led->cdev);
+}*/
+
+static int qnap_register_slot_leds(void) {
+	int i;
+	struct qnap_led_classdev *cdev;
+	struct qnap_model_config *cconfig = tsx73a_locate_config();;
+	if (!cconfig) {
+		pr_debug("Failed to find configuration for device model when configuring LEDs");
+		return -EINVAL;
+	}
+	for (i=0; cconfig->disk_slots[i].name; i++) {
+		pr_debug("Disk: %s @ ec %u", cconfig->disk_slots[i].name, cconfig->disk_slots[i].ec_index);
+		// &pdev->dev
+		cdev = devm_kzalloc(&ec_pdev->dev, sizeof(struct qnap_led_classdev), GFP_KERNEL);
+		if (!cdev) {
+			pr_debug("Cannot allocate led_classdev");
+			return -ENOMEM;
+		}
+		cdev->cdev.name = devm_kasprintf(&ec_pdev->dev, GFP_KERNEL, DRVNAME "::%s", cconfig->disk_slots[i].name);
+		if (!cdev->cdev.name) {
+			pr_debug("Cannot allocate kasprintf");
+			return -ENOMEM;
+		}
+		cdev->cdev.max_brightness = 2;
+		cdev->cdev.brightness_set_blocking = qnap_set_hdd_led;
+		cdev->cdev.blink_brightness = 1;
+		cdev->cdev.blink_set = qnap_set_hdd_led_blink;
+		cdev->ec_index = cconfig->disk_slots[i].ec_index;
+		devm_led_classdev_register(&ec_pdev->dev, &cdev->cdev);
+		
+
+	}
+	return 0;
+}
+
 
 static int ec_driver_probe(struct platform_device *pdev)
 {
@@ -1198,11 +1338,29 @@ static int ec_driver_probe(struct platform_device *pdev)
 	if (ret)
 		goto ec_probe_sysfs_ret;
 
+	ret = devm_led_classdev_register(&pdev->dev, &ec_led_usb);
+	if (ret)
+		goto ec_probe_input_ret;
+
+	ret = devm_led_classdev_register(&pdev->dev, &ec_led_status_green);
+	if (ret)
+		goto ec_probe_input_ret;
+
+	/*ret = devm_led_classdev_register(&pdev->dev, &ec_led_status_red);
+	if (ret)
+		goto ec_probe_input_ret;*/
+
+	ret = devm_led_classdev_register(&pdev->dev, &ec_led_panel_brightness_cdev);
+	if (ret)
+		goto ec_probe_input_ret;
+
+	qnap_register_slot_leds();
 
 	pr_debug("Probe");
 	goto ec_probe_ret;
 
-
+ec_probe_input_ret:
+	input_unregister_device(ec_bdev);
 ec_probe_sysfs_ret:
 	sysfs_remove_group(&pdev->dev.kobj, &ec_attr_group);
 	sysfs_remove_group(&pdev->dev.kobj, &ec_vpd_attr_group);
@@ -1290,7 +1448,7 @@ static int ec_hwmon_read(struct device *dev, enum hwmon_sensor_types type, u32 a
 		break;
 
 	case hwmon_pwm:
-		*val =  (ec_get_fan_pwm(channel) * 0xff) / 100;
+		*val =  ec_get_fan_pwm(channel);
 		break;
 	default:
 		return -EOPNOTSUPP;
@@ -1374,6 +1532,7 @@ tsx73a_exit_init:
 
 static void __exit tsx73a_exit(void)
 {
+	is_unloading = true;
 	if (ec_pdev)
 		platform_device_unregister(ec_pdev);
 

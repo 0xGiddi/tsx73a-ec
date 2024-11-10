@@ -133,6 +133,11 @@
 //#define EC_VPD_ 			0x0c030077      // Ta:03 Of:77 Ty:00 Le:03
 //#define EC_VPD_ 			0x0c1000cb      // Ta:03 Of:cb Ty:00 Le:10
 
+struct qnap_led_classdev {
+	struct led_classdev cdev;
+	u8 ec_index;
+};
+
 
 struct qnap_code_match {
 	char *code;
@@ -141,9 +146,8 @@ struct qnap_code_match {
 };
 
 struct qnap_slot_config {
-	u8 index;
-	u8 ec_bit;
-	u8 type;
+	char *name;
+	u8 ec_index;
 };
 
 struct qnap_model_config {
@@ -154,6 +158,8 @@ struct qnap_model_config {
 	u64 temp_mask;						// Bitmask of supported temperature channels
 	u64 fan_mask;						// Bitmask of supported fan channels
 	u64 pwm_mask; 						// Bitmask of supported PWM channels (multiple fan can be on a single PWM driver)
+
+	struct qnap_slot_config disk_slots[33];
 };
 
 
@@ -181,7 +187,8 @@ static struct qnap_model_config tsx73a_configs[] = {
 		},*/
 		.temp_mask = 0x0000000000000e1,
 		.fan_mask = 0x0000000000000041,
-		.pwm_mask = 0x0000000000000041
+		.pwm_mask = 0x0000000000000041,
+		.disk_slots = { {.name = "m2ssd1", .ec_index = 9}, {.name = "m2ssd2", .ec_index = 10}, {.name = "disk1", .ec_index = 1}, {.name = "disk2", .ec_index = 2}, {.name = "disk3", .ec_index = 3}, {.name = "disk4", .ec_index = 4}, {NULL} }
 	},
 	{
 		.model_name = "TS-673A",
@@ -197,7 +204,8 @@ static struct qnap_model_config tsx73a_configs[] = {
 			},
 		.temp_mask = 0x000000000000001e,
 		.fan_mask = 0x0000000000000041,
-		.pwm_mask = 0x0000000000000041
+		.pwm_mask = 0x0000000000000041,
+		.disk_slots = { {.name = "m2ssd1", .ec_index = 9}, {.name = "m2ssd2", .ec_index = 10}, {.name = "disk1", .ec_index = 1}, {.name = "disk2", .ec_index = 2}, {.name = "disk3", .ec_index = 3}, {.name = "disk4", .ec_index = 4}, {.name = "disk5", .ec_index = 5}, {.name = "disk6", .ec_index = 6}, {NULL} }
 	},
 	{NULL}
 };

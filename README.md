@@ -22,10 +22,10 @@ Expose fans via HWMON | :white_check_mark: | Expose the fan PWM/Speed via HWMON.
 Expose temperature sensors via HWMON | :white_check_mark: | Expose the system temperature sensors via HWMON. Used for monitoring with `lm-sensors` for example [1] [2].
 Expose fan control via PWM | WIP | Expose PWM interface for setting fan speeds manually. [3] [4] [5]
 Read RESET/COPY buttons |  :white_check_mark:  | Expose the state of the front COPY and rear RESET buttons as an input device. From my research it seems there is not interrupt for these buttons, so they are polled at 100ms intervals [6]
-LED global brightness |  WIP | A virtual LED exposed via the LED subsystem to control the bightness of all front panel LEDs.
-Status LED | WIP | Expose the status LED (red/green/blink/alternate) via the LED subsystem [7]
-USB LED | WIP |  Expose the blue USB LED (solid/blink/off)
-Disk LEDs | WIP | Expose the disk LEDs (present/error/blink) [7]. Fix N.2 NVME activity?[8]
+LED global brightness |  :white_check_mark: | A virtual LED exposed via the LED subsystem to control the bightness of all front panel LEDs.
+Status LED | No blink | Expose the status LED (red/green/blink/alternate) via the LED subsystem [7]
+USB LED | :white_check_mark: |  Expose the blue USB LED (solid/blink/off)
+Disk LEDs | No blink | Expose the disk LEDs (present/error/blink) [7]. Fix N.2 NVME activity?[8]
 Enclosure IDENT LED | WIP | Expose the enclosure identification LED. The TS-x73A blinks all disk LEDs red for ident, so maybe not needed? But other models might have dedicated LED.
 |----|----|----
 SATA power control | Unknown | There seems to be sata power control to power up/down SATA disks slots, this is not officially supported (according to the missing entries in `/etc/model.con`) but it works. Maybe add it for replacing disks on the fly?
