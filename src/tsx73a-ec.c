@@ -163,7 +163,7 @@ static struct hwmon_ops ec_hwmon_ops = {
 	.is_visible = &ec_hwmon_is_visible,
 	.read = &ec_hwmon_read,
 	.write = &ec_hwmon_write,
-	.read_string = &ec_hwmon_read_string
+	//.read_string = &ec_hwmon_read_string
 };
 
 static struct hwmon_chip_info ec_hwmon_chip_info = {
@@ -1296,11 +1296,11 @@ static int ec_driver_probe(struct platform_device *pdev)
 
 
 	for (i = 0; i < TSX73A_MAX_HWMON_CHANNELS; ++i)
-		ec_hwmon_fan_config[i] = HWMON_F_INPUT | HWMON_F_LABEL;
+		ec_hwmon_fan_config[i] = HWMON_F_INPUT; // | HWMON_F_LABEL;
 	ec_hwmon_fan_config[i] = 0;
 
 	for (i = 0; i < TSX73A_MAX_HWMON_CHANNELS; ++i)
-		ec_hwmon_temp_config[i] = HWMON_T_INPUT | HWMON_T_LABEL;
+		ec_hwmon_temp_config[i] = HWMON_T_INPUT; // | HWMON_T_LABEL;
 	ec_hwmon_temp_config[i] = 0;
 
 	for (i = 0; i < TSX73A_MAX_HWMON_CHANNELS; ++i)
@@ -1384,48 +1384,30 @@ static umode_t ec_hwmon_is_visible(const void *data, enum hwmon_sensor_types typ
 
 	switch (type) {
 	case hwmon_fan:
-		/**
-		 * The fans on the QNAP are a bit annoying, you would think that the checking the
-		 * fan status with the EC using ec_get_fan_status will return an error if the fan is
-		 * invalid, but this is not the case for fan numbers that are 20-25/30-35. Using a combination of
-		 * the fan status and the fan speed is also impossible to detect that a fan is invalid,
-		 * when reading the speed of an invalid fan, it returns either max u16 (65535) or -1, thats in most cases
-		 * for fans 33 and 34, the speed returned is 4853 and 11935 which breaks the rule. The system fan observed max
-		 * speed is just shy of 2000rpm and the cpu fan ~5000 rpm in max speed. Therfore, if the check is run when fans
-		 * might be at max speed, present fans might be erroneously omitted.
-		 *
-		 * There are three possible ways to bypass this:
-		 * 1. Check fan status and speed, ignore fan number above 29.
-		 * 2. Check fan status only, ignore all fans 19, this is the approach currently implemented, tested on TS-473A.
-		 * 3. Be less generic and use per model configs / request bitmask from user as parameter on load.
-		 *
-		 * A note about the fan number: on the TS-473A, the system fan is 0 and the CPU fan is 6. So multiple fans
-		 * in a system does NOT mean sequential fan numbers.s
+		/* 
+		 * A fan is deemed visible if the follwoing conditions are met (IN THIS ORDER):
+		 * 	- Status is 0
+		 *  - PWM is smaller than 256
+		 *  - RPM is reported as < 65535 
+		 * 
+		 * Tested only on TS-473A
 		 */
-
-		/*if (!ec_get_fan_status(channel) && channel < 20)
-			*/
-		if (BIT(channel) & config->fan_mask)
+		//if (BIT(channel) & config->fan_mask)
+		if ((0 ==ec_get_fan_status(channel)) && (256 > ec_get_fan_pwm(channel)) && (65535 != ec_get_fan_rpm(channel)))
 			return S_IRUGO;
 		break;
 	case hwmon_temp:
 		/**
-		 * Valid temperature channel is a channel which it's temperature ranges from 0 to 254
-		 * All invalid channels return either 255 (tested on TS-473A).
-		 *
-		 * NOTE: Sensors 0 and 7 might be the same physical sensor?
+		 * Valid temperature channel is a channel which it's temperature ranges from 0 to 127
+		 * All other sensors return either 128 or 255 (so dont heat the machine with a blowtorch?), 
 		 */
-		if (BIT(channel) & config->temp_mask)
+		tmp = ec_get_temperature(channel);
+		if ((0 < tmp) && (128 > tmp))
 			return S_IRUGO;
 		break;
 	case hwmon_pwm:
 		/**
-		 * Same story as the fans, reading a value should be between 0 and 255. If the value is out of range, it's invalid
-		 * however, pwm channels above 19 seem to return 255.
-		 *
-		 * From testing it seems to be that PWM value for the fan groups seem to be controlled together (0-5, 6&7, 10, 11, 20-25, 30-35)
-		 * so only one attribute/channel is needed per group. The TS-473A only has a single system fan and a single CPU fan, so
-		 * no tested physically. Maybe a per model config would be best?
+		 * TODO
 		 */
 		if (BIT(channel) & config->pwm_mask)
 			return S_IRUGO | S_IWUSR;
@@ -1465,9 +1447,10 @@ static int ec_hwmon_write(struct device *dev, enum hwmon_sensor_types type, u32 
 	return -EOPNOTSUPP;
 }
 
-static int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, const char **str)
+/*static int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, const char **str)
 {
 	pr_debug("String: t:%d a:%d c:%d", type, attr, channel);
+	// TODO: Implement string
 
 	switch (type) {
 	case hwmon_fan:
@@ -1483,7 +1466,7 @@ static int ec_hwmon_read_string(struct device *dev, enum hwmon_sensor_types type
 		return -EOPNOTSUPP;
 	}
 	return -EOPNOTSUPP;
-}
+}*/
 
 
 
