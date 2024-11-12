@@ -317,12 +317,10 @@ struct qnap8528_features {
 struct qnap8528_disk_slot {
     char *name;
     u8 ec_index;
-    u8 power_ctrl;
     u8 has_present:1;
     u8 has_active:1;
     u8 has_error:1;
     u8 has_locate:1;
-    //u8 has_pwr_ctrl:1;
 };
 
 struct qnap8528_model_config {

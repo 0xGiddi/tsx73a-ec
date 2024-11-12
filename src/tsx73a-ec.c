@@ -1526,6 +1526,6 @@ module_init(tsx73a_init);
 module_exit(tsx73a_exit);
 
 MODULE_DESCRIPTION("QNAP TS-x73A EC Driver");
-MODULE_VERSION("1.0");
+MODULE_VERSION("0.2");
 MODULE_AUTHOR("0xGiddi - <giddi AT giddi.net>");
 MODULE_LICENSE("GPL");
