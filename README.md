@@ -146,7 +146,7 @@ or does not use the IT8528 chip. Please check the Q&A for more information.
 
 ## Question and Answers
 
-**Q.** I can't find my model in the supproted model list, can I use this module?\
+**Q.** I can't find my model in the supported model list, can I use this module?\
 **A.** *If your device uses the IT8528 chip, then probably yes, but a configuration will need to be added to the module. If you are not sure, please create an issue requesting support and include your device model*
 
 **Q.**\ 

@@ -1,5 +1,6 @@
+/* SPDX-License-Identifier: GPL-2.0-or-later */
 #undef pr_fmt
-#define pr_fmt(fmt) "%s @ %s: " fmt "\n", DRVNAME, __FUNCTION__
+#define pr_fmt(fmt) "%s @ %s: " fmt "\n", DRVNAME, __func__
 
 #ifdef NDEBUG
 	#define DRIVER_DATA_DEBUG(data)  pr_debug("Driver data pointer: %p\n", data)
@@ -28,8 +29,8 @@
  * There are 4 VPD tables, each table 512 byte in length. Each table
  * seems to hold information about a specific component of the system.
  * Only tables 0 and 1 seem to be used on the TS-x73A, being main board and
- * backplane VPD respetivly. The only outliers are the case serial and system
- * nickname which are located in thre backplane VPD.
+ * backplane VPD respectively. The only outliers are the case serial and system
+ * nickname which are located in the backplane VPD.
  *
  * A VPD entry is located using the table number,offset withing the table,
  * length of the data and then parsed according to its type.
@@ -39,21 +40,21 @@
  * the following have been figured out and  assigned an attribute.
  *
  * The values bits are parsed as such:
- *  MSB																 LSB
- * 	1111    	11   			11  		11111111	1111111111111111
- *	Unkknown	table			type		length  	offset
- * 				0: Main PCB  	0 - str
- *	 			1: Backplane	1 - num
- * 				2/3: Not used	2 - date
- *  Example:
- *  VPD entry 0x0c1000cb = table 3, offset 203, length 16 and type 0
- *  0000 		11 				00 			00010000 	0000000011001011
-
+ *	MSB														     LSB
+ *	1111        11          11          11111111    1111111111111111
+ *	Unknown	table			type		length		offset
+ *				0: Main PCB		0 - str
+ *				1: Backplane	1 - num
+ *				2/3: Not used	2 - date
+ *	Example:
+ *	VPD entry 0x0c1000cb = table 3, offset 203, length 16 and type 0
+ *	0000		11				00			00010000	0000000011001011
  *
- * Notes:
- * 	Tables 2 and 3 may be used for network and redundent power VPD
- *  as there are hints to it in hal_daemon/libLinux_hal. Maybe for the 3rd model
- *  code?
+ *
+ *Notes:
+ *	Tables 2 and 3 may be used for network and redandent power VPD
+ *	as there are hints to it in hal_daemon/libLinux_hal. Maybe for the 3rd model
+ *	code?
  */
 
 #define QNAP8528_VPD_ENTRY_MAX      U8_MAX
@@ -125,7 +126,7 @@ struct qnap8528_device_attribute {
  * @pwr_recovery        Can AC power recovery mode be set
  * @eup_mode            Can EuP mode be set
  * @led_brightness      Has global LED brightness control
- * @led_status          Has Status LED 
+ * @led_status          Has Status LED
  * @led_10g             Has 10GiB indicator LED
  * @led_usb             Has USB led
  * @led_jbod            Has JBOD (attached storage) LED
@@ -135,7 +136,7 @@ struct qnap8528_device_attribute {
  */
 struct qnap8528_features {
 	u32 pwr_recovery:1;
-	u32 eup_mode:1;         
+	u32 eup_mode:1;
 	u32 led_brightness:1;
 	u32 led_status:1;
 	u32 led_10g:1;
@@ -151,11 +152,11 @@ struct qnap8528_features {
  * *@name               Disk name (e.g. "m2ssd1", "u2ssd1", "ssd1", "hdd1"),
 						slot names are derived from the original configuration
 						'SLOT_NAME' field, converted to lowercase and removing all
-						non-alphanumeric characters. If the slot name is "Disk %d" 
+						non-alphanumeric characters. If the slot name is "Disk %d"
 						the name is changed to "hdd%d" for clarity.
- * *@ec_index           The EC control index for disk related tasks, this is either 
+ * *@ec_index           The EC control index for disk related tasks, this is either
 						the number after the colon in `EC:%d` formatted fields, or
-						the disk number if the field contains only 'EC' in original config. 
+						the disk number if the field contains only 'EC' in original config.
  * *@has_present        Has present (static green) LED feature.
  * *@has_active         Has active (blinking green) LED feature.
  * *@has_error          Has error (static red) LED feature.
@@ -178,8 +179,8 @@ struct qnap8528_slot_config {
  * @name:               Model name
  * @mb_code:            Mainboard model code to match
  * @bp_code:            Backplain model code to match
- * @features:           qnap8528_features struct for avaiable features on this model
- * @fans:               0 terminated arrray of fans indexes suppoorted by this model
+ * @features:           qnap8528_features struct for available features on this model
+ * @fans:               0 terminated arrray of fans indexes supported by this model
  * @slots:              qnap8528_slot_config struct for creating slot related LEDs and attributes
  */
 struct qnap8528_config {
@@ -251,7 +252,7 @@ static int qnap8528_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
 static int qnap8528_hwmon_write(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, long val);
 static int qnap8528_register_hwmon(struct device *dev);
 
-static struct qnap8528_config* qnap8528_find_config(void);
+static struct qnap8528_config *qnap8528_find_config(void);
 static int qnap8528_probe(struct platform_device *pdev);
 static void __exit qnap8528_exit(void);
 static int __init qnap8528_init(void);

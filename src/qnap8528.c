@@ -1,29 +1,27 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 /*
- * qnap8528.c - Linux kernel module controlling QNAP specific hardware via IT8528 EC.
+ * Linux kernel module controlling QNAP specific hardware via IT8528 EC.
  *
- * Some QNAP sevices such as the TS-x73A series use a IT8528 EC with custom 
- * firmware to control some hardware options and capabilities. This module 
+ * Some QNAP services such as the TS-x73A series use a IT8528 EC with custom
+ * firmware to control some hardware options and capabilities. This module
  * exposes the non standard EC interface as standard Linux interfaces
-*  to the userland.
+ *  to the userland.
  *
- * This driver supports the follwoing QNAP IT8528 EC functions:
- * 	- Read QNAP Vital Product Data
- * 	- Set/Clear AC power recovery mode
- *  - Set/Clear Energy-using Products (EuP) mode
- *  - Expose EC FW version
- *  - Expose CPLD version
- *  - Read fan speeds in RPM
- *  - Read/write fan PWM
- *  - Read various temprature sensors
- *  - Read hardware buttons
- *  - Expose various LEDs
+ * This driver supports the following QNAP IT8528 EC functions:
+ *	- Read QNAP Vital Product Data
+ *	- Set/Clear AC power recovery mode
+ *	- Set/Clear Energy-using Products (EuP) mode
+ *	- Expose EC FW version
+ *	- Expose CPLD version
+ *	- Read fan speeds in RPM
+ *	- Read/write fan PWM
+ *	- Read various temperature sensors
+ *	- Read hardware buttons
+ *	- Expose various LEDs
  *
  * Version history:
- * 	v1.0-RC1: Initial RC, project renamed and rewritten.
+ *	v1.0-RC1: Initial RC, project renamed and rewritten.
  */
-
-
 
 #include <linux/delay.h>
 #include <linux/hwmon.h>
@@ -37,16 +35,16 @@
 #include <linux/time.h>
 #include "qnap8528.h"
 
-static bool qnap8528_skip_hw_check = false;
-module_param_named(skip_hw_check, qnap8528_skip_hw_check, bool, S_IRUGO);
+static bool qnap8528_skip_hw_check;
+module_param_named(skip_hw_check, qnap8528_skip_hw_check, bool, 0);
 MODULE_PARM_DESC(skip_hw_check, "Skip HW check for IT8528 device");
 
-static bool qnap8528_blink_sw_only = false;
-module_param_named(blink_sw_only, qnap8528_blink_sw_only, bool, S_IRUGO);
+static bool qnap8528_blink_sw_only;
+module_param_named(blink_sw_only, qnap8528_blink_sw_only, bool, 0);
 MODULE_PARM_DESC(blink_sw_only, "Disable hardware blinking and only use software blinking (less quirky but ties up EC for fast blinking)");
 
 static bool qnap8528_preserve_leds = true;
-module_param_named(preserve_leds, qnap8528_preserve_leds, bool, S_IRUGO);
+module_param_named(preserve_leds, qnap8528_preserve_leds, bool, 0);
 MODULE_PARM_DESC(preserve_leds, "Preserve LED states on module unload (default on)");
 
 static DEFINE_MUTEX(qnap8528_ec_lock);
@@ -58,10 +56,10 @@ static struct resource qnap8528_resources[] = {
 
 static struct platform_device *qnap8528_pdevice;
 
-static DEVICE_ATTR(fw_version, S_IRUGO, qnap8528_fw_version_attr_show, NULL);
-static DEVICE_ATTR(cpld_version, S_IRUGO, qnap8528_cpld_version_attr_show, NULL);
-static DEVICE_ATTR(power_recovery, S_IRUGO | S_IWUSR, qnap8528_power_recovery_attr_show, qnap8528_power_recovery_attr_store);
-static DEVICE_ATTR(eup_mode, S_IRUGO | S_IWUSR, qnap8528_eup_mode_attr_show, qnap8528_eup_mode_attr_store);
+static DEVICE_ATTR(fw_version, 0444, qnap8528_fw_version_attr_show, NULL);
+static DEVICE_ATTR(cpld_version, 0444, qnap8528_cpld_version_attr_show, NULL);
+static DEVICE_ATTR(power_recovery, 0644, qnap8528_power_recovery_attr_show, qnap8528_power_recovery_attr_store);
+static DEVICE_ATTR(eup_mode, 0644, qnap8528_eup_mode_attr_show, qnap8528_eup_mode_attr_store);
 
 static struct attribute *qnap8528_ec_attrs[] = {
 	&dev_attr_fw_version.attr,
@@ -77,20 +75,20 @@ static const struct attribute_group qnap8528_ec_attr_group = {
 	.attrs = qnap8528_ec_attrs
 };
 
-static QNAP8528_DEVICE_ATTR(enclosure_serial, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_ENC_SERIAL);
-static QNAP8528_DEVICE_ATTR(enclosure_nickname, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_ENC_NICKNAME);
-static QNAP8528_DEVICE_ATTR(mainboard_manufacturer, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_MB_MANUF);
-static QNAP8528_DEVICE_ATTR(mainboard_vendor, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_MB_VENDOR);
-static QNAP8528_DEVICE_ATTR(mainboard_name, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_MB_NAME);
-static QNAP8528_DEVICE_ATTR(mainboard_model, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_MB_MODEL);
-static QNAP8528_DEVICE_ATTR(mainboard_serial, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_MB_SERIAL);
-static QNAP8528_DEVICE_ATTR(mainboard_date, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_MB_DATE);
-static QNAP8528_DEVICE_ATTR(backplane_manufacturer, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_BP_MANUF);
-static QNAP8528_DEVICE_ATTR(backplane_vendor, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_BP_VENDOR);
-static QNAP8528_DEVICE_ATTR(backplane_name, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_BP_NAME);
-static QNAP8528_DEVICE_ATTR(backplane_model, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_BP_MODEL);
-static QNAP8528_DEVICE_ATTR(backplane_serial, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_BP_SERIAL);
-static QNAP8528_DEVICE_ATTR(backplane_date, S_IRUGO, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_BP_DATE);
+static QNAP8528_DEVICE_ATTR(enclosure_serial, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_ENC_SERIAL);
+static QNAP8528_DEVICE_ATTR(enclosure_nickname, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_ENC_NICKNAME);
+static QNAP8528_DEVICE_ATTR(mainboard_manufacturer, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_MB_MANUF);
+static QNAP8528_DEVICE_ATTR(mainboard_vendor, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_MB_VENDOR);
+static QNAP8528_DEVICE_ATTR(mainboard_name, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_MB_NAME);
+static QNAP8528_DEVICE_ATTR(mainboard_model, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_MB_MODEL);
+static QNAP8528_DEVICE_ATTR(mainboard_serial, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_MB_SERIAL);
+static QNAP8528_DEVICE_ATTR(mainboard_date, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_MB_DATE);
+static QNAP8528_DEVICE_ATTR(backplane_manufacturer, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_BP_MANUF);
+static QNAP8528_DEVICE_ATTR(backplane_vendor, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_BP_VENDOR);
+static QNAP8528_DEVICE_ATTR(backplane_name, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_BP_NAME);
+static QNAP8528_DEVICE_ATTR(backplane_model, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_BP_MODEL);
+static QNAP8528_DEVICE_ATTR(backplane_serial, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_BP_SERIAL);
+static QNAP8528_DEVICE_ATTR(backplane_date, 0444, qnap8528_vpd_attr_show, NULL, QNAP8528_VPD_BP_DATE);
 
 static struct attribute *qnap8528_vpd_attrs[] = {
 	&dev_attr_enclosure_serial.attr,
@@ -147,14 +145,14 @@ static struct hwmon_channel_info qnap8528_hwmon_pwm_chan_info = {
 	.config = qnap8528_hwmon_pwm_config
 };
 
-static struct hwmon_channel_info const *qnap8528_hwmon_chan_info[] = {
+static const struct hwmon_channel_info *qnap8528_hwmon_chan_info[] = {
 	&qnap8528_hwmon_temp_chan_info,
 	&qnap8528_hwmon_fan_chan_info,
 	&qnap8528_hwmon_pwm_chan_info,
 	NULL
 };
 
-static struct hwmon_ops qnap8528_hwmon_ops = {
+static const struct hwmon_ops qnap8528_hwmon_ops = {
 	.is_visible = qnap8528_hwmon_is_visible,
 	.read = qnap8528_hwmon_read,
 	.write = qnap8528_hwmon_write
@@ -165,7 +163,7 @@ static struct hwmon_chip_info qnap8528_hwmon_chip_info = {
 	.info = qnap8528_hwmon_chan_info
 };
 
-static DEVICE_ATTR(blink_bicolor, S_IWUSR, NULL, blink_bicolor_store);
+static DEVICE_ATTR_WO(blink_bicolor);
 
 static int qnap8528_ec_hw_check(void)
 {
@@ -184,7 +182,7 @@ static int qnap8528_ec_hw_check(void)
 		ret = -ENODEV;
 
 	release_region(0x2e, 2);
-	
+
 	if (ret)
 		pr_err("Could not locate IT8528 EC device");
 	else
@@ -301,7 +299,7 @@ qnap8528_ec_read_out:
 static umode_t qnap8528_ec_attr_check_visible(struct kobject *kobj, struct attribute *attr, int n)
 {
 	struct qnap8528_dev_data *data = dev_get_drvdata(container_of(kobj, struct device, kobj));
-	
+
 	if ((!data->config->features.eup_mode) && (strcmp(attr->name, "eup_mode") == 0))
 		return 0;
 
@@ -423,8 +421,8 @@ static ssize_t qnap8528_vpd_attr_show(struct device *dev, struct qnap8528_device
 	char raw[QNAP8528_VPD_ENTRY_MAX + 1] = {0};
 	u32 entry = attr->vpd_entry;
 	struct qnap8528_dev_data *data;
-	
-	if (dev && (0xdeadbeef == entry)) {
+
+	if (dev && (entry == 0xdeadbeef)) {
 		data = dev_get_drvdata(dev);
 		DRIVER_DATA_DEBUG(data);
 		if (data->config->features.enc_serial_mb)
@@ -433,31 +431,31 @@ static ssize_t qnap8528_vpd_attr_show(struct device *dev, struct qnap8528_device
 			entry = QNAP8528_VPD_ENC_SER_BP;
 	}
 	switch ((entry >> 0x1a) & 3) {
-		case 0:
-			reg_a = 0x56;
-			reg_b = 0x57;
-			reg_c = 0x58;
-			break;
-		case 1:
-			reg_a = 0x59;
-			reg_b = 0x5a;
-			reg_c = 0x5b;
-			break;
-		case 2:
-			reg_a = 0x5c;
-			reg_b = 0x5d;
-			reg_c = 0x5e;
-			break;
-		case 3:
-			reg_a = 0x60;
-			reg_b = 0x61;
-			reg_c = 0x62;
-			break;
-		default:
-			return -EINVAL;
+	case 0:
+		reg_a = 0x56;
+		reg_b = 0x57;
+		reg_c = 0x58;
+		break;
+	case 1:
+		reg_a = 0x59;
+		reg_b = 0x5a;
+		reg_c = 0x5b;
+		break;
+	case 2:
+		reg_a = 0x5c;
+		reg_b = 0x5d;
+		reg_c = 0x5e;
+		break;
+	case 3:
+		reg_a = 0x60;
+		reg_b = 0x61;
+		reg_c = 0x62;
+		break;
+	default:
+		return -EINVAL;
 	}
 
-	for (i=0; i < ((entry >> 0x10 ) & 0xff); i++) {
+	for (i = 0; i < ((entry >> 0x10) & 0xff); i++) {
 		offs = (entry & 0xffff) + i;
 		if (qnap8528_ec_write(reg_a, (offs >> 8) & 0xff) || qnap8528_ec_write(reg_b, offs & 0xff) || qnap8528_ec_read(reg_c, &raw[i]))
 			return -EBUSY;
@@ -471,26 +469,27 @@ static ssize_t qnap8528_vpd_parse(int type, int size, char *raw, char *buf)
 	int ret = 0;
 	u16 i, offs;
 	time64_t ts, time_bytes = 0;
+
 	switch (type) {
-		case 0: /* String */
-			strncpy(buf, raw, size);
-			buf[size + 1] = '\x0';
-			ret =  size + 1;
-			break;
-		case 1: /* Number */
-			ret += scnprintf(buf, PAGE_SIZE, "0x");
-			for (i=0; i < size; i++) {
-				offs = (i + 1) * 2;
-				ret += scnprintf(buf + offs, PAGE_SIZE - offs, "%02x", raw[size - i - 1]);
-			}
-			break;
-		case 2: /* Date */
-			memcpy(&time_bytes, raw, size);
-			ts = mktime64(2013, 1, 1, 0, 0, 0) + (time_bytes * 0x3c);
-			ret += scnprintf(buf, PAGE_SIZE, "%ptTs", &ts);
-			break;
-		default:
-			ret = -EINVAL;
+	case 0: /* String */
+		strncpy(buf, raw, size);
+		buf[size + 1] = '\x0';
+		ret =  size + 1;
+		break;
+	case 1: /* Number */
+		ret += scnprintf(buf, PAGE_SIZE, "0x");
+		for (i = 0; i < size; i++) {
+			offs = (i + 1) * 2;
+			ret += scnprintf(buf + offs, PAGE_SIZE - offs, "%02x", raw[size - i - 1]);
+		}
+		break;
+	case 2: /* Date */
+		memcpy(&time_bytes, raw, size);
+		ts = mktime64(2013, 1, 1, 0, 0, 0) + (time_bytes * 0x3c);
+		ret += scnprintf(buf, PAGE_SIZE, "%ptTs", &ts);
+		break;
+	default:
+		ret = -EINVAL;
 	}
 
 	return ret;
@@ -499,6 +498,7 @@ static ssize_t qnap8528_vpd_parse(int type, int size, char *raw, char *buf)
 static ssize_t blink_bicolor_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t count)
 {
 	int ret;
+
 	if (count > 0)
 		ret = qnap8528_ec_write(QNAP8528_LED_STATUS_REG, 5);
 	return ret ? ret : count;
@@ -509,17 +509,17 @@ static int qnap8528_led_status_set(struct led_classdev *cdev, enum led_brightnes
 	if (cdev->flags & LED_UNREGISTERING) {
 		if (!qnap8528_blink_sw_only)
 			device_remove_file(cdev->dev, &dev_attr_blink_bicolor);
-		
+
 		if (qnap8528_preserve_leds)
 			return 0;
 	}
-	
+
 	return qnap8528_ec_write(QNAP8528_LED_STATUS_REG, brightness);
 }
 
 static int qnap8528_led_status_blink(struct led_classdev *led_cdev, unsigned long *delay_on, unsigned long *delay_off)
 {
-	/* HW blink acceptable range: measured blink rate for green and red is ~628ms on/off, tolorance of ~25% */
+	/* HW blink acceptable range: measured blink rate for green and red is ~628ms on/off, tolerance of ~25% */
 	if (!(*delay_on == 0 && *delay_off == 0) && (*delay_on < 470 || *delay_on > 790 || *delay_off < 470 || *delay_off > 790))
 		return -EINVAL;
 
@@ -540,34 +540,37 @@ static int qnap8528_led_usb_set(struct led_classdev *cdev, enum led_brightness b
 
 static int qnap8528_led_usb_blink(struct led_classdev *led_cdev, unsigned long *delay_on, unsigned long *delay_off)
 {
-	
-	/* HW blink acceptable range: measured blink rate is ~376ms on/off, tolorance of ~25% */
+	/* HW blink acceptable range: measured blink rate is ~376ms on/off, tolerance of ~25% */
 	if (!(*delay_on == 0 && *delay_off == 0) && (*delay_on < 280 || *delay_on > 470 || *delay_off < 280 || *delay_off > 470))
 		return -EINVAL;
 
 	return qnap8528_ec_write(QNAP8528_LED_USB_REG, 1);
 }
 
-static int qnap8528_led_ident_set(struct led_classdev *cdev, enum led_brightness brightness) {
+static int qnap8528_led_ident_set(struct led_classdev *cdev, enum led_brightness brightness)
+{
 	if (qnap8528_preserve_leds && (cdev->flags & LED_UNREGISTERING))
 		return 0;
-	
+
 	return qnap8528_ec_write(QNAP8528_LED_IDENT_REG, brightness ? 1 : 2);
 }
 
-static int qnap8528_led_jbod_set(struct led_classdev *cdev, enum led_brightness brightness) {
+static int qnap8528_led_jbod_set(struct led_classdev *cdev, enum led_brightness brightness)
+{
 	if (qnap8528_preserve_leds && (cdev->flags & LED_UNREGISTERING))
 		return 0;
 	return qnap8528_ec_write(QNAP8528_LED_JBOD_REG, !!brightness);
 }
 
-static int qnap8528_led_10g_set(struct led_classdev *cdev, enum led_brightness brightness) {
+static int qnap8528_led_10g_set(struct led_classdev *cdev, enum led_brightness brightness)
+{
 	if (qnap8528_preserve_leds && (cdev->flags & LED_UNREGISTERING))
 		return 0;
 	return qnap8528_ec_write(QNAP8528_LED_10G_REG, !!brightness);
 }
 
-static int qnap8528_led_slot_set(struct led_classdev *cdev,	enum led_brightness brightness) {
+static int qnap8528_led_slot_set(struct led_classdev *cdev,	enum led_brightness brightness)
+{
 	int ret = -EINVAL;
 	struct qnap8528_slot_led *sled = container_of(cdev, struct qnap8528_slot_led, led_cdev);
 
@@ -583,20 +586,20 @@ static int qnap8528_led_slot_set(struct led_classdev *cdev,	enum led_brightness 
 		return ret;
 
 	switch ((int)brightness) {
-		case 0:
-			ret = qnap8528_ec_write(EC_LED_DISK_ERROR_OFF_REG, sled->slot_cfg->ec_index);
-			ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_PRESENT_OFF_REG, sled->slot_cfg->ec_index);
-			break;
-		case 1:
-			ret = qnap8528_ec_write(EC_LED_DISK_PRESENT_ON_REG, sled->slot_cfg->ec_index);
-			ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_ERROR_OFF_REG, sled->slot_cfg->ec_index);
-			break;
-		case 2:
-			ret = qnap8528_ec_write(EC_LED_DISK_PRESENT_OFF_REG, sled->slot_cfg->ec_index);
-			ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_ERROR_ON_REG, sled->slot_cfg->ec_index);
-			break;
-		default:
-			ret = -EINVAL;
+	case 0:
+		ret = qnap8528_ec_write(EC_LED_DISK_ERROR_OFF_REG, sled->slot_cfg->ec_index);
+		ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_PRESENT_OFF_REG, sled->slot_cfg->ec_index);
+		break;
+	case 1:
+		ret = qnap8528_ec_write(EC_LED_DISK_PRESENT_ON_REG, sled->slot_cfg->ec_index);
+		ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_ERROR_OFF_REG, sled->slot_cfg->ec_index);
+		break;
+	case 2:
+		ret = qnap8528_ec_write(EC_LED_DISK_PRESENT_OFF_REG, sled->slot_cfg->ec_index);
+		ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_ERROR_ON_REG, sled->slot_cfg->ec_index);
+		break;
+	default:
+		ret = -EINVAL;
 	}
 	return ret;
 }
@@ -605,14 +608,14 @@ static int qnap8528_led_slot_blink(struct led_classdev *cdev, unsigned long *del
 {
 	int ret = -EINVAL;
 	struct qnap8528_slot_led *sled = container_of(cdev, struct qnap8528_slot_led, led_cdev);
-	
-	/* HW blink acceptable range: measured at ~121ms and ~108ms for green/(red/amber), assuming a rate of 110 with a tolorance of ~25% */
+
+	/* HW blink acceptable range: measured at ~121ms and ~108ms for green/(red/amber), assuming a rate of 110 with a tolerance of ~25% */
 	if (!(*delay_on == 0 && *delay_off == 0) && (*delay_on < 80 || *delay_on > 140 || *delay_off < 80 || *delay_off > 140))
 		return ret;
-	
+
 	if (sled->led_cdev.brightness == 2) {
-			ret = qnap8528_ec_write(EC_LED_DISK_ACTIVE_OFF_REG, sled->slot_cfg->ec_index);
-			ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_LOCATE_ON_REG, sled->slot_cfg->ec_index);
+		ret = qnap8528_ec_write(EC_LED_DISK_ACTIVE_OFF_REG, sled->slot_cfg->ec_index);
+		ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_LOCATE_ON_REG, sled->slot_cfg->ec_index);
 	} else {
 		ret = qnap8528_ec_write(EC_LED_DISK_LOCATE_OFF_REG, sled->slot_cfg->ec_index);
 		ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_PRESENT_ON_REG, sled->slot_cfg->ec_index);
@@ -620,7 +623,6 @@ static int qnap8528_led_slot_blink(struct led_classdev *cdev, unsigned long *del
 	}
 
 	return ret;
-		
 }
 
 static int qnap8528_led_panel_brightness_set(struct led_classdev *cdev, enum led_brightness brightness)
@@ -661,12 +663,13 @@ static int qnap8528_led_panel_brightness_set(struct led_classdev *cdev, enum led
 	return ret;
 }
 
-static int qnap8528_register_leds(struct device *dev) {
+static int qnap8528_register_leds(struct device *dev)
+{
 	int i, ret;
 	struct qnap8528_slot_config *slots;
 	struct qnap8528_slot_led *sled;
 	struct qnap8528_dev_data *data = dev_get_drvdata(dev);
-	DRIVER_DATA_DEBUG(data);
+
 
 	if (data->config->features.led_status) {
 		data->led_status.name = DRVNAME "::status";
@@ -707,7 +710,7 @@ static int qnap8528_register_leds(struct device *dev) {
 		data->led_10g.brightness_set_blocking = qnap8528_led_10g_set;
 		devm_led_classdev_register(dev, &data->led_10g);
 	}
-	
+
 	if (data->config->features.led_brightness) {
 		data->led_brightness.name = DRVNAME "::panel_brightness";
 		data->led_brightness.max_brightness = 255;
@@ -717,7 +720,7 @@ static int qnap8528_register_leds(struct device *dev) {
 
 	if (data->config->slots) {
 		slots = data->config->slots;
-		for (i=0; slots[i].name; i++) {
+		for (i = 0; slots[i].name; i++) {
 			if (!(slots[i].has_present | slots[i].has_error))
 				continue;
 
@@ -735,43 +738,45 @@ static int qnap8528_register_leds(struct device *dev) {
 			devm_led_classdev_register(dev, &sled->led_cdev);
 		}
 	}
-	pr_info("LED devices registred");
+	pr_info("LED devices registered");
 	return 0;
 }
 
-/* Kepping this just in case we need it later on */
-/*
-static int qnap8528_fan_status_get(unsigned int fan)
-{
-	u16 reg;
-	u8 value;
+/* Keeping this just in case we need it later on */
 
-	if (fan >=0 && fan <= 5)
-		reg = 0x242;
-	else if (fan >= 6 && fan <= 7)
-		reg = 0x244;
-	else if (fan >= 0x14 && fan <= 0x19)
-		reg = 0x259;
-	else if (fan >= 0x1e && fan <= 0x23)
-		reg = 0x25a;
-	else
-		return -EINVAL;
-
-	if (qnap8528_ec_read(reg, &value))
-		return -EBUSY;
-
-	if (fan >=0 && fan <= 5)
-		return ((value >> (fan & 0x1f)) & 1) == 0 ? -ENODEV : 0;
-	if (fan >= 6 && fan <= 7)
-		return ((value >> ((fan - 0x06) & 0x1f)) & 1) == 0 ? -ENODEV : 0;
-	if (fan >= 0x14 && fan <= 0x19)
-		return ((value >> ((fan - 0x14) & 0x1f)) & 1) == 0 ? -ENODEV : 0;
-	if (fan >= 0x1e && fan <= 0x23)
-		return ((value >> ((fan - 0x1e) & 0x1f)) & 1) == 0 ? -ENODEV : 0;
-
-	return -EINVAL;
-}
-*/
+/**
+ *
+ *static int qnap8528_fan_status_get(unsigned int fan)
+ *{
+ *	u16 reg;
+ *	u8 value;
+ *
+ *	if (fan >=0 && fan <= 5)
+ *		reg = 0x242;
+ *	else if (fan >= 6 && fan <= 7)
+ *		reg = 0x244;
+ *	else if (fan >= 0x14 && fan <= 0x19)
+ *		reg = 0x259;
+ *	else if (fan >= 0x1e && fan <= 0x23)
+ *		reg = 0x25a;
+ *	else
+ *		return -EINVAL;
+ *
+ *	if (qnap8528_ec_read(reg, &value))
+ *		return -EBUSY;
+ *
+ *	if (fan >=0 && fan <= 5)
+ *		return ((value >> (fan & 0x1f)) & 1) == 0 ? -ENODEV : 0;
+ *	if (fan >= 6 && fan <= 7)
+ *		return ((value >> ((fan - 0x06) & 0x1f)) & 1) == 0 ? -ENODEV : 0;
+ *	if (fan >= 0x14 && fan <= 0x19)
+ *		return ((value >> ((fan - 0x14) & 0x1f)) & 1) == 0 ? -ENODEV : 0;
+ *	if (fan >= 0x1e && fan <= 0x23)
+ *		return ((value >> ((fan - 0x1e) & 0x1f)) & 1) == 0 ? -ENODEV : 0;
+ *
+ *	return -EINVAL;
+ * }
+ */
 
 static int qnap8528_fan_rpm_get(unsigned int fan)
 {
@@ -842,7 +847,7 @@ static int qnap8528_fan_pwm_set(unsigned int fan, u8 value)
 
 	if (value > 255)
 		value = 255;
-	
+
 	value = (value * 100) / 0xff;
 
 	if (fan >= 0 && fan <= 5) {
@@ -878,28 +883,29 @@ static int qnap8528_temperature_get(unsigned int sensor)
 	int ret;
 	u16 reg = 0;
 
-	if (sensor == 0 || sensor == 1)		 		/* CPU temp only if CPU_TEMP_UNIT == "EC" else ??? */
+	if (sensor == 0 || sensor == 1)				/* CPU temp only if CPU_TEMP_UNIT == "EC" else ??? */
 		reg = 0x600 + sensor;
-	else if (sensor >= 5 && sensor <= 7) 		/* System temp unit */
+	else if (sensor >= 5 && sensor <= 7)		/* System temp unit */
 		reg = 0x5fd + sensor;
-	else if (sensor == 0x0a)			 		/* Only if redanant power */
+	else if (sensor == 0x0a)					/* Only if redandnat power */
 		reg = 0x659;
-	else if (sensor == 0x0b)			 		/* Only if redanant power */
+	else if (sensor == 0x0b)					/* Only if redandnat power */
 		reg = 0x65c;
-	else if (sensor >= 0xf && sensor <= 0x26) 	/* Env temp unit */
+	else if (sensor >= 0xf && sensor <= 0x26)	/* Env temp unit */
 		reg = 0x5f7 + sensor;
 
 
 	ret = reg ? qnap8528_ec_read(reg, &value) : -EBUSY;
 	if (ret)
 		return ret;
-	
+
 	return (value < 128) && (value > 0) ? value : -ENODEV;
 }
 
 static void qnap8528_input_poll(struct input_dev *input)
 {
 	u8 val = 0;
+
 	if (qnap8528_ec_read(QNAP8528_BUTTON_INPUT_REG, &val))
 		return;
 
@@ -913,7 +919,7 @@ static int qnap8528_register_inputs(struct device *dev)
 {
 	int ret;
 	struct qnap8528_dev_data *data = dev_get_drvdata(dev);
-	
+
 	DRIVER_DATA_DEBUG(data);
 
 	data->input_dev = devm_input_allocate_device(dev);
@@ -928,17 +934,17 @@ static int qnap8528_register_inputs(struct device *dev)
 	input_set_capability(data->input_dev, EV_KEY,  BTN_0);
 	input_set_capability(data->input_dev, EV_KEY,  BTN_1);
 	input_set_capability(data->input_dev, EV_KEY,  BTN_2);
-	
+
 	ret = input_setup_polling(data->input_dev, qnap8528_input_poll);
 	if (ret)
 		return ret;
-	
+
 	input_set_poll_interval(data->input_dev, QNAP8528_INPUT_POLL_TIME);
 	ret = input_register_device(data->input_dev);
 	if (ret)
 		return ret;
-	
-	pr_info("Buttons input device registred");
+
+	pr_info("Buttons input device registered");
 	return 0;
 }
 
@@ -951,62 +957,61 @@ static umode_t qnap8528_hwmon_is_visible(const void *data, enum hwmon_sensor_typ
 
 	DRIVER_DATA_DEBUG(data);
 	switch (type) {
-		case hwmon_temp:
-			val = qnap8528_temperature_get(channel);
-			mode = ((val > 0) && (val < 128)) ? S_IRUGO : 0;
+	case hwmon_temp:
+		val = qnap8528_temperature_get(channel);
+		mode = ((val > 0) && (val < 128)) ? 0444 : 0;
+		break;
+	case hwmon_fan:
+		channel += 1;
+		if (!dev_data->config->fans)
 			break;
-		case hwmon_fan:
-			channel += 1;
-			if (!dev_data->config->fans)
-				break;
 
-			for (i=0; dev_data->config->fans[i]; i++) {
-				if (dev_data->config->fans[i] == channel)
-					mode = S_IRUGO;
-			}
+		for (i = 0; dev_data->config->fans[i]; i++) {
+			if (dev_data->config->fans[i] == channel)
+				mode = 0444;
+		}
+		break;
+	case hwmon_pwm:
+		channel += 1;
+		if (!dev_data->config->fans)
 			break;
-		case hwmon_pwm:
-			channel += 1;
-			if (!dev_data->config->fans)
-				break;
 
-			for (i=0; dev_data->config->fans[i]; i++) {
-				if (dev_data->config->fans[i] == channel) {
-					if (channel >= 0 && channel <= 5) {
-						if (!dev_data->hm_pwm_channels[0]) {
-							dev_data->hm_pwm_channels[0] = true;
-							mode = S_IRUGO | S_IWUSR;
-							break;
-						}
+		for (i = 0; dev_data->config->fans[i]; i++) {
+			if (dev_data->config->fans[i] == channel) {
+				if (channel >= 0 && channel <= 5) {
+					if (!dev_data->hm_pwm_channels[0]) {
+						dev_data->hm_pwm_channels[0] = true;
+						mode = 0644;
+						break;
 					}
-					
-					if (channel == 6 || channel == 7) {
-						if (!dev_data->hm_pwm_channels[1]) {
-							dev_data->hm_pwm_channels[1] = true;
-							mode = S_IRUGO | S_IWUSR;
-							break;
-						}
-					}
-					
-					if (channel >= 0x14 && channel <= 0x19) {
-						if (!dev_data->hm_pwm_channels[2]) {
-							dev_data->hm_pwm_channels[2] = true;
-							mode = S_IRUGO | S_IWUSR;
-							break;
-						}
-					}
-					
-					if (channel >= 0x1e && channel <= 0x23) {
-						if (!dev_data->hm_pwm_channels[3]) {
-							dev_data->hm_pwm_channels[3] = true;
-							mode = S_IRUGO | S_IWUSR;
-							break;
-						}
-					}
+				}
 
+				if (channel == 6 || channel == 7) {
+					if (!dev_data->hm_pwm_channels[1]) {
+						dev_data->hm_pwm_channels[1] = true;
+						mode = 0644;
+						break;
+					}
+				}
+
+				if (channel >= 0x14 && channel <= 0x19) {
+					if (!dev_data->hm_pwm_channels[2]) {
+						dev_data->hm_pwm_channels[2] = true;
+						mode = 0644;
+						break;
+					}
+				}
+
+				if (channel >= 0x1e && channel <= 0x23) {
+					if (!dev_data->hm_pwm_channels[3]) {
+						dev_data->hm_pwm_channels[3] = true;
+						mode = 0644;
+						break;
+					}
 				}
 			}
-		default:
+		}
+	default:
 	}
 	return mode;
 }
@@ -1014,16 +1019,16 @@ static umode_t qnap8528_hwmon_is_visible(const void *data, enum hwmon_sensor_typ
 static int qnap8528_hwmon_read(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel, long *val)
 {
 	switch (type) {
-		case hwmon_temp:
-			*val = qnap8528_temperature_get(channel) * 1000;
-			return 0;
-		case hwmon_fan:
-			*val = qnap8528_fan_rpm_get(channel);
-			return 0;
-		case hwmon_pwm:
-			*val = qnap8528_fan_pwm_get(channel);
-			return 0;
-		default:
+	case hwmon_temp:
+		*val = qnap8528_temperature_get(channel) * 1000;
+		return 0;
+	case hwmon_fan:
+		*val = qnap8528_fan_rpm_get(channel);
+		return 0;
+	case hwmon_pwm:
+		*val = qnap8528_fan_pwm_get(channel);
+		return 0;
+	default:
 	}
 	return -ENOTSUPP;
 }
@@ -1039,45 +1044,47 @@ static int qnap8528_register_hwmon(struct device *dev)
 {
 	int i;
 	struct qnap8528_dev_data *data = dev_get_drvdata(dev);
+
 	DRIVER_DATA_DEBUG(data);
 
-	for (i=0; i < QNAP8528_HWMON_MAX_CHANNELS + 1; i++) {
+	for (i = 0; i < QNAP8528_HWMON_MAX_CHANNELS + 1; i++) {
 		qnap8528_hwmon_temp_config[i] = HWMON_T_INPUT;
 		qnap8528_hwmon_fan_config[i] = HWMON_F_INPUT;
 		qnap8528_hwmon_pwm_config[i] = HWMON_PWM_INPUT;
 	}
 
-	for (i=0; i < QNAP8528_HWMON_PWM_BANKS; i++)
+	for (i = 0; i < QNAP8528_HWMON_PWM_BANKS; i++)
 		data->hm_pwm_channels[i] = false;
 
 	data->hwmon_dev = devm_hwmon_device_register_with_info(dev, DRVNAME, data, &qnap8528_hwmon_chip_info, NULL);
-	if (IS_ERR(data->hwmon_dev)) 
+	if (IS_ERR(data->hwmon_dev))
 		return PTR_ERR(data->hwmon_dev);
-	
-	pr_info("Hwmon device registred");
+
+	pr_info("Hwmon device registered");
 	return 0;
 }
 
-static struct qnap8528_config* qnap8528_find_config(void) {
+static struct qnap8528_config *qnap8528_find_config(void)
+{
 	int i;
 	char mb_model[QNAP8528_VPD_ENTRY_MAX + 1];
 	char bp_model[QNAP8528_VPD_ENTRY_MAX + 1];
-	
-	qnap8528_vpd_attr_show(NULL, &(struct qnap8528_device_attribute){.vpd_entry=QNAP8528_VPD_MB_MODEL}, mb_model);
-	qnap8528_vpd_attr_show(NULL, &(struct qnap8528_device_attribute){.vpd_entry=QNAP8528_VPD_BP_MODEL}, bp_model);
-	
+
+	qnap8528_vpd_attr_show(NULL, &(struct qnap8528_device_attribute){.vpd_entry = QNAP8528_VPD_MB_MODEL}, mb_model);
+	qnap8528_vpd_attr_show(NULL, &(struct qnap8528_device_attribute){.vpd_entry = QNAP8528_VPD_BP_MODEL}, bp_model);
+
 	if (!strnlen(mb_model, 32) || !strnlen(bp_model, 32))
 		return 0;
 
 	pr_info("Searching configs for a match with MB=%s BP=%s", mb_model, bp_model);
 
-	for (i=0; qnap8528_configs[i].mb_model && qnap8528_configs[i].bp_model; i++) {
+	for (i = 0; qnap8528_configs[i].mb_model && qnap8528_configs[i].bp_model; i++) {
 		if (!strnlen(qnap8528_configs[i].mb_model, 32) || !strnlen(qnap8528_configs[i].bp_model, 32))
 			continue;
 
 		if (strstr(mb_model, qnap8528_configs[i].mb_model) && strstr(bp_model, qnap8528_configs[i].bp_model)) {
 			pr_info("Model codes match found, model is %s", qnap8528_configs[i].name);
-			// CR: Add here sanity check for features
+			/* CR: Add here sanity check for features */
 			return &qnap8528_configs[i];
 		}
 	}
@@ -1090,12 +1097,12 @@ static int qnap8528_probe(struct platform_device *pdev)
 	int ret;
 	struct qnap8528_dev_data *data;
 
-	/* 
-	 * Skip HW check for the EC 
+	/*
+	 * Skip HW check for the EC
 	 * Not really usefull, but left in as a feature from debugging
 	 */
 	if (!qnap8528_skip_hw_check)
-		ret= qnap8528_ec_hw_check();
+		ret = qnap8528_ec_hw_check();
 	else
 		pr_warn("Skipping HW check for IT8528");
 
@@ -1113,8 +1120,8 @@ static int qnap8528_probe(struct platform_device *pdev)
 	if (!data->config)
 		return -ENOTSUPP;
 
-   ret = qnap8528_register_inputs(&pdev->dev);
-   if (ret)
+	ret = qnap8528_register_inputs(&pdev->dev);
+	if (ret)
 		return ret;
 
 	ret = qnap8528_register_leds(&pdev->dev);
@@ -1128,7 +1135,7 @@ static int qnap8528_probe(struct platform_device *pdev)
 	return 0;
 }
 
-static void __exit qnap8528_exit(void) 
+static void __exit qnap8528_exit(void)
 {
 	if (qnap8528_pdevice)
 		platform_device_unregister(qnap8528_pdevice);
@@ -1139,7 +1146,7 @@ static int __init qnap8528_init(void)
 {
 	int ret = 0;
 
-	/* Create a platform driver and a (pesudo) platform deivce to probe the driver */
+	/* Create a platform driver and a (pseudo) platform device to probe the driver */
 	ret = platform_driver_register(&qnap8528_pdriver);
 	if (ret)
 		goto qnap8528_init_ret;
@@ -1166,8 +1173,6 @@ qnap8528_init_driver_unregister:
 qnap8528_init_ret:
 	return ret;
 }
-
-// Module info
 
 MODULE_AUTHOR("0xGiddi <qnap8528@giddi.net>");
 MODULE_DESCRIPTION("QNAP IT8528 EC driver");
