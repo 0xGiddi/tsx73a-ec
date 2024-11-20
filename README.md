@@ -2,18 +2,28 @@
   - [Supported features](#supported-features)
 - [Installation Instructions](#installation-instructions)
   - [Install instructions using DKMS](#install-instructions-using-dkms)
-  - [Autoload module on startup with systemd](#autoload-module-on-startup-with-systemd)
+  - [Autoload module on startup with Systemd](#autoload-module-on-startup-with-systemd)
   - [Removing the module](#removing-the-module)
-- [Supported models](#supported-models)
+- [How to use this module](#how-to-use-this-module)
+  - [Module Parameter](#module-parameter)
+  - [Vital Product Data (VPD) Entries](#vital-product-data-vpd-entries)
+  - [EC Firmware version and CPLD version](#ec-firmware-version-and-cpld-version)
+  - [Energy-using Products (EuP) and Power Recovery modes](#energy-using-products-eup-and-power-recovery-modes)
+  - [Buttons and switches](#buttons-and-switches)
+  - [Fan Reporting/Control and Temperature Sensors](#fan-reportingcontrol-and-temperature-sensors)
+  - [System LEDs Control](#system-leds-control)
+  - [Disk Slot LED Control](#disk-slot-led-control)
+  - [Possible Future Feature](#possible-future-feature)
+- [Supported Models](#supported-models)
 - [Question and Answers](#question-and-answers)
 
 
 ## Overview
 
-
 The qnap8528 project is a kernel module for exposing the ITE8528 embedded controller functionality on QNAP NAS devices via common kernel APIs and subsystems. The goal is to get as many QNAP devices that use the ITE8528 EC to be supported. This project has no affiliation with *QNAP Systems Inc.*.
 
 ### Supported features
+
 ✅ Reading EC firmware version and CPLD version\
 ✅ Changing AC power recovery mode\
 ✅ Changing EuP mode\
@@ -38,7 +48,7 @@ Before installing, please check the *Supported Models* table and see that your d
 4. Compile and install the module using with `make install`
 5. Ensure the module is installed using `dkms status`
 
-### Autoload module on startup with systemd
+### Autoload module on startup with Systemd
 1. Create a new unit file `touch /etc/systemd/system/qnap8528-load-module.service`
 2. Open the file in your favorite editor and add the following:
 ```ini
@@ -65,11 +75,155 @@ If module is not loaded, try `systemctl daemon-reload` and `systemctl start qnap
 3. use `make uninstall` to uninstall the kernel module
 4. Verify with `dkms status` that the module is no longer installed
 
-## Supported models
+## How to use this module
 
-The following table lists all devices that have a valid configuration in the module and should 
+### Module Parameter
+The module currently has 3 configuration parameters that can be set at load time:
+
+`skip_hw_check`:\
+Set to `false` by default, this prevents the module checking to see if a valid *IT8528* exists, the check is put there so that the module does not interact with an unknown device I/O ports more than it needs in the case that the module is loaded on the wrong machine. This parameter should not be set under normal conditions and is used mostly for debugging.
+
+`qnap8528_blink_sw_only`:\
+Set to `false` by default, this prevents registering the hardware blink callbacks on the device so all blinking is done via software. In most cases this is not needed and is a remnant of testing the LED subsystem, however, since the LED bilking logic is a mess and some edge cases may exist, this parameter exists to prevent letting the EC blink the LEDs. The `ident` LED is an exception since its behavior is only to blink.
+
+`preserve_leds`:\
+Set to `true` by default, this prevents the LED subsystem from turning of the LEDS when the module is unloaded. This is useful to keep enabled so that information can be conveyed by the LEDs even when then module is not loaded (for example, when shutting down, you might want the status LED to be a specific color and stay that way until the device has turned off).
+
+The pseudo-LED `panel_brightneess` which controls the brightness of all the LEDs is not affected by this parameter and always preserves its value on unloading the module.
+
+### Vital Product Data (VPD) Entries
+The VPD entries provide information about the device, known VPD entries can be read under `/sys/devices/platform/qnap8528/vpd`, the  following VPD entries are supported:
+
+ - `backplane_date`
+ - `backplane_manufacturer`
+ - `backplane_model` - Used for locating device config
+ - `backplane_name`
+ - `backplane_serial`
+ - `backplane_vendor`
+ - `enclosure_nickname`
+ - `enclosure_serial` - This is the SN on the external sticker
+ - `mainboard_date`
+ - `mainboard_manufacturer`
+ - `mainboard_model` - Used for locating device config
+ - `mainboard_name`
+ - `mainboard_serial`
+ - `mainboard_vendor`
+
+### EC Firmware version and CPLD version
+Located under `/sys/devices/platform/qnap8528/ec`:
+ - `fw_version` - Returns the EC firmware version
+ - `cpld_version` - Returns the CPLD firmware
+
+### Energy-using Products (EuP) and Power Recovery modes
+*Not avaiable on all devices - configuration dependant*
+Located under `/sys/devices/platform/qnap8528/ec`, allows to control features such as Wake-on-LAN nd power recovery. When EuP mode is set to ON, Wake-on-LAN and auto power recovery is not available.
+
+- `eup_mode` - Returns the current EuP mode on read, sets on write.
+- `power_recovery` - Returns the power recovery mode on read, sets on write.
+
+Valid Values for EuP mode:
+|Value| Mode
+|-|-|
+|0| EuP mode is OFF (WOL/Power-Recovery available)
+|1| EuP mode is ON (WOL/Power-Recovery unavailable)
+
+Valid Values for power recovery options:
+|Value| Mode
+|-|-|
+|0| Keep device powered down
+|1| Power device back up
+|2| Enter last power state
+
+### Buttons and switches
+Buttons and switches are represented as an input device. They report as `EV_KEY` events and can be read with standard software and libraries (such as `evtest`). The input device is always registered, physical buttons are dependant on QNAP device model.
+
+ The following buttons are supported:
+ |Name|Event Code| Description|
+ |-|-|-
+ |Chassis Open|`BTN_0`| Chassis open switch
+ |Reset|`BTN_1`| Reset button
+ |USB Copy|`BTN_2`| Front panel USB copy button
+
+### Fan Reporting/Control and Temperature Sensors
+The fan and temperature sensors are exposed using the hwmon subsystem.
+
+The temperature sensors are enumerated at the module load time and are not part of the device configuration, a valid temperature sensor is a sensor with a values of between (not including) `0` and `128` (So  don't keep the NAS in the freezer when loading the module). From the research, this is the mapping between temperature sensors and their number (the exact location of the sensor depends on model and no mapping exists):
+
+|Temp Sensor Index|QNAP "Region"
+|-|-
+|`temp0`, `temp1`| CPU sensors (note 1)|
+|`temp5` - `temp7`| System sensors
+|`temp10`, `temp11`| Redundant power sensor
+|`temp15` - `temp8`| Environment sensor
+
+Note 1: I'm not sure if this is the actual CPU temperatures on system what DO NOT have a "proper" processor (an Intel or AMD processor) as I do not own such as device, on units that have a "proper" processor, the CPU temperature unit is set to `DTS` and not `EC` and the sensor reports a value of unknown origin.
+
+Fans inputs are registered according to device config and report their speed in RPM (under `/sys/class/hwmon/hwmonX/fanY_input`), fan control is done via PWM channels (under `/sys/class/hwmon/hwmonX/pwmX`),
+
+An unimportant side-note: The EC controls fans in groups (multiple fans will be effected by a change to a single PWM channel), there are 4 PWM channels and for each group, if a fan exists in that group, the PWM group will have the same index as the first fan that exists in that group, so for fan #7 (which is in the second group that controls fans #6 and #7) a pwm channel `pwm7` will be created if fan #6 does not exist.:
+
+|PWM Group | Fans Controlled
+|-|-
+Group 1|Fans 0-5
+Group 2|Fans 6, 7
+Group 3|Fans 20-25
+Group 4|Fans 30-35
+
+**Why fans are no enumerated at runtime:** \
+I experimented with enumerating the fans at runtime by using a combination of checking the fan status in the fan status EC register, checking that the PWM values are between `0` and `255` and that the reported RPM is not a junk value (such as `65535` on my device), however, the RPM check is not enough and the junk value is not always a MAX_SHORT or something nice that can be detected. This method of enumeration also extends the module load. If this feature is requested it will not be hard to add, please create an issue requesting it.
+
+### System LEDs Control
+
+System LEDs can be controlled via the standard Linux LED subsystem. For LEDs that have more than a single color (e.g. the *Status* LED), the brightness value dictates the color of the LED, so setting *Status* to `0` will turn it off, setting it to `1` will set it green and `3` would turn it red. Following is a list of supported leds (without the `qnap8528::` prefix):
+
+If an LED has multiple color, the blink color can be controlled by setting the correct brightness value either before or while blinking. To stop the blinking, a value of `0` needs to be written as the brightness value.
+
+|Name|Device Name|Brightness Values|Notes
+|-|-|-|-
+|Status|`status`|`0`,`1`,`2` for Off, On Green, On Red| Support blink, see note below
+|USB|`usb`|`0`,`1` for Off, On (Blue)| Support blink
+|Enclosure Identification|`ident`|`0`,`1` for Off, On (Flashing Green/Red) | Overrides all disk LEDs until disabled
+|JBOD Expansion|`jbod`|`0`,`1` for Off, On (Orange?)|
+|10GbE Expansion|`10GbE`|`0`,`1` for Off, On (Green?)|
+|USB|`panel_brightness`|`0`-`100` for Off, Max Brightness| Affects all LEDs
+
+***Status LED Note***\
+The status LED is a special case where it can blink red and green in an alternating pattern, a special attribute `blink_bicolor` is created (if hardware blink was not disabled) which when written to with any value (except an empty string) will set the the *Status* LEDs into the green-red blinking pattern. To disable this, set the brightness of the LED to anything else.
+
+**Why not use separate LED devices for each color?**\
+Since the LEDs are either ON or OFF and colors cannot be mixed, a design choice was made that each LED is represented by a single kernel LED device, this not just cuts down on the number of LED entries created in the `/sys/class/leds` directory (especially when having 2 LEDs per disk), but it also makes it easier to keep track of the states of two connected LEDs more manageable.
+
+### Disk Slot LED Control
+
+The disk slot LEDs are controlled in a similar way to the system *Status* LED, where the brightness dictates the color (if multiple colors are available). The slot LEDs are named according to their names in the QNAP device documentation and slot numbers are preserved matching the physical disk slot they belong to. The only name change is that when a disk slot that QNAP names with a generic *Disk X*, the module name `hddX` to denote its type. The following table shows example slot names:
+
+|QNAP Name|Module LED Name
+|-|-
+|Disk X| `hddX`
+|SSD X| `ssdX`
+|M.2 SSD X| `m2ssdX`
+|U.2 SSD X| `u2ssdX`
+
+Apart from that, there are a few other notes about disk slot LEDs for various device models:
+
+**Disk slots don't always have LEDs**\
+Some of the LEDs for disk slots are controlled by other hardware, and if so they are not exposed my this module (e.g. the *TES-1885U* only has EC LED control for 6/18 of the disks, the remaining 12 are controlled by another device). Or, the slot LEDs may simply not exist such as for some internal M.2 drives (e.g. *TS-855EU* which as 2 internal M.2 disks). Please check the *Disk LEDs* column in the supported models table to check how many disk LEDs are available.
+
+**Some devices do not have bi-color LEDs**\
+Some devices, such as the *TS-873AEU* do not have a green LEDs for the disks (that are controlled by the EC) only a red LEDs. In such a case (and vice-versa, if no red LED exists, only green), the brightness value written to the disk slot LED would turn on/blink the LED that does exist, so if no green LED exists but the value `1` is written (and not `2`), the red LED will illuminate instead.
+
+**Disk slot drive activity blinking**\
+Some devices (such as the *TS-473A*) blink the green disk slot LED to indicate the disk is being accessed, however, due to the architecture of the backplane, this "works out-of-the-box" behavior only works for some of the disk drives (on my NAS, disks 1 and 2, and disks 3 and 4 stay static green), unfortunately there is no known way (to me, currently) to disable this blinking if it's unwanted, the blinking will happen no matter the value set to activity blink register in the EC. However, the activity blinking is effected by turning the green LED off completely.
+
+
+### Possible Future Feature
+- Adding SATA disk power control for hotswapping disks
+
+## Supported Models
+
+The following table lists all devices that have a valid configuration in the module and should
 work out-of-the-box. If you cannot find your model here, it either does not yet have a configuration entry
-or does not use the IT8528 chip. Please check the Q&A for more information. 
+or does not use the IT8528 chip. Please check the Q&A for more information.
 
 |Model Name|MB Code|BP Code|Disk LEDs|Notes
 |-|-|-|-|-|
@@ -109,7 +263,7 @@ or does not use the IT8528 chip. Please check the Q&A for more information.
 |TS-973AX|Q0711|Q0760|9/9 |
 |TS-873A|Q07D0|Q07L0|10/10 |🟩 Similar to TS-473A
 |TS-673A|Q07D0|Q07M0|8/8 |🟩 Similar to TS-473A
-|TS-473A|Q07D0|Q07N0|6/6 |  ✅ Tested 
+|TS-473A|Q07D0|Q07N0|6/6 |  ✅ Tested
 |TS-1655|Q07Z1|Q08G0|18/18 |
 |TS-2287XU|Q0840|Q08A0|22/22 |
 |TS-1887XU|Q0840|Q0950|18/18 |
@@ -140,29 +294,35 @@ or does not use the IT8528 chip. Please check the Q&A for more information.
 |TVS-1275U|SAP00|SBO70|12/14 | ⚠️ See *1
 |TVS-1675U|SAP00|SBO80|16/18 | ⚠️ See *1
 
-*1 Some or all disks LEDs are managed by other hardware (not the EC).\
+*1 Some or all disks LEDs are managed by other hardware (not the EC), if the model is missing 2 disks (e.g `8/10`), it's most likely the internal M.2/NVME ports that do not have an LED associated with them.\
 *2 Some or all of the disks do not have a present or error (green/red) LED.\
 *3 This device config file contains a 3rd code number which is not checked or tested. Might hint at use of VPD table 3 and 4?
 
 ## Question and Answers
 
-**Q.** I can't find my model in the supported model list, can I use this module?\
-**A.** *If your device uses the IT8528 chip, then probably yes, but a configuration will need to be added to the module. If you are not sure, please create an issue requesting support and include your device model*
+**Q.** **I have a device that has not been tested yet, how can I be sure that everything is working properly?**\
+**A.** *Install the without the `systemd` service and check the functionality, read VPD entries, check the power recovery and EuP modes (if applicable), test setting the different LEDs and check that hwmon information seems correct, you might want to keep `dmesg` up and check that there are no errors reported in the process, then, let us know via an issue if you have any problems or that everything seems OK and it has been tested.*
 
-**Q.**\ 
-**A.**
+**Q.** **What environment was this module developed in?**\
+**A.** *This module was developed and tested primarily on Debian 12 (bookworm), Linux kernel version `6.1.0-18` on the amd64 based TS-473A NAS device, however the module was also compiled successfully under Arch Linux and Manjaro*.
 
-**Q.**\
-**A.**
+**Q.** **Can I get a `.deb`, `.rpm` (or other package format) file?**\
+**A.** *Hopefully Soon! I am working (as time permits) on creating packages for different NAS OS flavours (where possible)*
 
-**Q.**\
-**A.**
+**Q.** **I don't see my QNAP model in the table of supported devices, what to do?**\
+**A.** *Either the device does not use the IT8528 chip or I missed it when generating the config, feel free to open a new issue and report this with as much information about the model.*
 
-**Q.**\
-**A.**
+**Q.** **What is this `MB Code` and `BP Code`?**\
+**A.** *These are the model codes stored in the devices VPD tables, an `MB` code is the product code of the mainboard (motherboard) and the `BP` code is for the backplane. These codes are used to locate the correct configuration for the device*, some devices might share a code, such as the `TS-X73A` family that share the mainboard code of `Q07D0` but have different backplane codes depending on the number of disks, the codes in the VPD tables are actually longer, and contain a revision number, but that does not seem to change the configuration.
 
-**Q.**\
-**A.**
+**Q.** **I have loaded the module but the fans speeds don't change with temperature rise/fall, what's wrong?**\
+**A.** *This module does not decide how to control the fans, it only exposes the fan controls and reporting for third part scripts*
 
-**Q.**\
-**A.**
+**Q.** **I have loaded the module but the disk LEDs are not blinking when disk activity is happening, what's wrong?**\
+**A.** *This module does not blink the disk activity LEDs when disks are accessed, this was a possible feature, however no proper way was found to link a physical disk slot to a disk device, so this was left for the user to deice how to do it, I personally was thinking of maybe using System Taps or similar to trigger a oneshot event, in addition, changes made to the Linux kernel make it hard to hook the disk block-IO interface without inviting instability to the system*
+
+**Q.** **There seem to be things missing (a fan, an HDD led, etc...) why?**\
+**A.** *It's most likely that that specific sensor/fan/LED is not managed by the EC, if you think this is a configuration error, report it.*
+
+**Q.** **I need/want feature XYZ, can you please add support for it?**\
+**A.** *Depends on the feature, if it's part of the IT8528 EC responsibility and an API to reverse engineer is available, we can try, create an Issue contain all information.*

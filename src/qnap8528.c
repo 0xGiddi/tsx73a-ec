@@ -21,6 +21,7 @@
  *
  * Version history:
  *	v1.0-RC1: Initial RC, project renamed and rewritten.
+ *	v1.0: Updated LED logic
  */
 
 #include <linux/delay.h>
@@ -426,7 +427,6 @@ static ssize_t qnap8528_vpd_attr_show(struct device *dev, struct qnap8528_device
 
 	if (dev && (entry == 0xdeadbeef)) {
 		data = dev_get_drvdata(dev);
-		DRIVER_DATA_DEBUG(data);
 		if (data->config->features.enc_serial_mb)
 			entry = QNAP8528_VPD_ENC_SER_MB;
 		else
@@ -508,6 +508,8 @@ static ssize_t blink_bicolor_store(struct device *dev, struct device_attribute *
 
 static int qnap8528_led_status_set(struct led_classdev *cdev, enum led_brightness brightness)
 {
+	struct qnap8528_system_led *sled = container_of(cdev, struct qnap8528_system_led, cdev);
+
 	if (cdev->flags & LED_UNREGISTERING) {
 		if (!qnap8528_blink_sw_only)
 			device_remove_file(cdev->dev, &dev_attr_blink_bicolor);
@@ -516,21 +518,35 @@ static int qnap8528_led_status_set(struct led_classdev *cdev, enum led_brightnes
 			return 0;
 	}
 
-	return qnap8528_ec_write(QNAP8528_LED_STATUS_REG, brightness);
+	if (brightness) {
+		if(sled->is_hw_blink)
+			qnap8528_ec_write(QNAP8528_LED_STATUS_REG, brightness  == 1 ? 3 : 4);
+		else
+			qnap8528_ec_write(QNAP8528_LED_STATUS_REG, brightness);
+	} else {
+		sled->is_hw_blink = false;
+		qnap8528_ec_write(QNAP8528_LED_STATUS_REG, 0);
+	}
+
+	return 0;
 }
 
-static int qnap8528_led_status_blink(struct led_classdev *led_cdev, unsigned long *delay_on, unsigned long *delay_off)
+static int qnap8528_led_status_blink(struct led_classdev *cdev, unsigned long *delay_on, unsigned long *delay_off)
 {
+	struct qnap8528_system_led *sled = container_of(cdev, struct qnap8528_system_led, cdev);
+
 	/* HW blink acceptable range: measured blink rate for green and red is ~628ms on/off, tolerance of ~25% */
 	if (!(*delay_on == 0 && *delay_off == 0) && (*delay_on < 470 || *delay_on > 790 || *delay_off < 470 || *delay_off > 790))
 		return -EINVAL;
+	
+	sled->is_hw_blink = true;
 
-	if (led_cdev->brightness == 2)
-		return qnap8528_ec_write(QNAP8528_LED_STATUS_REG, 4);
+	if (cdev->brightness == 2)
+		qnap8528_ec_write(QNAP8528_LED_STATUS_REG, 4);
 	else
-		return qnap8528_ec_write(QNAP8528_LED_STATUS_REG, 3);
+		qnap8528_ec_write(QNAP8528_LED_STATUS_REG, 3);
 
-	return -EINVAL;
+	return 0;
 }
 
 static int qnap8528_led_usb_set(struct led_classdev *cdev, enum led_brightness brightness)
@@ -540,7 +556,7 @@ static int qnap8528_led_usb_set(struct led_classdev *cdev, enum led_brightness b
 	return qnap8528_ec_write(QNAP8528_LED_USB_REG, brightness ? 2 : 0);
 }
 
-static int qnap8528_led_usb_blink(struct led_classdev *led_cdev, unsigned long *delay_on, unsigned long *delay_off)
+static int qnap8528_led_usb_blink(struct led_classdev *cdev, unsigned long *delay_on, unsigned long *delay_off)
 {
 	/* HW blink acceptable range: measured blink rate is ~376ms on/off, tolerance of ~25% */
 	if (!(*delay_on == 0 && *delay_off == 0) && (*delay_on < 280 || *delay_on > 470 || *delay_off < 280 || *delay_off > 470))
@@ -573,58 +589,85 @@ static int qnap8528_led_10g_set(struct led_classdev *cdev, enum led_brightness b
 
 static int qnap8528_led_slot_set(struct led_classdev *cdev,	enum led_brightness brightness)
 {
-	int ret = -EINVAL;
 	struct qnap8528_slot_led *sled = container_of(cdev, struct qnap8528_slot_led, led_cdev);
 
 	if (qnap8528_preserve_leds && (cdev->flags & LED_UNREGISTERING))
 		return 0;
 
-	ret = sled->slot_cfg->has_active ? qnap8528_ec_write(EC_LED_DISK_ACTIVE_OFF_REG, sled->slot_cfg->ec_index) : 0;
-	if (ret)
-		return ret;
+	/*
+	 * Here comes a lot of logic, this might be unnecessary and writing to non-existent
+	 * LED EC register is OK, but we dont know that, so let's start branching like crazy.
+	 */ 
 
-	ret = sled->slot_cfg->has_locate ? qnap8528_ec_write(EC_LED_DISK_LOCATE_OFF_REG, sled->slot_cfg->ec_index) : 0;
-	if (ret)
-		return ret;
+	/* Start with a clean state, disable all LED states */
+	if (sled->is_hw_blink) {
+		if (sled->slot_cfg->has_active)
+			qnap8528_ec_write(EC_LED_DISK_ACTIVE_OFF_REG, sled->slot_cfg->ec_index);
+		if (sled->slot_cfg->has_locate)
+			qnap8528_ec_write(EC_LED_DISK_LOCATE_OFF_REG, sled->slot_cfg->ec_index);
+	}
 
-	switch ((int)brightness) {
+	if (sled->slot_cfg->has_present)
+		qnap8528_ec_write(EC_LED_DISK_PRESENT_OFF_REG, sled->slot_cfg->ec_index);
+	if (sled->slot_cfg->has_active)
+		qnap8528_ec_write(EC_LED_DISK_ERROR_OFF_REG, sled->slot_cfg->ec_index);
+
+	/* What state do we want to achieve? */
+	switch((int)brightness) {
 	case 0:
-		ret = qnap8528_ec_write(EC_LED_DISK_ERROR_OFF_REG, sled->slot_cfg->ec_index);
-		ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_PRESENT_OFF_REG, sled->slot_cfg->ec_index);
+		/* LEDs are already OFF, just set the HW blink flag */
+		sled->is_hw_blink = false;
 		break;
 	case 1:
-		ret = qnap8528_ec_write(EC_LED_DISK_PRESENT_ON_REG, sled->slot_cfg->ec_index);
-		ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_ERROR_OFF_REG, sled->slot_cfg->ec_index);
-		break;
+		/* Do we have a present LED? Good, otherwise treat as only error 
+		 * If no present, we also dont care about activity since its needs present
+		 * to be ON
+		 */
+		if (sled->slot_cfg->has_present) {
+			qnap8528_ec_write(EC_LED_DISK_PRESENT_ON_REG, sled->slot_cfg->ec_index);
+			
+			if (sled->is_hw_blink && sled->slot_cfg->has_active)
+				qnap8528_ec_write(EC_LED_DISK_ACTIVE_ON_REG, sled->slot_cfg->ec_index);
+
+			break;
+		}
+		__attribute__((__fallthrough__));
 	case 2:
-		ret = qnap8528_ec_write(EC_LED_DISK_PRESENT_OFF_REG, sled->slot_cfg->ec_index);
-		ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_ERROR_ON_REG, sled->slot_cfg->ec_index);
+		/* Turn on error LED and blink if state was blinking */
+		if (sled->slot_cfg->has_error)
+			qnap8528_ec_write(EC_LED_DISK_ERROR_ON_REG, sled->slot_cfg->ec_index);
+		
+		if (sled->is_hw_blink && sled->slot_cfg->has_locate)
+			qnap8528_ec_write(EC_LED_DISK_LOCATE_ON_REG, sled->slot_cfg->ec_index);
 		break;
-	default:
-		ret = -EINVAL;
 	}
-	return ret;
+
+	return 0;
 }
 
 static int qnap8528_led_slot_blink(struct led_classdev *cdev, unsigned long *delay_on, unsigned long *delay_off)
 {
-	int ret = -EINVAL;
 	struct qnap8528_slot_led *sled = container_of(cdev, struct qnap8528_slot_led, led_cdev);
 
 	/* HW blink acceptable range: measured at ~121ms and ~108ms for green/(red/amber), assuming a rate of 110 with a tolerance of ~25% */
 	if (!(*delay_on == 0 && *delay_off == 0) && (*delay_on < 80 || *delay_on > 140 || *delay_off < 80 || *delay_off > 140))
-		return ret;
+		return -EINVAL;
 
-	if (sled->led_cdev.brightness == 2) {
-		ret = qnap8528_ec_write(EC_LED_DISK_ACTIVE_OFF_REG, sled->slot_cfg->ec_index);
-		ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_LOCATE_ON_REG, sled->slot_cfg->ec_index);
-	} else {
-		ret = qnap8528_ec_write(EC_LED_DISK_LOCATE_OFF_REG, sled->slot_cfg->ec_index);
-		ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_PRESENT_ON_REG, sled->slot_cfg->ec_index);
-		ret = ret ? ret : qnap8528_ec_write(EC_LED_DISK_ACTIVE_ON_REG, sled->slot_cfg->ec_index);
+	sled->is_hw_blink = true;
+
+	if ((sled->led_cdev.brightness == 2) && sled->slot_cfg->has_locate) {
+		qnap8528_ec_write(EC_LED_DISK_ACTIVE_OFF_REG, sled->slot_cfg->ec_index);
+		qnap8528_ec_write(EC_LED_DISK_LOCATE_ON_REG, sled->slot_cfg->ec_index);
+		return 0;
+	} else if (sled->slot_cfg->has_active) {
+		qnap8528_ec_write(EC_LED_DISK_LOCATE_OFF_REG, sled->slot_cfg->ec_index);
+		qnap8528_ec_write(EC_LED_DISK_PRESENT_ON_REG, sled->slot_cfg->ec_index);
+		qnap8528_ec_write(EC_LED_DISK_ACTIVE_ON_REG, sled->slot_cfg->ec_index);
+		return 0;
 	}
 
-	return ret;
+	sled->is_hw_blink = false;
+	return -EINVAL;
 }
 
 static int qnap8528_led_panel_brightness_set(struct led_classdev *cdev, enum led_brightness brightness)
@@ -672,57 +715,58 @@ static int qnap8528_register_leds(struct device *dev)
 	struct qnap8528_slot_led *sled;
 	struct qnap8528_dev_data *data = dev_get_drvdata(dev);
 
-
+	/* Just allocate them all synamically?  */
 	if (data->config->features.led_status) {
-		data->led_status.name = DRVNAME "::status";
-		data->led_status.max_brightness = 2;
-		data->led_status.brightness_set_blocking = qnap8528_led_status_set;
-		data->led_status.blink_set = qnap8528_blink_sw_only ? NULL : qnap8528_led_status_blink;
-		devm_led_classdev_register(dev, &data->led_status);
-		ret = qnap8528_blink_sw_only ? 0 : device_create_file(data->led_status.dev, &dev_attr_blink_bicolor);
+		data->led_status.cdev.name = DRVNAME "::status";
+		data->led_status.cdev.max_brightness = 2;
+		data->led_status.cdev.brightness_set_blocking = qnap8528_led_status_set;
+		data->led_status.cdev.blink_set = qnap8528_blink_sw_only ? NULL : qnap8528_led_status_blink;
+		devm_led_classdev_register(dev, &data->led_status.cdev);
+		ret = qnap8528_blink_sw_only ? 0 : device_create_file(data->led_status.cdev.dev, &dev_attr_blink_bicolor);
 		if (ret)
 			return ret;
 	}
 
 	if (data->config->features.led_usb) {
-		data->led_usb.name = DRVNAME "::usb";
-		data->led_usb.max_brightness = 1;
-		data->led_usb.brightness_set_blocking = qnap8528_led_usb_set;
-		data->led_usb.blink_set = qnap8528_blink_sw_only ? NULL : qnap8528_led_usb_blink;
-		devm_led_classdev_register(dev, &data->led_usb);
+		data->led_usb.cdev.name = DRVNAME "::usb";
+		data->led_usb.cdev.max_brightness = 1;
+		data->led_usb.cdev.brightness_set_blocking = qnap8528_led_usb_set;
+		data->led_usb.cdev.blink_set = qnap8528_blink_sw_only ? NULL : qnap8528_led_usb_blink;
+		devm_led_classdev_register(dev, &data->led_usb.cdev);
 	}
 
 	if (data->config->features.led_ident) {
-		data->led_ident.name = DRVNAME "::ident";
-		data->led_ident.max_brightness = 1;
-		data->led_ident.brightness_set_blocking = qnap8528_led_ident_set;
-		devm_led_classdev_register(dev, &data->led_ident);
+		data->led_ident.cdev.name = DRVNAME "::ident";
+		data->led_ident.cdev.max_brightness = 1;
+		data->led_ident.cdev.brightness_set_blocking = qnap8528_led_ident_set;
+		devm_led_classdev_register(dev, &data->led_ident.cdev);
 	}
 
 	if (data->config->features.led_jbod) {
-		data->led_jbod.name = DRVNAME "::jbod";
-		data->led_jbod.max_brightness = 1;
-		data->led_jbod.brightness_set_blocking = qnap8528_led_jbod_set;
-		devm_led_classdev_register(dev, &data->led_jbod);
+		data->led_jbod.cdev.name = DRVNAME "::jbod";
+		data->led_jbod.cdev.max_brightness = 1;
+		data->led_jbod.cdev.brightness_set_blocking = qnap8528_led_jbod_set;
+		devm_led_classdev_register(dev, &data->led_jbod.cdev);
 	}
 
 	if (data->config->features.led_10g) {
-		data->led_10g.name = DRVNAME "::10GbE";
-		data->led_10g.max_brightness = 1;
-		data->led_10g.brightness_set_blocking = qnap8528_led_10g_set;
-		devm_led_classdev_register(dev, &data->led_10g);
+		data->led_10g.cdev.name = DRVNAME "::10GbE";
+		data->led_10g.cdev.max_brightness = 1;
+		data->led_10g.cdev.brightness_set_blocking = qnap8528_led_10g_set;
+		devm_led_classdev_register(dev, &data->led_10g.cdev);
 	}
 
 	if (data->config->features.led_brightness) {
-		data->led_brightness.name = DRVNAME "::panel_brightness";
-		data->led_brightness.max_brightness = 255;
-		data->led_brightness.brightness_set_blocking = qnap8528_led_panel_brightness_set;
-		devm_led_classdev_register(dev, &data->led_brightness);
+		data->led_brightness.cdev.name = DRVNAME "::panel_brightness";
+		data->led_brightness.cdev.max_brightness = 100;
+		data->led_brightness.cdev.brightness_set_blocking = qnap8528_led_panel_brightness_set;
+		devm_led_classdev_register(dev, &data->led_brightness.cdev);
 	}
 
 	if (data->config->slots) {
 		slots = data->config->slots;
 		for (i = 0; slots[i].name; i++) {
+			/* If there is not least 1 static LED, why bother? */
 			if (!(slots[i].has_present | slots[i].has_error))
 				continue;
 
@@ -733,7 +777,7 @@ static int qnap8528_register_leds(struct device *dev)
 			sled->led_cdev.name = devm_kasprintf(dev, GFP_KERNEL, DRVNAME "::%s", slots[i].name);
 			if (!sled->led_cdev.name)
 				return -ENOMEM;
-			sled->led_cdev.max_brightness = (slots[i].has_present && slots[i].has_error) ? 2 : 1;
+			sled->led_cdev.max_brightness = 2;
 			sled->led_cdev.brightness_set_blocking = qnap8528_led_slot_set;
 			sled->led_cdev.blink_set = ((slots[i].has_active || slots[i].has_locate) && !qnap8528_blink_sw_only) ? qnap8528_led_slot_blink : NULL;
 			sled->pdev = dev;
@@ -922,8 +966,6 @@ static int qnap8528_register_inputs(struct device *dev)
 	int ret;
 	struct qnap8528_dev_data *data = dev_get_drvdata(dev);
 
-	DRIVER_DATA_DEBUG(data);
-
 	data->input_dev = devm_input_allocate_device(dev);
 	if (IS_ERR(data->input_dev))
 		return PTR_ERR(data->input_dev);
@@ -957,7 +999,6 @@ static umode_t qnap8528_hwmon_is_visible(const void *data, enum hwmon_sensor_typ
 	umode_t mode = 0;
 	struct qnap8528_dev_data *dev_data = (struct qnap8528_dev_data *)data;
 
-	DRIVER_DATA_DEBUG(data);
 	switch (type) {
 	case hwmon_temp:
 		val = qnap8528_temperature_get(channel);
@@ -1047,8 +1088,6 @@ static int qnap8528_register_hwmon(struct device *dev)
 	int i;
 	struct qnap8528_dev_data *data = dev_get_drvdata(dev);
 
-	DRIVER_DATA_DEBUG(data);
-
 	for (i = 0; i < QNAP8528_HWMON_MAX_CHANNELS + 1; i++) {
 		qnap8528_hwmon_temp_config[i] = HWMON_T_INPUT;
 		qnap8528_hwmon_fan_config[i] = HWMON_F_INPUT;
@@ -1116,7 +1155,6 @@ static int qnap8528_probe(struct platform_device *pdev)
 		return -ENOMEM;
 
 	dev_set_drvdata(&pdev->dev, data);
-	DRIVER_DATA_DEBUG(data);
 
 	data->config = qnap8528_find_config();
 	if (!data->config)
@@ -1142,6 +1180,7 @@ static void __exit qnap8528_exit(void)
 	if (qnap8528_pdevice)
 		platform_device_unregister(qnap8528_pdevice);
 	platform_driver_unregister(&qnap8528_pdriver);
+	pr_info("Module unloaded");
 }
 
 static int __init qnap8528_init(void)
@@ -1178,7 +1217,7 @@ qnap8528_init_ret:
 
 MODULE_AUTHOR("0xGiddi <qnap8528@giddi.net>");
 MODULE_DESCRIPTION("QNAP IT8528 EC driver");
-MODULE_VERSION("1.0-RC1");
+MODULE_VERSION("1.0");
 MODULE_LICENSE("GPL");
 
 module_init(qnap8528_init);

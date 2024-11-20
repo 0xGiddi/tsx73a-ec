@@ -2,7 +2,7 @@
 #undef pr_fmt
 #define pr_fmt(fmt) "%s @ %s: " fmt "\n", DRVNAME, __func__
 
-#ifdef NDEBUG
+#ifdef DEBUG
 	#define DRIVER_DATA_DEBUG(data)  pr_debug("Driver data pointer: %p\n", data)
 #else
 	#define DRIVER_DATA_DEBUG(data)  /* do nothing */
@@ -196,19 +196,26 @@ struct qnap8528_slot_led {
 	struct led_classdev led_cdev;
 	struct qnap8528_slot_config *slot_cfg;
 	struct device *pdev;
+	bool is_hw_blink;
+};
+
+struct qnap8528_system_led {
+	struct led_classdev cdev;
+	bool is_hw_blink;
 };
 
 struct qnap8528_dev_data {
 	struct qnap8528_config  *config;
+	bool hm_pwm_channels[QNAP8528_HWMON_PWM_BANKS];
+	/* Do I really need handles to all my devices?  */
 	struct input_dev	    *input_dev;
 	struct device           *hwmon_dev;
-	bool hm_pwm_channels[QNAP8528_HWMON_PWM_BANKS];
-	struct led_classdev     led_status;
-	struct led_classdev     led_usb;
-	struct led_classdev     led_ident;
-	struct led_classdev     led_jbod;
-	struct led_classdev     led_10g;
-	struct led_classdev     led_brightness;
+	struct qnap8528_system_led     led_status;
+	struct qnap8528_system_led     led_usb;
+	struct qnap8528_system_led     led_ident;
+	struct qnap8528_system_led     led_jbod;
+	struct qnap8528_system_led     led_10g;
+	struct qnap8528_system_led     led_brightness;
 };
 
 static int qnap8528_ec_hw_check(void);
