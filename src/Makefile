@@ -1,7 +1,7 @@
-obj-m += tsx73a-ec.o
+obj-m += qnap8528.o
 
 KERNEL_DIR ?= /lib/modules/$(shell uname -r)/build
-CFLAGS_tsx73a-ec.o := -DDEBUG
+#CFLAGS_qnap8528.o := -DDEBUG
 
 all:
 	$(MAKE) -C $(KERNEL_DIR) M=$$PWD modules

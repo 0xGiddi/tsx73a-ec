@@ -1,4 +1,4 @@
-MODULE_NAME := tsx73a-ec
+MODULE_NAME := qnap8528
 DKMS_CONF_FILE := dkms.conf
 MODULE_VERSION := $(shell grep "^PACKAGE_VERSION" $(DKMS_CONF_FILE) | sed 's/.*= *//')
 
@@ -14,3 +14,6 @@ install:
 
 uninstall:
 	dkms remove -m $(MODULE_NAME) -v $(MODULE_VERSION) --all
+
+#debpackage:
+#	dpkg-buildpackage -rfakeroot -tc
