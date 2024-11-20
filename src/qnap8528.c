@@ -499,7 +499,7 @@ static ssize_t qnap8528_vpd_parse(int type, int size, char *raw, char *buf)
 static ssize_t blink_bicolor_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t count)
 {
 	int ret;
-    if (count > 0)
+	if (count > 0)
 		ret = qnap8528_ec_write(QNAP8528_LED_STATUS_REG, 5);
 	return ret ? ret : count;
 }
@@ -521,7 +521,7 @@ static int qnap8528_led_status_blink(struct led_classdev *led_cdev, unsigned lon
 {
 	/* HW blink acceptable range: measured blink rate for green and red is ~628ms on/off, tolorance of ~25% */
 	if (!(*delay_on == 0 && *delay_off == 0) && (*delay_on < 470 || *delay_on > 790 || *delay_off < 470 || *delay_off > 790))
-    	return -EINVAL;
+		return -EINVAL;
 
 	if (led_cdev->brightness == 2)
 		return qnap8528_ec_write(QNAP8528_LED_STATUS_REG, 4);
@@ -543,7 +543,7 @@ static int qnap8528_led_usb_blink(struct led_classdev *led_cdev, unsigned long *
 	
 	/* HW blink acceptable range: measured blink rate is ~376ms on/off, tolorance of ~25% */
 	if (!(*delay_on == 0 && *delay_off == 0) && (*delay_on < 280 || *delay_on > 470 || *delay_off < 280 || *delay_off > 470))
-    	return -EINVAL;
+		return -EINVAL;
 
 	return qnap8528_ec_write(QNAP8528_LED_USB_REG, 1);
 }
@@ -608,7 +608,7 @@ static int qnap8528_led_slot_blink(struct led_classdev *cdev, unsigned long *del
 	
 	/* HW blink acceptable range: measured at ~121ms and ~108ms for green/(red/amber), assuming a rate of 110 with a tolorance of ~25% */
 	if (!(*delay_on == 0 && *delay_off == 0) && (*delay_on < 80 || *delay_on > 140 || *delay_off < 80 || *delay_off > 140))
-    	return ret;
+		return ret;
 	
 	if (sled->led_cdev.brightness == 2) {
 			ret = qnap8528_ec_write(EC_LED_DISK_ACTIVE_OFF_REG, sled->slot_cfg->ec_index);
