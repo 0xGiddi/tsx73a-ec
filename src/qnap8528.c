@@ -357,6 +357,7 @@ static ssize_t qnap8528_power_recovery_attr_store(struct device *dev, struct dev
 	if (ret)
 		return ret;
 
+	/* Values are: 0 - Off, 1 - On, 2 - Last State */
 	if ((val < 0) || (val > 2))
 		return -ERANGE;
 
@@ -408,6 +409,7 @@ static ssize_t qnap8528_eup_mode_attr_store(struct device *dev, struct device_at
 	tmp &= 0xf7;
 	tmp |= val ? 0x08 : 0x00;
 
+	/* Values are: 0 - Off, 1 - On*/
 	ret = qnap8528_ec_write(QNAP8528_EUP_MODE_REG, tmp);
 	if (ret)
 		return ret;
