@@ -11,8 +11,8 @@
 #define DRVNAME "qnap8528"
 
 #define QNAP8528_EC_CHIP_ID			0x8528
-#define QNAP8528_EC_UDELAY          300
-#define QNAP8528_EC_MAX_RETRY       1000
+#define QNAP8528_EC_UDELAY          1000
+#define QNAP8528_EC_MAX_RETRY       5000
 #define QNAP8528_EC_CMD_PORT        0x6c
 #define QNAP8528_EC_DAT_PORT        0x68
 

@@ -23,6 +23,8 @@
  *	v1.0-RC1: Initial RC, project renamed and rewritten.
  *	v1.0: Updated LED logic
  *	v1.1: Added config  TS464, TS-464C, TS-464C2, TS-464T4 and TS-464U
+ *	v1.2: Extended delay and retry for EC read/write operations
+ *	      Fixed erroneous check for slot activity support when setting ERROR off
  */
 
 #include <linux/delay.h>
@@ -462,6 +464,7 @@ static ssize_t qnap8528_vpd_attr_show(struct device *dev, struct qnap8528_device
 		offs = (entry & 0xffff) + i;
 		if (qnap8528_ec_write(reg_a, (offs >> 8) & 0xff) || qnap8528_ec_write(reg_b, offs & 0xff) || qnap8528_ec_read(reg_c, &raw[i]))
 			return -EBUSY;
+		udelay(5000);
 	}
 
 	return qnap8528_vpd_parse((entry >> 0x18) & 3, (entry >> 0x10) & 0xff, raw, buf);
@@ -610,7 +613,7 @@ static int qnap8528_led_slot_set(struct led_classdev *cdev,	enum led_brightness 
 
 	if (sled->slot_cfg->has_present)
 		qnap8528_ec_write(EC_LED_DISK_PRESENT_OFF_REG, sled->slot_cfg->ec_index);
-	if (sled->slot_cfg->has_active)
+	if (sled->slot_cfg->has_error)
 		qnap8528_ec_write(EC_LED_DISK_ERROR_OFF_REG, sled->slot_cfg->ec_index);
 
 	/* What state do we want to achieve? */
@@ -1218,7 +1221,7 @@ qnap8528_init_ret:
 
 MODULE_AUTHOR("0xGiddi <qnap8528@giddi.net>");
 MODULE_DESCRIPTION("QNAP IT8528 EC driver");
-MODULE_VERSION("1.1");
+MODULE_VERSION("1.2");
 MODULE_LICENSE("GPL");
 
 module_init(qnap8528_init);
