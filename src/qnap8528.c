@@ -37,7 +37,7 @@
 #include <linux/time.h>
 #include "qnap8528.h"
 
-static bool qnap8528_skip_hw_check;
+static bool qnap8528_skip_hw_check = true;
 module_param_named(skip_hw_check, qnap8528_skip_hw_check, bool, 0);
 MODULE_PARM_DESC(skip_hw_check, "Skip HW check for IT8528 device");
 
@@ -462,6 +462,7 @@ static ssize_t qnap8528_vpd_attr_show(struct device *dev, struct qnap8528_device
 		offs = (entry & 0xffff) + i;
 		if (qnap8528_ec_write(reg_a, (offs >> 8) & 0xff) || qnap8528_ec_write(reg_b, offs & 0xff) || qnap8528_ec_read(reg_c, &raw[i]))
 			return -EBUSY;
+		udelay(5000);
 	}
 
 	return qnap8528_vpd_parse((entry >> 0x18) & 3, (entry >> 0x10) & 0xff, raw, buf);
@@ -1115,8 +1116,11 @@ static struct qnap8528_config *qnap8528_find_config(void)
 	qnap8528_vpd_attr_show(NULL, &(struct qnap8528_device_attribute){.vpd_entry = QNAP8528_VPD_MB_MODEL}, mb_model);
 	qnap8528_vpd_attr_show(NULL, &(struct qnap8528_device_attribute){.vpd_entry = QNAP8528_VPD_BP_MODEL}, bp_model);
 
-	if (!strnlen(mb_model, 32) || !strnlen(bp_model, 32))
+	if (!strnlen(mb_model, 32) || !strnlen(bp_model, 32)) {
+		pr_info("MB Code: %s", mb_model);
+		pr_info("BP Code: %s", bp_model);
 		return 0;
+	}
 
 	pr_info("Searching configs for a match with MB=%s BP=%s", mb_model, bp_model);
 
