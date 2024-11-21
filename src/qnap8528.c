@@ -22,6 +22,7 @@
  * Version history:
  *	v1.0-RC1: Initial RC, project renamed and rewritten.
  *	v1.0: Updated LED logic
+ *	v1.1: Added config  TS464, TS-464C, TS-464C2, TS-464T4 and TS-464U
  */
 
 #include <linux/delay.h>
@@ -1217,7 +1218,7 @@ qnap8528_init_ret:
 
 MODULE_AUTHOR("0xGiddi <qnap8528@giddi.net>");
 MODULE_DESCRIPTION("QNAP IT8528 EC driver");
-MODULE_VERSION("1.0");
+MODULE_VERSION("1.1");
 MODULE_LICENSE("GPL");
 
 module_init(qnap8528_init);

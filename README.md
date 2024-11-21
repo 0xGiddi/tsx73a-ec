@@ -293,6 +293,11 @@ or does not use the IT8528 chip. Please check the Q&A for more information.
 |TVS-875U|SAP00|SBO60|8/10 | ⚠️ See *1
 |TVS-1275U|SAP00|SBO70|12/14 | ⚠️ See *1
 |TVS-1675U|SAP00|SBO80|16/18 | ⚠️ See *1
+|TS-464|Q07R1|Q08F0|4/6 | ⚠️ See *1 See *2 
+|TS-464U|Q08S0|QY740|4/4 | ⚠️ See *2
+|TS-464T4|Q0910|Q08F0|6/6 | ⚠️ See *2
+|TS-464C|SAQ93|SBR00|6/6 | ⚠️ See *2
+|TS-464C2|SAQ95|SBR00|6/6 | ⚠️ See *2
 
 *1 Some or all disks LEDs are managed by other hardware (not the EC), if the model is missing 2 disks (e.g `8/10`), it's most likely the internal M.2/NVME ports that do not have an LED associated with them.\
 *2 Some or all of the disks do not have a present or error (green/red) LED.\
