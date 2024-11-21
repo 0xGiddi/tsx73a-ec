@@ -1136,7 +1136,7 @@ static struct qnap8528_config *qnap8528_find_config(void)
 
 static int qnap8528_probe(struct platform_device *pdev)
 {
-	int ret;
+	int ret = 0;
 	struct qnap8528_dev_data *data;
 
 	/*
