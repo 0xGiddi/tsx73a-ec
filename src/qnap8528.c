@@ -611,7 +611,7 @@ static int qnap8528_led_slot_set(struct led_classdev *cdev,	enum led_brightness 
 
 	if (sled->slot_cfg->has_present)
 		qnap8528_ec_write(EC_LED_DISK_PRESENT_OFF_REG, sled->slot_cfg->ec_index);
-	if (sled->slot_cfg->has_active)
+	if (sled->slot_cfg->has_error)
 		qnap8528_ec_write(EC_LED_DISK_ERROR_OFF_REG, sled->slot_cfg->ec_index);
 
 	/* What state do we want to achieve? */
