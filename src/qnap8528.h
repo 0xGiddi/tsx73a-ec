@@ -2026,10 +2026,10 @@ static struct qnap8528_config qnap8528_configs[] = {
 		},
 		.fans = (u8[]){ 1, 0},
 		.slots = (struct qnap8528_slot_config[]){
-			{ .name = "hdd1", .ec_index = 1, .has_present = 1, .has_active = 1, .has_error = 1, .has_locate = 1},
-			{ .name = "hdd2", .ec_index = 2, .has_present = 1, .has_active = 1, .has_error = 1, .has_locate = 1},
-			{ .name = "hdd3", .ec_index = 3, .has_present = 1, .has_active = 1, .has_error = 1, .has_locate = 1},
-			{ .name = "hdd4", .ec_index = 4, .has_present = 1, .has_active = 1, .has_error = 1, .has_locate = 1},
+			{ .name = "hdd1", .ec_index = 1, .has_error = 1, .has_locate = 1},
+			{ .name = "hdd2", .ec_index = 2, .has_error = 1, .has_locate = 1},
+			{ .name = "hdd3", .ec_index = 3, .has_error = 1, .has_locate = 1},
+			{ .name = "hdd4", .ec_index = 4, .has_error = 1, .has_locate = 1},
 			{ NULL }
 		}
 	},
