@@ -242,8 +242,8 @@ or does not use the IT8528 chip. Please check the Q&A for more information.
 |TVS-872X|Q0121|Q0160|10/10 |
 |TVS-672X|Q0121|Q0170|8/8 |
 |TS-2490FU|Q03X0|Q04K0|24/24 |
-|TNS-1083X|Q0410|Q0490|10/12 | ⚠️ [^1] ❗3rd code `Q04U0`, See *3
-|TNS-C1083X|Q0411|Q0490|10/12 | ⚠️ [^1] ❗3rd code `Q04U0`, See *3
+|TNS-1083X|Q0410|Q0490|10/12 | ⚠️ See *1 ❗3rd code `Q04U0`, See *3
+|TNS-C1083X|Q0411|Q0490|10/12 | ⚠️ See *1 ❗3rd code `Q04U0`, See *3
 |TVS-872N|Q0420|Q0160|10/10 |
 |TVS-672N|Q0420|Q0170|8/8 |
 |TVS-472X|Q0420|Q0180|6/6 |
