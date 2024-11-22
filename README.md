@@ -42,6 +42,10 @@ Before installing, please check the *Supported Models* table and see that your d
 **Disclaimer:** This kernel module is provided as-is, without any warranty of functionality or fitness for a specific purpose. The developers of this kernel module accept no liability for any damage, data loss, or system instability resulting from its use, Use at your own risk .
 ### Install instructions using DKMS
 
+> **_⚠️ TR-464 Users:_**  It seems the device uses a ENE EC which does not return the correct chip ID, `skip_hw_check` needs to be set to true, in the service file, update `ExecStart` to `ExecStart=/sbin/modprobe qnap8528 skip_hw_check=true`.
+
+> **_⚠️ TrueNAS Users:_**  A bug with TrueNAS is currently preventing installing using `sudo make install`, either install using the local console (serial/monitor+keyboard, option `7) Open Linux Shell` in the menu), OR, compile only the module as `truenas_admin` with `make -C src` and install manually/probe manually (using `sudo insmod` or `sudo modprobe`).
+
 1. Download the latest release of the module from the [releases page](https://github.com/0xGiddi/tsx73a-ec/releases/latest) or clone the repository locally using `git clone https://github.com/0xgiddi/qnap8528.git`
 2. Extract the zip/tarball using `unzip <file>`, `tar xzf <file>`
 3. Enter the project directory `qnap8528`
