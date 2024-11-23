@@ -2,6 +2,9 @@
   - [Supported features](#supported-features)
 - [Installation Instructions](#installation-instructions)
   - [Install instructions using DKMS](#install-instructions-using-dkms)
+  - [Installing on TrueNAS Scale](#installing-on-truenas-scale)
+    - [Install Procedure](#install-procedure)
+    - [Uninstall procedure](#uninstall-procedure)
   - [Autoload module on startup with Systemd](#autoload-module-on-startup-with-systemd)
   - [Removing the module](#removing-the-module)
 - [How to use this module](#how-to-use-this-module)
@@ -42,15 +45,34 @@ Before installing, please check the *Supported Models* table and see that your d
 **Disclaimer:** This kernel module is provided as-is, without any warranty of functionality or fitness for a specific purpose. The developers of this kernel module accept no liability for any damage, data loss, or system instability resulting from its use, Use at your own risk .
 ### Install instructions using DKMS
 
-> **_⚠️ TR-464 Users:_**  It seems the device uses a ENE EC which does not return the correct chip ID, `skip_hw_check` needs to be set to true, in the service file, update `ExecStart` to `ExecStart=/sbin/modprobe qnap8528 skip_hw_check=true`.
-
-> **_⚠️ TrueNAS Users:_**  A bug with TrueNAS is currently preventing installing using `sudo make install`, either install using the local console (serial/monitor+keyboard, option `7) Open Linux Shell` in the menu), OR, compile only the module as `truenas_admin` with `make -C src` and install manually/probe manually (using `sudo insmod` or `sudo modprobe`).
+> **_⚠️ TR-464 Users:_**  It seems the device uses an ENE EC which does not return the correct chip ID, `skip_hw_check` needs to be set to true (`insmod qnap8528.ko skip_hw_check=true`), also, add this at the end of `ExecStart` in the service unit file.
 
 1. Download the latest release of the module from the [releases page](https://github.com/0xGiddi/tsx73a-ec/releases/latest) or clone the repository locally using `git clone https://github.com/0xgiddi/qnap8528.git`
 2. Extract the zip/tarball using `unzip <file>`, `tar xzf <file>`
 3. Enter the project directory `qnap8528`
 4. Compile and install the module using with `make install`
 5. Ensure the module is installed using `dkms status`
+
+### Installing on TrueNAS Scale 
+> **❗Important**: TrueNAS Scale is a highly restricted operating system that does not support modifications to the host OS environment. To add this module, you must enable **Developer Mode**, which allows installation of build tools and modification of the root filesystem to include the kernel module. However, enabling Developer Mode voids official support from iXsystems on their support platforms. For more information, refer to the [TrueNAS documentation](https://www.truenas.com/docs/scale/scaletutorials/systemsettings/advanced/developermode/).  
+
+> **❗Important**: Updates to the TrueNAS OS will overwrite any changes made during the installation of this module, requiring the installation process to be repeated.
+
+#### Install Procedure
+1. Connect to TrueNAS either by using the web console, SSH or the local Linux shell.
+2. using `sudo install-dev-tools` disable the read protection on the root filesystem and install required tools.
+3. Download the latest source tarball from the [release page](https://github.com/0xGiddi/tsx73a-ec/releases/latest) and extract using `tar xzf <filename>`.
+4. Enter the `src` directory of the project `cd qnap8528-<version>/src`.
+5. Run `make`, **without `sudo`** (as `truenas_admin` or `root` if using local console)
+6. Check that the module compiled successfully with `echo $?` (should be `0`) and that the `qnap8528.ko` was created.
+7. Copy the kernel module to the Linux modules directory `cp qnap8528.ko /lib/modules/$(uname -r)/extra`
+8. Run `depmod -a` to updated the modules database.
+9. Module is installed and can be probed, follow [autoload-module-on-startup-with-systemd](#autoload-module-on-startup-with-systemd) to autoload on boot.
+
+#### Uninstall procedure
+1. Unload the module using `modprobe -r qnap8528` or stopping the service created in previous step 9.
+2. Delete the module file `rm /lib/modules/$(uname -r)/extra/qnap8528.ko`
+3. Update modules database with `depmod -a`
 
 ### Autoload module on startup with Systemd
 1. Create a new unit file `touch /etc/systemd/system/qnap8528-load-module.service`
@@ -62,6 +84,7 @@ Description=Load qnap8528 EC kernel module
 [Service]
 Type=oneshot
 RemainAfterExit=yes
+# Add skip_hw_check=true at the end of the following line if required (such as on TS-464)
 ExecStart=/sbin/modprobe qnap8528
 ExecStop=/sbin/modprobe -r qnap8528
 
@@ -297,11 +320,11 @@ or does not use the IT8528 chip. Please check the Q&A for more information.
 |TVS-875U|SAP00|SBO60|8/10 | ⚠️ See *1
 |TVS-1275U|SAP00|SBO70|12/14 | ⚠️ See *1
 |TVS-1675U|SAP00|SBO80|16/18 | ⚠️ See *1
-|TS-464|Q07R1|Q08F0|4/6 | ⚠️ See *1 See *2 
-|TS-464U|Q08S0|QY740|4/4 | ⚠️ See *2
-|TS-464T4|Q0910|Q08F0|6/6 | ⚠️ See *2
-|TS-464C|SAQ93|SBR00|6/6 | ⚠️ See *2
-|TS-464C2|SAQ95|SBR00|6/6 | ⚠️ See *2
+|TS-464|Q07R1|Q08F0|4/6 |Requires `skip_hw_check` ⚠️ See *1 See *2 
+|TS-464U|Q08S0|QY740|4/4 |Might require `skip_hw_check` ⚠️ See *2
+|TS-464T4|Q0910|Q08F0|6/6 |Might require `skip_hw_check` ⚠️ See *2
+|TS-464C|SAQ93|SBR00|6/6 |Might require `skip_hw_check` ⚠️ See *2
+|TS-464C2|SAQ95|SBR00|6/6 |Might require `skip_hw_check` ⚠️ See *2
 
 *1 Some or all disks LEDs are managed by other hardware (not the EC), if the model is missing 2 disks (e.g `8/10`), it's most likely the internal M.2/NVME ports that do not have an LED associated with them.\
 *2 Some or all of the disks do not have a present or error (green/red) LED.\
