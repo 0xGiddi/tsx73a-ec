@@ -110,7 +110,7 @@ The module currently has 3 configuration parameters that can be set at load time
 `skip_hw_check`:\
 Set to `false` by default, this prevents the module checking to see if a valid *IT8528* exists, the check is put there so that the module does not interact with an unknown device I/O ports more than it needs in the case that the module is loaded on the wrong machine. This parameter should not be set under normal conditions and is used mostly for debugging.
 
-`qnap8528_blink_sw_only`:\
+`blink_sw_only`:\
 Set to `false` by default, this prevents registering the hardware blink callbacks on the device so all blinking is done via software. In most cases this is not needed and is a remnant of testing the LED subsystem, however, since the LED bilking logic is a mess and some edge cases may exist, this parameter exists to prevent letting the EC blink the LEDs. The `ident` LED is an exception since its behavior is only to blink.
 
 `preserve_leds`:\
@@ -201,10 +201,13 @@ I experimented with enumerating the fans at runtime by using a combination of ch
 
 ### System LEDs Control
 
-System LEDs can be controlled via the standard Linux LED subsystem. For LEDs that have more than a single color (e.g. the *Status* LED), the brightness value dictates the color of the LED, so setting *Status* to `0` will turn it off, setting it to `1` will set it green and `3` would turn it red. Following is a list of supported leds (without the `qnap8528::` prefix):
+System LEDs can be controlled via the standard Linux LED subsystem. For LEDs that have more than a single color (e.g. the *Status* LED), the brightness value dictates the color of the LED, so setting *Status* to `0` will turn it off, setting it to `1` will set it green and `2` would turn it red.
+
+To blink the LEDs, use standard Linux Kernel LED triggers such as the `ledtrig_trimer`, `ledtrig_oneshot` and so on. If the blink rate chosen (`delay_on`/`delay_off`) is close to whats possible with hardware blink +-25% the module will ignore the exact rate provided and will use the hardware to blink the LEDs.  If blink timing is important (the HW blink is only +- 200ms at most off requested value) set `blink_sw_only=true` when loading the module to disable hardware acceleration. 
 
 If an LED has multiple color, the blink color can be controlled by setting the correct brightness value either before or while blinking. To stop the blinking, a value of `0` needs to be written as the brightness value.
 
+Following is a list of supported leds (without the `qnap8528::` prefix):
 |Name|Device Name|Brightness Values|Notes
 |-|-|-|-
 |Status|`status`|`0`,`1`,`2` for Off, On Green, On Red| Support blink, see note below
@@ -212,7 +215,7 @@ If an LED has multiple color, the blink color can be controlled by setting the c
 |Enclosure Identification|`ident`|`0`,`1` for Off, On (Flashing Green/Red) | Overrides all disk LEDs until disabled
 |JBOD Expansion|`jbod`|`0`,`1` for Off, On (Orange?)|
 |10GbE Expansion|`10GbE`|`0`,`1` for Off, On (Green?)|
-|USB|`panel_brightness`|`0`-`100` for Off, Max Brightness| Affects all LEDs
+|Panel Brightness|`panel_brightness`|`0`-`100` for Off, Max Brightness| Affects all LEDs
 
 ***Status LED Note***\
 The status LED is a special case where it can blink red and green in an alternating pattern, a special attribute `blink_bicolor` is created (if hardware blink was not disabled) which when written to with any value (except an empty string) will set the the *Status* LEDs into the green-red blinking pattern. To disable this, set the brightness of the LED to anything else.
